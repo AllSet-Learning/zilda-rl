@@ -1,0 +1,3224 @@
+{
+    "project": {},
+    "files": {
+        "src/array-2d.js": {
+            "name": "src/array-2d.js",
+            "modules": {},
+            "classes": {
+                "Array2d": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/console.js": {
+            "name": "src/console.js",
+            "modules": {},
+            "classes": {
+                "Console": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/entity-manager.js": {
+            "name": "src/entity-manager.js",
+            "modules": {},
+            "classes": {
+                "EntityManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/entity.js": {
+            "name": "src/entity.js",
+            "modules": {},
+            "classes": {
+                "Entity": 1,
+                "Entity.Types": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/fov-rot.js": {
+            "name": "src/fov-rot.js",
+            "modules": {},
+            "classes": {
+                "FovROT": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/game.js": {
+            "name": "src/game.js",
+            "modules": {},
+            "classes": {
+                "Game": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/input.js": {
+            "name": "src/input.js",
+            "modules": {},
+            "classes": {
+                "Input": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/lighting-rot.js": {
+            "name": "src/lighting-rot.js",
+            "modules": {},
+            "classes": {
+                "Lighting": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/map.js": {
+            "name": "src/map.js",
+            "modules": {},
+            "classes": {
+                "Map": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/mouse.js": {
+            "name": "src/mouse.js",
+            "modules": {},
+            "classes": {
+                "Mouse": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/player.js": {
+            "name": "src/player.js",
+            "modules": {},
+            "classes": {
+                "Player": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/renderer.js": {
+            "name": "src/renderer.js",
+            "modules": {},
+            "classes": {
+                "Renderer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/tile.js": {
+            "name": "src/tile.js",
+            "modules": {},
+            "classes": {
+                "Tile": 1,
+                "Tile.Types": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/util.js": {
+            "name": "src/util.js",
+            "modules": {},
+            "classes": {
+                "Util": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Array2d": {
+            "name": "Array2d",
+            "shortname": "Array2d",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/array-2d.js",
+            "line": 4,
+            "description": "Manages a 2d array of values mapped to x,y coords.\ncoord data methods to help with data maniuplation and searching (getAdjacent, findNearest, filter, getWithinSquareRadius etc.)",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- Width of the 2d Array.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height of the 2d Array.",
+                    "type": "Number"
+                }
+            ]
+        },
+        "Console": {
+            "name": "Console",
+            "shortname": "Console",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/console.js",
+            "line": 4,
+            "description": "Manages the display and history of console messages to the user.\n\"The troll hits you dealing 10 damage.\"\n\"You die.\"",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                },
+                {
+                    "name": "messageHistoryCount",
+                    "description": "- Number of messages to display at once.",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "5"
+                },
+                {
+                    "name": "elClassName",
+                    "description": "- Css class name to assign to the console element.",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'console'"
+                }
+            ]
+        },
+        "EntityManager": {
+            "name": "EntityManager",
+            "shortname": "EntityManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/entity-manager.js",
+            "line": 4,
+            "description": "Manages a list of all entities and their tile positions.\nHandles adding, removing, moving entities within the game.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                },
+                {
+                    "name": "width",
+                    "description": "- Width of current map in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height of current map in tiles.",
+                    "type": "Number"
+                }
+            ]
+        },
+        "Entity": {
+            "name": "Entity",
+            "shortname": "Entity",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/entity.js",
+            "line": 4,
+            "description": "Represents an entity in the game. Usually a character or enemy.\nManages state (position, health, stats, etc)\nOccupies a single game map tile.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                },
+                {
+                    "name": "type",
+                    "description": "- Type of entity. When created this object is merged with the value of Entity.Types[type].",
+                    "type": "String"
+                }
+            ]
+        },
+        "Entity.Types": {
+            "name": "Entity.Types",
+            "shortname": "Entity.Types",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/entity.js",
+            "line": 202,
+            "description": "Describes different types of entities. Used by the Entity constructor 'type' param.\n\n    Entity.Types = {\n        zombie: {\n           name: 'Zombie',\n           char: 'z',\n           color: 'red',\n           bgColor: '#222',\n           pushable: false\n        },\n        // ...\n    }",
+            "static": 1
+        },
+        "FovROT": {
+            "name": "FovROT",
+            "shortname": "FovROT",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/fov-rot.js",
+            "line": 4,
+            "description": "Represents a FovROT in the game map. requires ROT.js",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                }
+            ]
+        },
+        "Game": {
+            "name": "Game",
+            "shortname": "Game",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/game.js",
+            "line": 4,
+            "description": "Container for all game objects.\nHandles updating the state of game objects each turn.\nListens for player input to trigger and resolve new turns.",
+            "is_constructor": 1
+        },
+        "Input": {
+            "name": "Input",
+            "shortname": "Input",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/input.js",
+            "line": 4,
+            "description": "Helper for binding user key input to actions.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "onKeyAction",
+                    "description": "- Function called when a key bound to an action is pressed (function(action){}).",
+                    "type": "Function"
+                },
+                {
+                    "name": "bindings",
+                    "description": "- An object of key val pairs mapping an action to an array of keys that trigger it. Input.Keys is used to convert input key string names to key codes.",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "action1",
+                            "description": "Input keys mapped to action1. ['A', 'B', ...]",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "action2",
+                            "description": "Input keys mapped to action2. ['X', 'Y', ...]",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "...",
+                            "description": ""
+                        }
+                    ]
+                }
+            ],
+            "example": [
+                "\n       //bindings param example:\n       {\n           up: ['UP_ARROW'],\n           down: ['DOWN_ARROW'],\n           left: ['LEFT_ARROW'],\n           right: ['RIGHT_ARROW'],\n       }"
+            ]
+        },
+        "Lighting": {
+            "name": "Lighting",
+            "shortname": "Lighting",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/lighting-rot.js",
+            "line": 4,
+            "description": "Represents lighting in the game map. requires ROT.js\nManages position of lights.\nCalculates illumination of map tiles.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                },
+                {
+                    "name": "settings",
+                    "description": "Lighting settings object.",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "range",
+                            "description": "- Maximum range for the most powerful light source.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "passes",
+                            "description": "- Number of computation passes (1: no reflectivity used, 2: reflectivity used)",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "emissionThreshold",
+                            "description": "- Minimal amount of light at a cell to be re-emited (only for passes>1).",
+                            "type": "Number",
+                            "optional": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "Map": {
+            "name": "Map",
+            "shortname": "Map",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/map.js",
+            "line": 4,
+            "description": "Manages map Tiles. Depends on Array2d (array-2d.js).",
+            "extends": "Array2d",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                }
+            ]
+        },
+        "Mouse": {
+            "name": "Mouse",
+            "shortname": "Mouse",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/mouse.js",
+            "line": 4,
+            "description": "Helper for handling user mouse input.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "onClick",
+                    "description": "- A function to handle mouse click events. function(x, y){}",
+                    "type": "Function"
+                },
+                {
+                    "name": "onHover",
+                    "description": "- A function to handle mouse hover events. function(x, y){}",
+                    "type": "Function"
+                }
+            ]
+        },
+        "Player": {
+            "name": "Player",
+            "shortname": "Player",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/player.js",
+            "line": 4,
+            "description": "Represents the player.\nVery similar to Entity\nHandles functionality triggered by keyboard and mouse Input",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- game instance this obj is attached to",
+                    "type": "Game"
+                }
+            ]
+        },
+        "Renderer": {
+            "name": "Renderer",
+            "shortname": "Renderer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/renderer.js",
+            "line": 4,
+            "description": "Renders the current game state using html5 canvas.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Game"
+                },
+                {
+                    "name": "width",
+                    "description": "- Width of the map view in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height of the map view in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "canvasClassName",
+                    "description": "- Css class name for the canvas element.",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'renderer'"
+                }
+            ]
+        },
+        "Tile": {
+            "name": "Tile",
+            "shortname": "Tile",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/tile.js",
+            "line": 4,
+            "description": "Represents a tile in the game map.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "- Game instance this obj is attached to.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "- Type of tile. When created this object is merged with the value of Tile.Types[type].",
+                    "type": "String"
+                },
+                {
+                    "name": "x",
+                    "description": "- The map tile coordinate position of this tile on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map tile coordinate position of this tile on the y axis.",
+                    "type": "Number"
+                }
+            ]
+        },
+        "Tile.Types": {
+            "name": "Tile.Types",
+            "shortname": "Tile.Types",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/tile.js",
+            "line": 132,
+            "description": "Describes different types of tiles. Used by the Tile constructor 'type' param.\n\n    Tile.Types = {\n        floor: {\n           name: 'Floor',\n           char: '.',\n           color: '#333',\n           bgColor: '#111',\n           passable: true,\n           blocksLos: false\n        },\n        // ...\n    }",
+            "static": 1
+        },
+        "Util": {
+            "name": "Util",
+            "shortname": "Util",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/util.js",
+            "line": 17,
+            "description": "Utility functions",
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/array-2d.js",
+            "line": 21,
+            "description": "Width of the 2d Array.",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 28,
+            "description": "Height of the 2d Array.",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 35,
+            "description": "2d Array data",
+            "itemtype": "property",
+            "name": "data",
+            "type": "Array",
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 42,
+            "description": "Resets the 2d array, clearing all data and initializing with this.width and this.height.",
+            "itemtype": "method",
+            "name": "reset",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- The new width.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- The new height.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 55,
+            "description": "Updates the size of this Array2d without destroying data.",
+            "itemtype": "method",
+            "name": "setSize",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- The new width.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- The new height.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 71,
+            "description": "Sets a value at given coords.",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Position on the x axis of the value being set.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Position on the y axis of the value being set.",
+                    "type": "Number"
+                },
+                {
+                    "name": "value",
+                    "description": "- The value being set at given coords.",
+                    "type": "Mixed"
+                }
+            ],
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 85,
+            "description": "Gets a value from given coords.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Position on the x axis of the value being retrieved.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Position on the y axis of the value being retrieved.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Mixed"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 99,
+            "description": "Removes a value from given coords.",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Position on the x axis of the value being removed.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Position on the y axis of the value being removed.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 109,
+            "description": "Retrieves an array of values of adjacent coords.",
+            "itemtype": "method",
+            "name": "getAdjacent",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Position on the x axis of the coord to get adjacent values of.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Position on the x axis of the coord to get adjacent values of.",
+                    "type": "Number"
+                },
+                {
+                    "name": "withCoords",
+                    "description": "- If true the returned array will include the coords of each value ([{x: 0, y: 0, value: 1}, ...])",
+                    "type": "Bool"
+                },
+                {
+                    "name": "filter",
+                    "description": "- A function to filter the values returned (function(value, x, y){ return true;})",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "An array of adjacent coord values.",
+                "type": "Array"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 183,
+            "description": "Retrieves an array of values of coords within a given radius.",
+            "itemtype": "method",
+            "name": "getWithinSquareRadius",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Position on the x axis of the coord at the center of the radius.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Position on the x axis of the coord at the center of the radius.",
+                    "type": "Number"
+                },
+                {
+                    "name": "radius",
+                    "description": "- Radius of the area to retrieve tiles from.",
+                    "type": "Number"
+                },
+                {
+                    "name": "filter",
+                    "description": "- A function to filter the values returned (function(value, x, y){ return true;})",
+                    "type": "Function",
+                    "optional": true,
+                    "optdefault": "undefined"
+                },
+                {
+                    "name": "withCoords",
+                    "description": "- If true the returned array will include the coords of each value ([{x: 0, y: 0, value: 1}, ...])",
+                    "type": "Bool",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "includeTarget",
+                    "description": "- If true the value of the coordinates given will be included in the returned array.",
+                    "type": "Bool",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "An array of coord values within a square radius of the given coords.",
+                "type": "Array"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 241,
+            "description": "Retrieves an array of values of coords along a line starting at point 0 and crossing point 1 until it hits the edge of the 2d array or a coord value returning true when passed to the condtion function.",
+            "itemtype": "method",
+            "name": "getLineThrough",
+            "params": [
+                {
+                    "name": "x0",
+                    "description": "- Position on the x axis of the coord 0.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y0",
+                    "description": "- Position on the y axis of the coord 0.",
+                    "type": "Number"
+                },
+                {
+                    "name": "x1",
+                    "description": "- Position on the x axis of the coord 1.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y1",
+                    "description": "- Position on the y axis of the coord 1.",
+                    "type": "Number"
+                },
+                {
+                    "name": "condition",
+                    "description": "- A function to determine when to end the line. A coord value returning true when passed to the function will end the line. (function(value, x, y){ return true;})",
+                    "type": "Function",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "withCoords",
+                    "description": "- If true the returned array will include the coords of each value ([{x: 0, y: 0, value: 1}, ...])",
+                    "type": "Bool",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "An array of coord values.",
+                "type": "Array"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 296,
+            "description": "Retrieves an array of the nearest coord values meeting checked requirements. If multiple coord values were matched at the same nearest distance, the returned array will contain multiple matched coord values.\nUsed for projecting path of ranged attacks, pushed entities, ect.",
+            "itemtype": "method",
+            "name": "getNearest",
+            "params": [
+                {
+                    "name": "tileX",
+                    "description": "- Position on the x axis of the coord at the center of the radius.",
+                    "type": "Number"
+                },
+                {
+                    "name": "tileY",
+                    "description": "- Position on the y axis of the coord at the center of the radius.",
+                    "type": "Number"
+                },
+                {
+                    "name": "maxRadius",
+                    "description": "- Maxium search radius from given coord.",
+                    "type": "Number"
+                },
+                {
+                    "name": "check",
+                    "description": "- A function to determine when the desired coord value is matched. A coord value returning true when passed to the function would be added to the list of results. (function(value, x, y){ return true;}) If no check function is provided any tile with a truthy value will be matched.",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "withCoords",
+                    "description": "- If true the returned array will include the coords of each value ([{x: 0, y: 0, value: 1}, ...])",
+                    "type": "Bool",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "An array of coord values within a square radius of the given coords.",
+                "type": "Array"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 389,
+            "description": "Retrieves an array of the filtered values.",
+            "itemtype": "method",
+            "name": "filter",
+            "params": [
+                {
+                    "name": "check",
+                    "description": "- A function to determine if a value is to be included in results (returns true). (function(value, x, y){ return true;})",
+                    "type": "Function"
+                },
+                {
+                    "name": "withCoords",
+                    "description": "- If true the returned array will include the coords of each value ([{x: 0, y: 0, value: 1}, ...])",
+                    "type": "Bool",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "An array of coord values matched by the check function.",
+                "type": "Array"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 418,
+            "description": "Creates a copy of this Array2d. Shallow copies values.",
+            "itemtype": "method",
+            "name": "copy",
+            "return": {
+                "description": "",
+                "type": "Array2d"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/array-2d.js",
+            "line": 436,
+            "description": "Loops over each coord value.",
+            "itemtype": "method",
+            "name": "each",
+            "params": [
+                {
+                    "name": "func",
+                    "description": "- A function to call on each coord value. (function(value, x, y){})",
+                    "type": "Function"
+                },
+                {
+                    "name": "context",
+                    "description": "- Context to call the function with (func.call(context, val, x, y))",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array2d"
+            },
+            "class": "Array2d"
+        },
+        {
+            "file": "src/console.js",
+            "line": 24,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Console"
+        },
+        {
+            "file": "src/console.js",
+            "line": 31,
+            "description": "Element containing console messages.\nMust be manually added to the DOM",
+            "itemtype": "property",
+            "name": "el",
+            "type": "HTMLElement",
+            "class": "Console"
+        },
+        {
+            "file": "src/console.js",
+            "line": 39,
+            "description": "Number of messages to display at once.",
+            "itemtype": "property",
+            "name": "messageHistoryCount",
+            "type": "Number",
+            "class": "Console"
+        },
+        {
+            "file": "src/console.js",
+            "line": 46,
+            "description": "Adds a message to the console.",
+            "itemtype": "method",
+            "name": "log",
+            "params": [
+                {
+                    "name": "-",
+                    "description": "Message to be added.",
+                    "type": "String"
+                }
+            ],
+            "class": "Console"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 22,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 29,
+            "description": "Array containing all entities.",
+            "itemtype": "property",
+            "name": "entities",
+            "type": "Array",
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 36,
+            "description": "Array2d containing all entities by their current map tile coord",
+            "itemtype": "property",
+            "name": "entityMap",
+            "type": "Array2d",
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 43,
+            "description": "Retrieves an entity by map tile coords.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map tile coordinate position of the entity on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map tile coordinate position of the entity on the y axis.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "Entity|false"
+            },
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 54,
+            "description": "Adds an entity to the manager.",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map tile coordinate position of the entity on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map tile coordinate position of the entity on the y axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "ent",
+                    "description": "- The Entity being set at given coords. If ent is a string a new Entity will be created using the string as the Entity Type (see Entity.Types[type]).",
+                    "type": "Entity|String"
+                }
+            ],
+            "return": {
+                "description": "The added entity",
+                "type": "Entity"
+            },
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 74,
+            "description": "Removes an entity to the manager.",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "ent",
+                    "description": "- The entity to be removed.",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 85,
+            "description": "Changes the position of an entity already added to this entityManager.",
+            "itemtype": "method",
+            "name": "move",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The new map tile coordinate position of the entity on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The new map tile coordinate position of the entity on the y axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "ent",
+                    "description": "- The entity to be removed.",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 99,
+            "description": "Calls the entity.update() method on all entities. Removes dead entities. Typically called after a player has resolved their actions.",
+            "itemtype": "method",
+            "name": "update",
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 115,
+            "description": "Resets this entityManager.",
+            "itemtype": "method",
+            "name": "reset",
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 124,
+            "description": "Sets the size of the map to manage entities within.",
+            "itemtype": "method",
+            "name": "setSize",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- Width of current map in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height of current map in tiles.",
+                    "type": "Number"
+                }
+            ],
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity-manager.js",
+            "line": 134,
+            "description": "Loads Entity data from an array of strings.",
+            "itemtype": "method",
+            "name": "loadEntitiesFromArrayString",
+            "params": [
+                {
+                    "name": "mapData",
+                    "description": "- The array of strings to load.",
+                    "type": "Array"
+                },
+                {
+                    "name": "charToType",
+                    "description": "- An object mapping string characters to Entity types (see Entity.Types[type]). Characters in mapData not in charToType are ignored.",
+                    "type": "Object"
+                },
+                {
+                    "name": "replaceCurrentEntities",
+                    "description": "- If true current entities at positons of entities being added will be removed. Otherwise new entities at occupied positions will be skipped.",
+                    "type": "Bool",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "example": [
+                "\n\n           // 'P' will be ignored and a floor tile will be placed at that position\n           var mapData = [\n               '####',\n               '#..#',\n               '#.Z#',\n               '####',\n           ],\n           charToType = {\n               'Z': 'zombie'\n           };\n\n           entityManager.loadTilesFromArrayString(mapData, charToType);\n"
+            ],
+            "class": "EntityManager"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 32,
+            "description": "Game instance this object is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 39,
+            "description": "The type of entity this is.\nWhen created this object is merged with the value of Entity.Types[type].",
+            "itemtype": "property",
+            "name": "type",
+            "type": "String",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 47,
+            "description": "Called when the entity is first created. Intended to be assigned by Entity.Types.",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 55,
+            "description": "Name used when referencing or describing this entity.\nUsed in console messages.",
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 63,
+            "description": "The x map tile coord of this entity.",
+            "itemtype": "property",
+            "name": "x",
+            "type": "Number",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 70,
+            "description": "The y map tile coord of this entity.",
+            "itemtype": "property",
+            "name": "y",
+            "type": "Number",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 77,
+            "description": "The character displayed when rendering this entity.",
+            "itemtype": "property",
+            "name": "char",
+            "type": "String",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 84,
+            "description": "The color of the character displayed when rendering this entity. Not rendered if false.",
+            "itemtype": "property",
+            "name": "color",
+            "type": "String|bool",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 91,
+            "description": "The background color the character displayed when rendering this entity. Not rendered if false.",
+            "itemtype": "property",
+            "name": "bgColor",
+            "type": "String|bool",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 98,
+            "description": "Determines if this entity has been killed and needs to be removed.",
+            "itemtype": "property",
+            "name": "dead",
+            "type": "bool",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 105,
+            "description": "Determines if this entity can be pushed by the player.",
+            "itemtype": "property",
+            "name": "pushable",
+            "type": "bool",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 112,
+            "description": "Called after a player action has been resolved. Resolves this entities turn.",
+            "itemtype": "method",
+            "name": "update",
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 120,
+            "description": "Checks if an entity can move through a map tile.\nConvenience method for this.game.canMoveThrough()",
+            "itemtype": "method",
+            "name": "canMoveThrough",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The tile map x coord to check if this entity can move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The tile map y coord to check if this entity can move to.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 132,
+            "description": "Checks if an entity can move through and into a map tile and that tile is un-occupied.\nConvenience method for this.game.entityCanMoveTo()",
+            "itemtype": "method",
+            "name": "canMoveTo",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The tile map x coord to check if this entity can move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The tile map y coord to check if this entity can move to.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 144,
+            "description": "Changes the position of this entity on the map.\nConvenience method for this.game.entityMoveTo()\nthis.canMoveTo() and/or this.canMoveThrough() should always be checked before calling this.moveTo()",
+            "itemtype": "method",
+            "name": "moveTo",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The tile map x coord to move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The tile map y coord to move to.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 156,
+            "description": "Checks if a map tile can be seen through.\nConvenience method for this.game.entityCanSeeThrough()",
+            "itemtype": "method",
+            "name": "canSeeThrough",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The x map tile coord to check.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map tile coord to check.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Entity"
+        },
+        {
+            "file": "src/entity.js",
+            "line": 168,
+            "description": "Handles the behavior of a player or other entity attempting to move into the tile coord this entity is currently occupying.",
+            "itemtype": "method",
+            "name": "bump",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The player or entity attemplting to move into this entity's tile.",
+                    "type": "Entity"
+                }
+            ],
+            "class": "Entity"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 18,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 25,
+            "description": "Array2d storing fovROT visibility fovMap",
+            "itemtype": "property",
+            "name": "fovMap",
+            "type": "Array2d",
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 32,
+            "description": "Field Range of view 90, 180, or 360.",
+            "itemtype": "property",
+            "name": "fieldRange",
+            "type": "Number",
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 39,
+            "description": "Direction of fov (used as default) (not used for fieldRange 360) valid directions: ['up', 'down', 'left', 'right', 'up_left', 'up_right', 'down_left', 'down_right'].",
+            "itemtype": "property",
+            "name": "direction",
+            "type": "String",
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 46,
+            "description": "Max visible distance in tiles",
+            "itemtype": "property",
+            "name": "maxViewDistance",
+            "type": "Number",
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 53,
+            "description": "Validates a fieldRange value.",
+            "itemtype": "method",
+            "name": "validateFieldRange",
+            "params": [
+                {
+                    "name": "fieldRange",
+                    "description": "- Field Range of view valid values: `90`, `180`, or `360`.",
+                    "type": "Number"
+                }
+            ],
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 65,
+            "description": "Converts a string direction to an rot direction",
+            "itemtype": "method",
+            "name": "directionStringToArray",
+            "params": [
+                {
+                    "name": "direction",
+                    "description": "- Direction of fov (used as default) (not used for fieldRange 360) valid directions: ['up', 'down', 'left', 'right', 'up_left', 'up_right', 'down_left', 'down_right'].",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "[x, y]",
+                "type": "Array"
+            },
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 76,
+            "description": "Calculates the fovROT data relative to given coords.",
+            "itemtype": "method",
+            "name": "update",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map coordinate position to calculate FovROT from on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map coordinate position to calculate FovROT from on the y axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "[fieldRange",
+                    "description": "= this.fieldRange || 360] - Field Range of view 90, 180, or 360.",
+                    "type": "Number"
+                },
+                {
+                    "name": "[direction",
+                    "description": "= this.direction || 'up'] - Direction of fov (not used for fieldRange 360) valid directions: ['up', 'down', 'left', 'right', 'up_left', 'up_right', 'down_left', 'down_right'];.",
+                    "type": "String|ROT.DIRS[8].x"
+                },
+                {
+                    "name": "[maxViewDistance",
+                    "description": "= this.maxViewDistance] - Max visible distance in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "entity",
+                    "description": "- The entity to check tile visibility with.",
+                    "type": "Entity",
+                    "optional": true
+                }
+            ],
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 124,
+            "description": "Retrieves the visibility of the tile at given coords",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map coord position to get FovROT visibility from.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map coord position to get FovROT visibility from.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 135,
+            "description": "Checks if a tile blocks line of sight",
+            "itemtype": "method",
+            "name": "entityCanSeeThrough",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The entity to make a callback for.",
+                    "type": "Entity"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 148,
+            "description": "Sets the visibility of a checked map tile",
+            "itemtype": "method",
+            "name": "setMapTileVisible",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map coord position to set.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map coord position to set.",
+                    "type": "Number"
+                },
+                {
+                    "name": "range",
+                    "description": "- The distance from this fov origin.",
+                    "type": "Number"
+                },
+                {
+                    "name": "visibility",
+                    "description": "- The visibility of this tile coord.",
+                    "type": "Number"
+                }
+            ],
+            "class": "FovROT"
+        },
+        {
+            "file": "src/fov-rot.js",
+            "line": 160,
+            "description": "Sets the size of the map to mange fovROT within.",
+            "itemtype": "method",
+            "name": "setSize",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- Width of current map in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height of current map in tiles.",
+                    "type": "Number"
+                }
+            ],
+            "class": "FovROT"
+        },
+        {
+            "file": "src/game.js",
+            "line": 38,
+            "description": "The current map.",
+            "itemtype": "property",
+            "name": "map",
+            "type": "Array2d",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 45,
+            "description": "The current entityManager.",
+            "itemtype": "property",
+            "name": "entityManager",
+            "type": "EntityManager",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 52,
+            "description": "The current Lighting.",
+            "itemtype": "property",
+            "name": "lighting",
+            "type": "Lighting",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 59,
+            "description": "The current renderer.",
+            "itemtype": "property",
+            "name": "renderer",
+            "type": "Renderer",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 66,
+            "description": "The current console.",
+            "itemtype": "property",
+            "name": "console",
+            "type": "Console",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 73,
+            "description": "The current player.",
+            "itemtype": "property",
+            "name": "player",
+            "type": "Player",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 80,
+            "description": "The current input.",
+            "itemtype": "property",
+            "name": "input",
+            "type": "Input",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 87,
+            "description": "The current mouse.",
+            "itemtype": "property",
+            "name": "mouse",
+            "type": "Mouse",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 94,
+            "description": "Sets the size of the map resizing this.map and this.entityManager.",
+            "itemtype": "method",
+            "name": "setMapSize",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- Width in tilse to set map and entityManager to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height in tilse to set map and entityManager to.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 107,
+            "description": "Starts the game.",
+            "itemtype": "method",
+            "name": "start",
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 120,
+            "description": "Handles user input actions.",
+            "itemtype": "method",
+            "name": "onKeyAction",
+            "params": [
+                {
+                    "name": "action",
+                    "description": "- Action triggered by user input.",
+                    "type": "String"
+                }
+            ],
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 140,
+            "description": "Handles tile mouse click events.",
+            "itemtype": "method",
+            "name": "onClick",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Mouse x coord relative to window.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Mouse y coord relative to window.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 161,
+            "description": "Handles tile mouse hover events",
+            "itemtype": "method",
+            "name": "onHover",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Mouse x coord relative to window.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Mouse y coord relative to window.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 180,
+            "description": "Checks if an entity can move through a map tile.\nThis does NOT check for entities on the tile blocking movement.\nThis is where code for special cases changing an entity's ability to pass through a tile should be placed.\nThings like flying, swimming and ghosts moving through walls.",
+            "itemtype": "method",
+            "name": "entityCanMoveThrough",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The entity to check.",
+                    "type": "Entity"
+                },
+                {
+                    "name": "x",
+                    "description": "- The x map tile coord to check.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map tile coord to check.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 200,
+            "description": "Checks if an entity can move through and into a map tile and that tile is un-occupied.",
+            "itemtype": "method",
+            "name": "entityCanMoveTo",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The entity to check.",
+                    "type": "Entity"
+                },
+                {
+                    "name": "x",
+                    "description": "- The x map tile coord to check.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map tile coord to check.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 219,
+            "description": "Changes the position of an entity on the map.\nUpdates entity position in this.entityManager and calls tile.onEntityEnter\nthis.entityCanMoveTo() should always be checked before calling this.entityMoveTo",
+            "itemtype": "method",
+            "name": "entityMoveTo",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The entity to move.",
+                    "type": "Entity"
+                },
+                {
+                    "name": "x",
+                    "description": "- The tile map x coord to move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The tile map y coord to move to.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Game"
+        },
+        {
+            "file": "src/game.js",
+            "line": 236,
+            "description": "Checks if a map tile can be seen through.\nThis is where code for special cases like smoke, fog, x-ray vision should go.",
+            "itemtype": "method",
+            "name": "entityCanSeeThrough",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The x map tile coord to check.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map tile coord to check.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Game"
+        },
+        {
+            "file": "src/input.js",
+            "line": 36,
+            "description": "An object of key val pairs mapping keyCode to action",
+            "itemtype": "property",
+            "name": "bindings",
+            "type": "Object",
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 43,
+            "description": "Function called when a key bound to an action is pressed (function(action){}).",
+            "itemtype": "property",
+            "name": "onKeyAction",
+            "type": "Function",
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 50,
+            "description": "Bind a user action to a key input",
+            "itemtype": "method",
+            "name": "bindAction",
+            "params": [
+                {
+                    "name": "action",
+                    "description": "- The action to bind the key to.",
+                    "type": "String"
+                },
+                {
+                    "name": "keyName",
+                    "description": "- The keyname to bind the action to. @see Input.Keys",
+                    "type": "String"
+                }
+            ],
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 61,
+            "description": "Converts a user input key code to an action bound to that key or false if none is bound.",
+            "itemtype": "method",
+            "name": "getActionFromKeyCode",
+            "params": [
+                {
+                    "name": "keyCode",
+                    "description": "- The key code to retrieve an action bound to.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "String|bool The action bound to the keyCode or false."
+            },
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 75,
+            "description": "Loads multiple action key bindings",
+            "itemtype": "method",
+            "name": "addBindings",
+            "params": [
+                {
+                    "name": "bindings",
+                    "description": "- An object of key val pairs mapping an action to an array of keys that trigger it. Input.Keys is used to convert input key string names to key codes.",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "action1",
+                            "description": "Input keys mapped to action1. ['A', 'B', ...]",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "action2",
+                            "description": "Input keys mapped to action2. ['X', 'Y', ...]",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "...",
+                            "description": ""
+                        }
+                    ]
+                }
+            ],
+            "example": [
+                "\n           //bindings param example:\n           {\n               up: ['UP_ARROW'],\n               down: ['DOWN_ARROW'],\n               left: ['LEFT_ARROW'],\n               right: ['RIGHT_ARROW'],\n           }"
+            ],
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 101,
+            "description": "Event handler for document.addEventListener('keydown', this). Triggered when a key is pressed.\nIf an action is bound to the key pressed, false is returned to cancel the default browser behavior of the keypress.\nIf an action is not bound to the key pressed, true is returned allowing the default browser behavior of the keypress to function.",
+            "itemtype": "method",
+            "name": "handleEvent",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "- The onkeydown event.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "bool"
+            },
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 128,
+            "description": "Binds event listener for document keydown event.",
+            "itemtype": "method",
+            "name": "startListening",
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 136,
+            "description": "Unbinds document keydown event listener",
+            "itemtype": "method",
+            "name": "stopListening",
+            "class": "Input"
+        },
+        {
+            "file": "src/input.js",
+            "line": 145,
+            "static": 1,
+            "itemtype": "property",
+            "name": "Keys",
+            "type": "{Object}",
+            "class": "Input"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 42,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 49,
+            "description": "Array2d storing Lighting data.",
+            "itemtype": "property",
+            "name": "lightingMap",
+            "type": "Array2d",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 56,
+            "description": "Reflectivity of wall tiles.",
+            "itemtype": "property",
+            "name": "defaultWallReflectivity",
+            "type": "Number",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 63,
+            "description": "Reflectivity of floor tiles.",
+            "itemtype": "property",
+            "name": "defaultFloorReflectivity",
+            "type": "Number",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 70,
+            "description": "Ambient light",
+            "itemtype": "property",
+            "name": "ambientLight",
+            "type": "Array",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 77,
+            "description": "ROT.FOV instance",
+            "itemtype": "property",
+            "name": "_fov",
+            "access": "private",
+            "tagname": "",
+            "type": "ROT.FOV",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 85,
+            "description": "ROT.Lighting instance",
+            "itemtype": "property",
+            "name": "_lighting",
+            "access": "private",
+            "tagname": "",
+            "type": "ROT.Lighting",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 93,
+            "description": "Calculates the Lighting data relative to given coords;",
+            "itemtype": "method",
+            "name": "update",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 101,
+            "description": "Shades tileData using lighting.",
+            "itemtype": "method",
+            "name": "shadeTile",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The x map coordinate to shade.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map coordinate to shade.",
+                    "type": "Number"
+                },
+                {
+                    "name": "tileData",
+                    "description": "- The tileData object to shade.",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "char",
+                            "description": "- The character to be rendered.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "color",
+                            "description": "- The color of character to be rendered.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "bgColor",
+                            "description": "- The background color of the tile to be rendered.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 149,
+            "description": "Retrieves the visibility of the tile at given coords",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map coordinate position to get Lighting visibility from on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map coordinate position to get Lighting visibility from on the y axis.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 159,
+            "description": "Set a light position and color",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The map coordinate position to set lightin on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The map coordinate position to set lightin on the y axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "r",
+                    "description": "- Red.",
+                    "type": "Number"
+                },
+                {
+                    "name": "g",
+                    "description": "- Green.",
+                    "type": "Number"
+                },
+                {
+                    "name": "b",
+                    "description": "- Blue.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 172,
+            "itemtype": "method",
+            "name": "remove",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 179,
+            "description": "Returns the reflectivity value of a tile",
+            "itemtype": "method",
+            "name": "getTileReflectivity",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 201,
+            "description": "Checks if a tile blocks line of sight",
+            "itemtype": "method",
+            "name": "checkVisible",
+            "class": "Lighting"
+        },
+        {
+            "file": "src/lighting-rot.js",
+            "line": 210,
+            "description": "Sets the size of the map to mange Lighting within.",
+            "itemtype": "method",
+            "name": "setSize",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "- Width of current map in tiles.",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "- Height of current map in tiles.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Lighting"
+        },
+        {
+            "file": "src/map.js",
+            "line": 18,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Map"
+        },
+        {
+            "file": "src/map.js",
+            "line": 25,
+            "description": "Sets a value at given coords.",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Position on the x axis of the value being set.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Position on the y axis of the value being set.",
+                    "type": "Number"
+                },
+                {
+                    "name": "tile",
+                    "description": "- The Tile being set at given coords. If Tile is a string a new tile will be created using the string as the Tile Type (see Tile.Types[type]).",
+                    "type": "Tile|String"
+                }
+            ],
+            "return": {
+                "description": "the tile added",
+                "type": "Tile"
+            },
+            "class": "Map"
+        },
+        {
+            "file": "src/map.js",
+            "line": 44,
+            "description": "Checks if a map tile can be seen through.",
+            "itemtype": "method",
+            "name": "canSeeThroughTile",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The x map tile coord to check.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map tile coord to check.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Map"
+        },
+        {
+            "file": "src/map.js",
+            "line": 56,
+            "description": "Checks if a map tile can be moved through.",
+            "itemtype": "method",
+            "name": "canMoveThroughTile",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The x map tile coord to check.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The y map tile coord to check.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Map"
+        },
+        {
+            "file": "src/map.js",
+            "line": 68,
+            "description": "Loads Tile data from an array of strings",
+            "itemtype": "method",
+            "name": "loadTilesFromArrayString",
+            "params": [
+                {
+                    "name": "mapData",
+                    "description": "- The array of strings to load.",
+                    "type": "Array"
+                },
+                {
+                    "name": "charToType",
+                    "description": "- An object mapping string characters to Tile types (see Tile.Types[type]).",
+                    "type": "Object"
+                },
+                {
+                    "name": "defaultTileType",
+                    "description": "- The tile type to use if a character is not in charToType. This is used to allow characters representing entites or non-tile objects to be included in the mapData.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "example": [
+                "\n\n           // 'P' will be ignored and a floor tile will be placed at that position\n           var mapData = [\n               '####',\n               '#..#',\n               '#.P#',\n               '####',\n           ],\n\n           charToType = {\n               '#': 'wall',\n               '.': 'floor'\n           },\n           defaultTileType = 'floor';\n\n           map.loadTilesFromArrayString(mapData, charToType, defaultTileType);\n"
+            ],
+            "class": "Map"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 19,
+            "description": "A function to handle tile mouse click events.",
+            "itemtype": "method",
+            "name": "onClick",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Mouse x coord relative to window.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Mouse y coord relative to window.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Mouse"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 27,
+            "description": "A function to handle tile mouse hover events",
+            "itemtype": "method",
+            "name": "onHover",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Mouse x coord relative to window.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Mouse y coord relative to window.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Mouse"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 35,
+            "description": "The dom element being rendered to and listened to for mouse events.",
+            "itemtype": "property",
+            "name": "_boundElement",
+            "access": "protected",
+            "tagname": "",
+            "type": "HTMLElement",
+            "class": "Mouse"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 43,
+            "description": "Hander for mouse events",
+            "itemtype": "method",
+            "name": "handleEvent",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "- mouse event",
+                    "type": "Event"
+                }
+            ],
+            "class": "Mouse"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 63,
+            "description": "Hander for mouse move events",
+            "itemtype": "method",
+            "name": "mouseMove",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "- mouse event",
+                    "type": "Event"
+                }
+            ],
+            "class": "Mouse"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 75,
+            "description": "Binds event listener for mouse events.",
+            "itemtype": "method",
+            "name": "startListening",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "- The dom element being rendered to.",
+                    "type": "HTMLElement"
+                }
+            ],
+            "class": "Mouse"
+        },
+        {
+            "file": "src/mouse.js",
+            "line": 93,
+            "description": "Unbinds event listener for mouse events.",
+            "itemtype": "method",
+            "name": "stopListening",
+            "class": "Mouse"
+        },
+        {
+            "file": "src/player.js",
+            "line": 31,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 38,
+            "description": "FovRot instance representing this entity's vision.",
+            "itemtype": "property",
+            "name": "fov",
+            "type": "FovROT",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 45,
+            "description": "Name used when referencing describing this player.\nUsed in console messages.",
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 53,
+            "description": "The map tile coordinate position of the player on the x axis.",
+            "itemtype": "property",
+            "name": "x",
+            "type": "Number",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 60,
+            "description": "The map tile coordinate position of the player on the y axis.",
+            "itemtype": "property",
+            "name": "y",
+            "type": "Number",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 67,
+            "description": "The character displayed when rendering this player.",
+            "itemtype": "property",
+            "name": "char",
+            "type": "String",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 74,
+            "description": "The color of the character displayed when rendering this player.",
+            "itemtype": "property",
+            "name": "color",
+            "type": "String|bool",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 81,
+            "description": "The background color the character displayed when rendering this player.",
+            "itemtype": "property",
+            "name": "bgColor",
+            "type": "String|bool",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 88,
+            "description": "Field Range of this.fov (90, 180, or 360)",
+            "itemtype": "property",
+            "name": "fovFieldRange",
+            "type": "Number",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 95,
+            "description": "Direction of fov (not used for fieldRange 360) valid directions: ['up', 'down', 'left', 'right', 'up_left', 'up_right', 'down_left', 'down_right'].",
+            "itemtype": "property",
+            "name": "fovDirection",
+            "type": "String",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 102,
+            "description": "Max visible distance in tiles",
+            "itemtype": "property",
+            "name": "fovMaxViewDistance",
+            "type": "Number",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 109,
+            "description": "Determines if the player has been killed.",
+            "itemtype": "property",
+            "name": "dead",
+            "type": "bool",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 116,
+            "description": "Updates this.fov",
+            "itemtype": "method",
+            "name": "updateFov",
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 129,
+            "description": "Checks if this entity can move to the specified map tile",
+            "itemtype": "method",
+            "name": "canMoveTo",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The tile map x coord to check if this entity can move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The tile map y coord to check if this entity can move to.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Bool"
+            },
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 140,
+            "description": "Changes the position of this entity on the map.\nthis.canMoveTo() should always be checked before calling this.moveTo",
+            "itemtype": "method",
+            "name": "moveTo",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- The tile map x coord to move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- The tile map y coord to move to.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 151,
+            "description": "Called when user key is pressed with action of key pressed as an arg.",
+            "itemtype": "method",
+            "name": "update",
+            "params": [
+                {
+                    "name": "action",
+                    "description": "- action bound to key pressed by user",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true if action was taken.",
+                "type": "Bool"
+            },
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 174,
+            "description": "Move action.",
+            "itemtype": "method",
+            "name": "move",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Map tile cood to move to.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Map tile cood to move to.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "true if action was taken.",
+                "type": "Bool"
+            },
+            "class": "Player"
+        },
+        {
+            "file": "src/player.js",
+            "line": 201,
+            "description": "Wait action.",
+            "itemtype": "method",
+            "name": "wait",
+            "class": "Player"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 27,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 34,
+            "description": "Canvas element this renderer draws to.",
+            "itemtype": "property",
+            "name": "canvas",
+            "type": "HTMLCanvasElement",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 41,
+            "description": "Drawing context of this.canvas",
+            "itemtype": "property",
+            "name": "ctx",
+            "type": "CanvasRenderingContext2D",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 48,
+            "description": "Canvas element this renderer draws to as a buffer for this.canvas.",
+            "itemtype": "property",
+            "name": "buffer",
+            "type": "HTMLCanvasElement",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 55,
+            "description": "Drawing context of this.buffer",
+            "itemtype": "property",
+            "name": "bufferCtx",
+            "type": "CanvasRenderingContext2D",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 62,
+            "description": "Background color of map view.",
+            "itemtype": "property",
+            "name": "bgColor",
+            "type": "String",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 69,
+            "description": "Color overlayed when mouse is over a tile.",
+            "itemtype": "property",
+            "name": "hoverColor",
+            "type": "String",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 76,
+            "description": "Alpha value applied to non-visible tiles",
+            "itemtype": "property",
+            "name": "nonVisibleTileAlpha",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 83,
+            "description": "Size of each tile is drawn.",
+            "itemtype": "property",
+            "name": "tileSize",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 90,
+            "description": "Font used to render tile characters.",
+            "itemtype": "property",
+            "name": "font",
+            "type": "String",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 97,
+            "description": "Device pixel ratio for high dpi screens.",
+            "itemtype": "property",
+            "name": "devicePixelRatio",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 104,
+            "description": "Map view width in tiles.",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 111,
+            "description": "Map view height in tiles.",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 118,
+            "description": "The x distance in tiles from center to upper left corner of map view.",
+            "itemtype": "property",
+            "name": "offsetX",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 125,
+            "description": "The y distance in tiles from center to upper left corner of map view.",
+            "itemtype": "property",
+            "name": "offsetY",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 132,
+            "description": "The map tile x coord of the tile drawn in the upper left corner of the map view.",
+            "itemtype": "property",
+            "name": "originX",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 139,
+            "description": "The map tile y coord of the tile drawn in the upper left corner of the map view.",
+            "itemtype": "property",
+            "name": "originY",
+            "type": "Number",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 146,
+            "description": "The map tile x coord of the tile currently being hovered by the mouse.",
+            "itemtype": "property",
+            "name": "hoveredTileX",
+            "type": "Number|Null",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 153,
+            "description": "The map tile y coord of the tile currently being hovered by the mouse.",
+            "itemtype": "property",
+            "name": "hoveredTileY",
+            "type": "Number|Null",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 160,
+            "description": "Resizes canvas elements to match the tileSize and map view with/height. Also adjusts behavior to accomodate high pixel density screens.",
+            "itemtype": "method",
+            "name": "resize",
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 201,
+            "description": "Converts mouse pixel coords to map tile coords. Mouse pixel coords must be relative to the current window.",
+            "itemtype": "method",
+            "name": "mouseToTileCoords",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Mouse pixel x coord.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Mouse pixel y coord.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "{x: 0, y: 0}",
+                "type": "Object|False"
+            },
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 215,
+            "description": "Converts map view pixel coords to map tile coords. Map view pixel coords are relative to the top left of the canvas element.",
+            "itemtype": "method",
+            "name": "pixelToTileCoords",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Map view pixel x coord.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Map view pixel y coord.",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "{x: 0, y: 0}",
+                "type": "Object|False"
+            },
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 229,
+            "description": "Sets the center map tile of the view.",
+            "itemtype": "method",
+            "name": "setCenter",
+            "params": [
+                {
+                    "name": "centerX",
+                    "description": "- Center map tile x coord.",
+                    "type": "Number"
+                },
+                {
+                    "name": "centerY",
+                    "description": "- Center map tile y coord.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 241,
+            "description": "Draws map and entity tiles. All parameters will fall back to this.game.<param> if not provided.",
+            "itemtype": "method",
+            "name": "draw",
+            "params": [
+                {
+                    "name": "map",
+                    "description": "- Map object to draw.",
+                    "type": "Map",
+                    "optional": true
+                },
+                {
+                    "name": "entityManager",
+                    "description": "- EntityManager object to draw entities from.",
+                    "type": "EntityManager",
+                    "optional": true
+                },
+                {
+                    "name": "player",
+                    "description": "- Player object to draw.",
+                    "type": "Player",
+                    "optional": true
+                },
+                {
+                    "name": "fov",
+                    "description": "- Fov object to check visibility of tiles.",
+                    "type": "Fov",
+                    "optional": true
+                },
+                {
+                    "name": "lighting",
+                    "description": "- Lighting object to shade map tiles with.",
+                    "type": "Lighting",
+                    "optional": true
+                }
+            ],
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 267,
+            "description": "Draws map tiles",
+            "itemtype": "method",
+            "name": "drawMap",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "- Canvas context to draw to",
+                    "type": "CanvasRenderingContext2D"
+                },
+                {
+                    "name": "map",
+                    "description": "- Map object to draw.",
+                    "type": "Map"
+                },
+                {
+                    "name": "fov",
+                    "description": "- Fov object to check visibility of tiles.",
+                    "type": "Fov",
+                    "optional": true
+                },
+                {
+                    "name": "lighting",
+                    "description": "- Lighting object to shade map tiles with.",
+                    "type": "Lighting",
+                    "optional": true
+                }
+            ],
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 335,
+            "description": "Draws entity tiles",
+            "itemtype": "method",
+            "name": "drawEntities",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "- Canvas context to draw to.",
+                    "type": "CanvasRenderingContext2D"
+                },
+                {
+                    "name": "entityManager",
+                    "description": "- EntityManager object to draw entities from.",
+                    "type": "EntityManager"
+                },
+                {
+                    "name": "player",
+                    "description": "- Player object to draw.",
+                    "type": "Player",
+                    "optional": true
+                },
+                {
+                    "name": "fov",
+                    "description": "- Fov object to check visibility of tiles.",
+                    "type": "FOV",
+                    "optional": true
+                }
+            ],
+            "class": "Renderer"
+        },
+        {
+            "file": "src/renderer.js",
+            "line": 388,
+            "description": "Draws a single tile to the map view.",
+            "itemtype": "method",
+            "name": "drawTile",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "- Map tile coord on the x axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Map tile coord on the y axis.",
+                    "type": "Number"
+                },
+                {
+                    "name": "tileData",
+                    "description": "- Object containing tile draw settings.",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "char",
+                            "description": "- The character to draw.",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "color",
+                            "description": "- The color of the character displayed.",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "bgColor",
+                            "description": "- The background color of the tile.",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                },
+                {
+                    "name": "ctx",
+                    "description": "- The canvas context to draw to.",
+                    "type": "CanvasRenderingContext2D",
+                    "optional": true,
+                    "optdefault": "this.bufferCtx"
+                }
+            ],
+            "class": "Renderer"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 34,
+            "description": "Game instance this obj is attached to.",
+            "itemtype": "property",
+            "name": "game",
+            "type": "Game",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 42,
+            "description": "The type of entity this is.\nWhen created this object is merged with the value of Tile.Types[type].",
+            "itemtype": "property",
+            "name": "type",
+            "type": "Object",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 50,
+            "description": "If this tile has been explored by the player.",
+            "itemtype": "property",
+            "name": "explored",
+            "type": "Bool",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 57,
+            "description": "If entities can move through this tile.",
+            "itemtype": "property",
+            "name": "passable",
+            "type": "Bool",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 64,
+            "description": "If this tile blocks line of sight.",
+            "itemtype": "property",
+            "name": "passable",
+            "type": "Bool",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 71,
+            "description": "The tile map coordinate position on the x axis.",
+            "itemtype": "property",
+            "name": "x",
+            "type": "Number",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 78,
+            "description": "The tile map coordinate position on the y axis.",
+            "itemtype": "property",
+            "name": "y",
+            "type": "Number",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 85,
+            "description": "The character displayed when rendering this tile.",
+            "itemtype": "property",
+            "name": "char",
+            "type": "String",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 92,
+            "description": "The color of the character displayed when rendering this tile. Not rendered if false.",
+            "itemtype": "property",
+            "name": "color",
+            "type": "String|bool",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 99,
+            "description": "The background color the character displayed when rendering this tile. Not rendered if false.",
+            "itemtype": "property",
+            "name": "bgColor",
+            "type": "String|bool",
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 106,
+            "description": "Handles the behavior of a player or other entity attempting to move into this tile. Only used if this.passable = false.",
+            "itemtype": "method",
+            "name": "bump",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The player or entity attemplting to move into this tile.",
+                    "type": "Object"
+                }
+            ],
+            "class": "Tile"
+        },
+        {
+            "file": "src/tile.js",
+            "line": 119,
+            "description": "Handles entity entering a new tile.\nCalled after chaning the entities position",
+            "itemtype": "method",
+            "name": "onEntityEnterTile",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "- The entity entering the tile",
+                    "type": "Entity"
+                },
+                {
+                    "name": "x",
+                    "description": "- Map tile coord.",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "- Map tile coord.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Tile"
+        },
+        {
+            "file": "src/util.js",
+            "line": 25,
+            "description": "Maps directions to coord offsets\n( keys of Util.DIRECTIONS_TO_OFFSETS)",
+            "itemtype": "property",
+            "name": "DIRECTIONS",
+            "type": "Array",
+            "static": 1,
+            "final": 1,
+            "example": [
+                "\n    `\n     [\n         'up',\n         'up_right',\n         'right',\n         'down_right',\n         'down',\n         'down_left',\n         'left',\n         'up_left',\n     ]\n    `"
+            ],
+            "class": "Util"
+        },
+        {
+            "file": "src/util.js",
+            "line": 48,
+            "description": "Maps direction names to coord offsets.",
+            "itemtype": "property",
+            "name": "DIRECTIONS_TO_OFFSETS",
+            "type": "Object",
+            "static": 1,
+            "final": 1,
+            "example": [
+                "\n    `{\n       up:           {x:  0, y: -1},\n       up_right:     {x:  1, y: -1},\n       right:        {x:  1, y:  0},\n       down_right:   {x:  1, y:  1},\n       down:         {x:  0, y:  1},\n       down_left:    {x: -1, y:  1},\n       left:         {x: -1, y:  0},\n       up_left:      {x: -1, y: -1}\n    }`"
+            ],
+            "class": "Util"
+        },
+        {
+            "file": "src/util.js",
+            "line": 68,
+            "description": "Merges settings with default values.",
+            "itemtype": "method",
+            "name": "mergeDefaults",
+            "static": 1,
+            "params": [
+                {
+                    "name": "defaults",
+                    "description": "- Default values to merge with.",
+                    "type": "Object"
+                },
+                {
+                    "name": "settings",
+                    "description": "- Settings to merge with default values.",
+                    "type": "Object"
+                }
+            ],
+            "class": "Util"
+        },
+        {
+            "file": "src/util.js",
+            "line": 87,
+            "description": "Gets the adjacent coords of a given x, y, direction.",
+            "itemtype": "method",
+            "name": "getAdjacentTileCoordsFromDirection",
+            "static": 1,
+            "params": [
+                {
+                    "name": "direction",
+                    "description": "- valid directions: [`up`, `down`, `left`, `right`, `up_left`, `up_right`, `down_left`, `down_right`];.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`{x: 0, y: 0}`",
+                "type": "Object"
+            },
+            "class": "Util"
+        }
+    ],
+    "warnings": []
+}

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/player.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array2d.html">Array2d</a></li>
+            
+                <li><a href="../classes/Console.html">Console</a></li>
+            
+                <li><a href="../classes/Entity.html">Entity</a></li>
+            
+                <li><a href="../classes/Entity.Types.html">Entity.Types</a></li>
+            
+                <li><a href="../classes/EntityManager.html">EntityManager</a></li>
+            
+                <li><a href="../classes/FovROT.html">FovROT</a></li>
+            
+                <li><a href="../classes/Game.html">Game</a></li>
+            
+                <li><a href="../classes/Input.html">Input</a></li>
+            
+                <li><a href="../classes/Lighting.html">Lighting</a></li>
+            
+                <li><a href="../classes/Map.html">Map</a></li>
+            
+                <li><a href="../classes/Mouse.html">Mouse</a></li>
+            
+                <li><a href="../classes/Player.html">Player</a></li>
+            
+                <li><a href="../classes/Renderer.html">Renderer</a></li>
+            
+                <li><a href="../classes/Tile.html">Tile</a></li>
+            
+                <li><a href="../classes/Tile.Types.html">Tile.Types</a></li>
+            
+                <li><a href="../classes/Util.html">Util</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/player.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+(function(root) {
+    &#x27;use strict&#x27;;
+
+    /**
+    * Represents the player.
+    * Very similar to Entity
+    * Handles functionality triggered by keyboard and mouse Input
+    * @class Player
+    * @constructor
+    * @param {Game} game - game instance this obj is attached to
+    */
+    var Player = function Player(game) {
+        this.game = game;
+        this.fov = new RL.FovROT(game);
+
+        // modify fov to set tiles as explored
+        this.fov.setMapTileVisible = function(x, y, range, visibility){
+            if(visibility){
+                var tile = this.game.map.get(x, y);
+                if(tile){
+                    tile.explored = true;
+                }
+            }
+            this.fovMap.set(x, y, visibility);
+        };
+    };
+
+    Player.prototype = {
+        constructor: Player,
+
+        /**
+        * Game instance this obj is attached to.
+        * @property game
+        * @type Game
+        */
+        game: null,
+
+        /**
+        * FovRot instance representing this entity&#x27;s vision.
+        * @property fov
+        * @type FovROT
+        */
+        fov: null,
+
+        /**
+        * Name used when referencing describing this player.
+        * Used in console messages.
+        * @property name
+        * @type String
+        */
+        name: &#x27;Player&#x27;,
+
+        /**
+        * The map tile coordinate position of the player on the x axis.
+        * @property x
+        * @type Number
+        */
+        x: null,
+
+        /**
+        * The map tile coordinate position of the player on the y axis.
+        * @property y
+        * @type Number
+        */
+        y: null,
+
+        /**
+        * The character displayed when rendering this player.
+        * @property char
+        * @type String
+        */
+        char: &#x27;@&#x27;,
+
+        /**
+        * The color of the character displayed when rendering this player.
+        * @property color
+        * @type String|bool
+        */
+        color: &#x27;#fff&#x27;,
+
+        /**
+        * The background color the character displayed when rendering this player.
+        * @property bgColor
+        * @type String|bool
+        */
+        bgColor: false,
+
+        /**
+        * Field Range of this.fov (90, 180, or 360)
+        * @property fovFieldRange
+        * @type Number
+        */
+        fovFieldRange: 360,
+
+        /**
+        * Direction of fov (not used for fieldRange 360) valid directions: [&#x27;up&#x27;, &#x27;down&#x27;, &#x27;left&#x27;, &#x27;right&#x27;, &#x27;up_left&#x27;, &#x27;up_right&#x27;, &#x27;down_left&#x27;, &#x27;down_right&#x27;].
+        * @property fovDirection
+        * @type String
+        */
+        fovDirection: &#x27;up&#x27;,
+
+        /**
+        * Max visible distance in tiles
+        * @property fovMaxViewDistance
+        * @type Number
+        */
+        fovMaxViewDistance: 10,
+
+        /**
+        * Determines if the player has been killed.
+        * @property dead
+        * @type bool
+        */
+        dead: false,
+
+        /**
+        * Updates this.fov
+        * @method updateFov
+        */
+        updateFov: function(){
+            var x = this.x,
+                y = this.y,
+                fieldRange = this.fovFieldRange,
+                direction = this.fovDirection,
+                maxViewDistance = this.fovMaxViewDistance;
+            this.fov.update(x, y, fieldRange, direction, maxViewDistance, this);
+        },
+
+        /**
+        * Checks if this entity can move to the specified map tile
+        * @method canMoveTo
+        * @param {Number} x - The tile map x coord to check if this entity can move to.
+        * @param {Number} y - The tile map y coord to check if this entity can move to.
+        * @return {Bool}
+        */
+        canMoveTo: function(x, y){
+            return this.game.entityCanMoveTo(this, x, y);
+        },
+
+        /**
+        * Changes the position of this entity on the map.
+        * this.canMoveTo() should always be checked before calling this.moveTo
+        * @method moveTo
+        * @param {Number} x - The tile map x coord to move to.
+        * @param {Number} y - The tile map y coord to move to.
+        */
+        moveTo: function(x, y) {
+            return this.game.entityMoveTo(this, x, y);
+        },
+
+        /**
+        * Called when user key is pressed with action of key pressed as an arg.
+        * @method update
+        * @param {String} action - action bound to key pressed by user
+        * @return {Bool} true if action was taken.
+        */
+        update: function(action) {
+            // if the action is a direction
+            if(RL.Util.DIRECTIONS.indexOf(action) !== -1){
+                var offsetCoord = RL.Util.getOffsetCoordsFromDirection(action),
+                    moveToX = this.x + offsetCoord.x,
+                    moveToY = this.y + offsetCoord.y;
+                return this.move(moveToX, moveToY);
+            }
+
+            if(action === &#x27;wait&#x27;){
+                this.wait();
+                return true;
+            }
+
+            return false;
+        },
+
+        /**
+        * Move action.
+        * @method move
+        * @param {Number} x - Map tile cood to move to.
+        * @param {Number} y - Map tile cood to move to.
+        * @return {Bool} true if action was taken.
+        */
+        move: function(x, y){
+            if(this.canMoveTo(x, y)){
+                this.moveTo(x, y);
+                return true;
+            } else {
+                // entity occupying target tile (if any)
+                var targetTileEnt = this.game.entityManager.get(x, y);
+                // if already occupied
+                if(targetTileEnt){
+                    this.game.console.log(&#x27;Excuse me &lt;strong&gt;Mr.&#x27; + targetTileEnt.name + &#x27;&lt;/strong&gt;, you appear to be in the way.&#x27;);
+                    return targetTileEnt.bump(this);
+                } else {
+                    // targeted tile (attempting to move into)
+                    var targetTile = this.game.map.get(x, y);
+                    return targetTile.bump(this);
+                }
+            }
+            return false;
+        },
+
+        /**
+        * Wait action.
+        * @method wait
+        */
+        wait: function(){
+            this.game.console.log(&#x27;You wait for a moment.&#x27;);
+        },
+
+    };
+
+    root.RL.Player = Player;
+
+}(this));
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
