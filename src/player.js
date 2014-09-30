@@ -69,7 +69,7 @@
         * @property char
         * @type String
         */
-        char: '@',
+        char: '☺',
 
         /**
         * The color of the character displayed when rendering this player.

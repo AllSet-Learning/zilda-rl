@@ -158,7 +158,7 @@
         },
         wall: {
             name: 'Wall',
-            char: '#',
+            char: '▧',
             color: '#777',
             bgColor: '#2e2e2e',
             passable: false,
@@ -174,7 +174,7 @@
         },
         door: {
             name: 'Door',
-            char: '+',
+            char: '▣',
             color: 'yellow',
             bgColor: '#222',
             passable: false,

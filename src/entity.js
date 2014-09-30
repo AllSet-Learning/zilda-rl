@@ -219,21 +219,28 @@
     Entity.Types = {
         zombie: {
             name: 'Zombie',
-            char: 'z',
+            char: '☃',
             color: 'red',
             bgColor: false,
             pushable: false,
         },
         statue: {
             name: 'Statue',
-            char: 's',
+            char: '♞',
             color: '#808080',
             bgColor: '#222',
             pushable: true
         },
-        chinese: {
-        	name: 'Chinese',
+        zhong: {
+        	name: 'Zhong',
         	char: '中',
+        	color: 'blue',
+        	bgColor: '#222',
+        	pushable: true
+        },        
+        wen: {
+        	name: 'Wen',
+        	char: '文',
         	color: 'blue',
         	bgColor: '#222',
         	pushable: true
