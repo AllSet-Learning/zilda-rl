@@ -230,6 +230,13 @@
             color: '#808080',
             bgColor: '#222',
             pushable: true
+        },
+        chinese: {
+        	name: 'Chinese',
+        	char: '中',
+        	color: 'blue',
+        	bgColor: '#222',
+        	pushable: true
         }
     };
 
