@@ -64,6 +64,7 @@ game.player.y = 3;
 
 game.lighting.set(20, 1, 0, 255, 0);
 game.lighting.set(7, 14, 0, 0, 255);
+game.lighting.set(20, 12, 255, 255, 255);
 
 // make the view a little smaller
 game.renderer.resize(10, 14);
