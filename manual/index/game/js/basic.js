@@ -11,9 +11,10 @@ RL.Entity.Types.next = {
 			// if bumping entity is the player
 			if(entity === this.game.player){
 				// @TODO combat logic here
-				this.game.console.log('You are entering next level');
 				mapData = mapData1;
+				game = new RL.Game();
 				gameReady();
+				game.console.log('You are entering next level');
 				game.start();
 				
 			}
@@ -118,19 +119,19 @@ function gameReady() {
 
 	// make the view a little smaller
 	game.renderer.resize(10, 14);
+
+	// get existing DOM elements
+	var mapContainerEl = document.getElementById('example-map-container');
+	var consoleContainerEl = document.getElementById('example-console-container');
+
+	// empty existing elements
+	mapContainerEl.innerHTML = '';
+	consoleContainerEl.innerHTML = '';
+
+	// append elements created by the game to the DOM
+	mapContainerEl.appendChild(game.renderer.canvas);
+	consoleContainerEl.appendChild(game.console.el);
 };
-
-// get existing DOM elements
-var mapContainerEl = document.getElementById('example-map-container');
-var consoleContainerEl = document.getElementById('example-console-container');
-
-// empty existing elements
-mapContainerEl.innerHTML = '';
-consoleContainerEl.innerHTML = '';
-
-// append elements created by the game to the DOM
-mapContainerEl.appendChild(game.renderer.canvas);
-consoleContainerEl.appendChild(game.console.el);
 
 game.console.log('The game starts.');
 // start the game
