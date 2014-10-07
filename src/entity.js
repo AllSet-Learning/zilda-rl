@@ -222,8 +222,24 @@
             char: '☃',
             color: 'red',
             bgColor: false,
-            pushable: false,
+			bump: function(entity){
+				// if bumping entity is the player
+				if(entity === this.game.player){
+					// @TODO combat logic here
+					this.game.console.log('You killed Zombie');
+					this.dead = true;
+					return true;
+				}
+				return false;
+			}
         },
+		next: {
+			name: 'next',
+			char: ',',
+			color: 'white',
+			bgColor: false,
+			pushable: false
+		},
         statue: {
             name: 'Statue',
             char: '♞',
