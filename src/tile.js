@@ -156,6 +156,70 @@
             passable: true,
             blocksLos: false
         },
+        verifier1: {
+        	name: 'Verifier1',
+        	char: 'X',
+            color: '#444',
+            bgColor: '#222',
+            passable: true,
+            blocksLos: false,
+			onEntityEnter: function(entity){
+				if(entity.name==='first'){
+					return true;
+				} else {
+                    return false;
+                }
+			}
+            
+        },
+        verifier2: {
+            name: 'Verifier2',
+            char: 'X',
+            color: '#444',
+            bgColor: '#222',
+            passable: true,
+            blocksLos: false,
+            onEntityEnter: function(entity){
+                if(entity.name==='second'){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+        },
+        verifier3: {
+            name: 'Verifier3',
+            char: 'X',
+            color: '#444',
+            bgColor: '#222',
+            passable: true,
+            blocksLos: false,
+            onEntityEnter: function(entity){
+                if(entity.name==='third'){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+        },
+        verifier4: {
+            name: 'Verifier4',
+            char: 'X',
+            color: '#444',
+            bgColor: '#222',
+            passable: true,
+            blocksLos: false,
+            onEntityEnter: function(entity){
+                if(entity.name==='fourth'){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+        },
         wall: {
             name: 'Wall',
             char: '▧',
@@ -189,6 +253,14 @@
                 }
                 return false;
             }
+        },
+        gate: {
+            name: 'Gate',
+            char: '♢',
+            color: 'yellow',
+            bgColor: '#222',
+            passable: false,
+            blocksLos: true
         }
     };
 
