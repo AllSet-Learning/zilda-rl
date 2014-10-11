@@ -253,10 +253,38 @@
         	color: 'blue',
         	bgColor: '#222',
         	pushable: true
-        },        
+        },
         wen: {
         	name: 'Wen',
         	char: '文',
+        	color: 'blue',
+        	bgColor: '#222',
+        	pushable: true
+        },
+        first: {
+        	name: 'frist',
+        	char: '一',
+        	color: 'blue',
+        	bgColor: '#222',
+        	pushable: true
+        },
+        second: {
+        	name: 'second',
+        	char: '二',
+        	color: 'blue',
+        	bgColor: '#222',
+        	pushable: true
+        },
+        third: {
+        	name: 'third',
+        	char: '三',
+        	color: 'blue',
+        	bgColor: '#222',
+        	pushable: true
+        },
+        fourth: {
+        	name: 'fourth',
+        	char: '四',
         	color: 'blue',
         	bgColor: '#222',
         	pushable: true
