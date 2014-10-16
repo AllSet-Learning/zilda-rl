@@ -126,7 +126,9 @@
         */
         onEntityEnter: function(entity){
             // add behavior here
-        }
+        },
+
+        matched: false
     };
 
     /**
@@ -163,10 +165,20 @@
             bgColor: '#222',
             passable: true,
             blocksLos: false,
-			onEntityEnter: function(entity){
+            matched: false,
+			onEntityEnter: function (entity){
+                var v2 = game.map.get(this.x+1, this.y).matched;
+                var v3 = game.map.get(this.x+2, this.y).matched;
+                var v4 = game.map.get(this.x+3, this.y).matched;
 				if(entity.name==='first'){
+                    this.matched = true;
+                    if (v2 && v3 && v4) {
+                        game.map.get(this.x+5,this.y+2).color='yellow';
+                        game.map.get(this.x+5,this.y+2).passable=true;
+                    }
 					return true;
 				} else {
+                    this.matched = false;
                     return false;
                 }
 			}
@@ -179,10 +191,20 @@
             bgColor: '#222',
             passable: true,
             blocksLos: false,
+            matched: false,
             onEntityEnter: function(entity){
+                var v1 = game.map.get(this.x-1, this.y).matched;
+                var v3 = game.map.get(this.x+1, this.y).matched;
+                var v4 = game.map.get(this.x+2, this.y).matched;
                 if(entity.name==='second'){
+                    this.matched = true;
+                    if (v1 && v3 && v4) {
+                        game.map.get(this.x+4,this.y+2).color='yellow';
+                        game.map.get(this.x+4,this.y+2).passable=true;
+                    }
                     return true;
                 } else {
+                    this.matched = false;
                     return false;
                 }
             }
@@ -195,10 +217,20 @@
             bgColor: '#222',
             passable: true,
             blocksLos: false,
+            matched: false,
             onEntityEnter: function(entity){
+                var v1 = game.map.get(this.x-2, this.y).matched;
+                var v2 = game.map.get(this.x-1, this.y).matched;
+                var v4 = game.map.get(this.x+1, this.y).matched;
                 if(entity.name==='third'){
+                    this.matched = true;
+                    if (v1 && v2 && v4) {
+                        game.map.get(this.x+3,this.y+2).color='yellow';
+                        game.map.get(this.x+3,this.y+2).passable=true;
+                    }
                     return true;
                 } else {
+                    this.matched = false;
                     return false;
                 }
             }
@@ -211,10 +243,20 @@
             bgColor: '#222',
             passable: true,
             blocksLos: false,
+            matched: false,
             onEntityEnter: function(entity){
+                var v1 = game.map.get(this.x-3, this.y).matched;
+                var v2 = game.map.get(this.x-2, this.y).matched;
+                var v3 = game.map.get(this.x-1, this.y).matched;
                 if(entity.name==='fourth'){
+                    this.matched = true;
+                    if (v1 && v2 && v3) {
+                        game.map.get(this.x+2,this.y+2).color='yellow';
+                        game.map.get(this.x+2,this.y+2).passable=true;
+                    }
                     return true;
                 } else {
+                    this.matched = false;
                     return false;
                 }
             }
@@ -257,10 +299,10 @@
         gate: {
             name: 'Gate',
             char: '♢',
-            color: 'yellow',
+            color: '#777',
             bgColor: '#222',
             passable: false,
-            blocksLos: true
+            blocksLos: true,
         }
     };
 
