@@ -262,7 +262,7 @@
         	pushable: true
         },
         first: {
-        	name: 'frist',
+        	name: 'first',
         	char: '一',
         	color: 'blue',
         	bgColor: '#222',
