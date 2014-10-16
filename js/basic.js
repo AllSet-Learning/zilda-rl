@@ -6,7 +6,7 @@ RL.Tile.Types.gate = {
     char: 'o',
     color: '#777',
     bgColor: '#222',
-    passable: true,
+    passable: false,
     blocksLos: true,
     onEntityEnter: function(entity){
         if(entity.name==='Player'){
