@@ -1,6 +1,13 @@
 // create the game instance
 var game = new RL.Game();
 
+// Tiles
+RL.Tile.prototype.matched = false;
+
+RL.Tile.Types.wall.char = '▧';
+
+RL.Tile.Types.door.char = '▣';
+
 RL.Tile.Types.gate = {
     name: 'Gate',
     char: 'o',
@@ -16,26 +23,113 @@ RL.Tile.Types.gate = {
             game.start();
         }
     }
-}
-// RL.Entity.Types.next = {
-// 		name: 'next',
-// 		char: ',',
-// 		color: 'white',
-// 		bgColor: false,
-// 		bump: function(entity){
-// 			// if bumping entity is the player
-// 			if(entity === this.game.player){
-// 				// @TODO combat logic here
-// 				mapData = mapData1;
-// 				game = new RL.Game();
-// 				gameReady();
-// 				game.console.log('You are entering next level');
-// 				game.start();
-// 				
-// 			}
-// 			return false;
-// 		}
-// };
+};
+
+RL.Tile.Types.verifier1 = {
+    name: 'Verifier1',
+    char: 'X',
+    color: '#444',
+    bgColor: '#222',
+    passable: true,
+    blocksLos: false,
+    matched: false,
+    onEntityEnter: function (entity){
+        var v2 = game.map.get(this.x+1, this.y).matched;
+        var v3 = game.map.get(this.x+2, this.y).matched;
+        var v4 = game.map.get(this.x+3, this.y).matched;
+        if(entity.name==='first'){
+            this.matched = true;
+            if (v2 && v3 && v4) {
+                game.map.get(this.x+5,this.y+2).color='yellow';
+                game.map.get(this.x+5,this.y+2).passable=true;
+            }
+            return true;
+        } else {
+            this.matched = false;
+            return false;
+        }
+    }
+};
+
+RL.Tile.Types.verifier2 = {
+    name: 'Verifier2',
+    char: 'X',
+    color: '#444',
+    bgColor: '#222',
+    passable: true,
+    blocksLos: false,
+    matched: false,
+    onEntityEnter: function(entity){
+        var v1 = game.map.get(this.x-1, this.y).matched;
+        var v3 = game.map.get(this.x+1, this.y).matched;
+        var v4 = game.map.get(this.x+2, this.y).matched;
+        if(entity.name==='second'){
+            this.matched = true;
+            if (v1 && v3 && v4) {
+                game.map.get(this.x+4,this.y+2).color='yellow';
+                game.map.get(this.x+4,this.y+2).passable=true;
+            }
+            return true;
+        } else {
+            this.matched = false;
+            return false;
+        }
+    }
+};
+
+RL.Tile.Types.verifier3 = {
+    name: 'Verifier3',
+    char: 'X',
+    color: '#444',
+    bgColor: '#222',
+    passable: true,
+    blocksLos: false,
+    matched: false,
+    onEntityEnter: function(entity){
+        var v1 = game.map.get(this.x-2, this.y).matched;
+        var v2 = game.map.get(this.x-1, this.y).matched;
+        var v4 = game.map.get(this.x+1, this.y).matched;
+        if(entity.name==='third'){
+            this.matched = true;
+            if (v1 && v2 && v4) {
+                game.map.get(this.x+3,this.y+2).color='yellow';
+                game.map.get(this.x+3,this.y+2).passable=true;
+            }
+            return true;
+        } else {
+            this.matched = false;
+            return false;
+        }
+    }
+    
+};
+
+RL.Tile.Types.verifier4 = {
+    name: 'Verifier4',
+    char: 'X',
+    color: '#444',
+    bgColor: '#222',
+    passable: true,
+    blocksLos: false,
+    matched: false,
+    onEntityEnter: function(entity){
+        var v1 = game.map.get(this.x-3, this.y).matched;
+        var v2 = game.map.get(this.x-2, this.y).matched;
+        var v3 = game.map.get(this.x-1, this.y).matched;
+        if(entity.name==='fourth'){
+            this.matched = true;
+            if (v1 && v2 && v3) {
+                game.map.get(this.x+2,this.y+2).color='yellow';
+                game.map.get(this.x+2,this.y+2).passable=true;
+            }
+            return true;
+        } else {
+            this.matched = false;
+            return false;
+        }
+    }
+    
+};
 
 var mapData0 = [
     "########################",
