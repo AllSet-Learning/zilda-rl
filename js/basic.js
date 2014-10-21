@@ -259,8 +259,8 @@ function gameReady() {
 // 	game.entityManager.add(3, 11, 'next');
 
 	// set player starting position
-	game.player.x = 3;
-	game.player.y = 3;
+	game.player.x = 7;
+	game.player.y = 8;
 
 // 	game.lighting.set(20, 1, 0, 255, 0);
 // 	game.lighting.set(7, 14, 0, 0, 255);
