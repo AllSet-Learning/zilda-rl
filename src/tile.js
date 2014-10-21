@@ -126,8 +126,7 @@
         */
         onEntityEnter: function(entity){
             // add behavior here
-        },
-
+        }
     };
 
     /**
@@ -190,7 +189,7 @@
                 }
                 return false;
             }
-        },
+        }
     };
 
     root.RL.Tile = Tile;

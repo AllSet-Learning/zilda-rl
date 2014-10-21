@@ -219,7 +219,7 @@
     Entity.Types = {
         zombie: {
             name: 'Zombie',
-            char: '☃',
+            char: 'z',
             color: 'red',
             bgColor: false,
 			bump: function(entity){
@@ -235,7 +235,7 @@
         },
         statue: {
             name: 'Statue',
-            char: '♞',
+            char: 's',
             color: '#808080',
             bgColor: '#222',
             pushable: true
