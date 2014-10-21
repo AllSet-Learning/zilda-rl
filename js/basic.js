@@ -131,6 +131,40 @@ RL.Tile.Types.verifier4 = {
     
 };
 
+// Entities
+
+RL.Entity.Types.first = {
+    name: 'first',
+    char: '一',
+    color: 'blue',
+    bgColor: '#222',
+    pushable: true
+};
+
+RL.Entity.Types.second = {
+    name: 'second',
+    char: '二',
+    color: 'blue',
+    bgColor: '#222',
+    pushable: true
+};
+
+RL.Entity.Types.third = {
+    name: 'third',
+    char: '三',
+    color: 'blue',
+    bgColor: '#222',
+    pushable: true
+};
+
+RL.Entity.Types.fourth = {
+    name: 'fourth',
+    char: '四',
+    color: 'blue',
+    bgColor: '#222',
+    pushable: true
+};
+
 var mapData0 = [
     "########################",
     "#...........#..........#",
