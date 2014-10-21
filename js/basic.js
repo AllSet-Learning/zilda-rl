@@ -8,19 +8,23 @@ RL.Tile.Types.wall.char = '▧';
 
 RL.Tile.Types.door.char = '▣';
 
-RL.Tile.Types.gate = {
-    name: 'Gate',
+RL.Tile.Types.portal = {
+    name: 'Portal',
     char: 'o',
     color: '#777',
     bgColor: '#222',
-    passable: false,
+    passable: true,
     blocksLos: true,
+    opened: false,
     onEntityEnter: function(entity){
-        if(entity.name==='Player'){
-            mapData = mapData1;
-            game = new RL.Game();
-            gameReady();
-            game.start();
+        var tiles = RL.Tile.Types
+        if (this.opened) {
+            if(entity.name==='Player'){
+                mapData = mapData1;
+                game = new RL.Game();
+                gameReady();
+                game.start();
+            }
         }
     }
 };
@@ -41,7 +45,8 @@ RL.Tile.Types.verifier1 = {
             this.matched = true;
             if (v2 && v3 && v4) {
                 game.map.get(this.x+5,this.y+2).color='yellow';
-                game.map.get(this.x+5,this.y+2).passable=true;
+                game.map.get(this.x+5,this.y+2).opened=true;
+
             }
             return true;
         } else {
@@ -67,7 +72,7 @@ RL.Tile.Types.verifier2 = {
             this.matched = true;
             if (v1 && v3 && v4) {
                 game.map.get(this.x+4,this.y+2).color='yellow';
-                game.map.get(this.x+4,this.y+2).passable=true;
+                game.map.get(this.x+4,this.y+2).opened=true;
             }
             return true;
         } else {
@@ -93,7 +98,7 @@ RL.Tile.Types.verifier3 = {
             this.matched = true;
             if (v1 && v2 && v4) {
                 game.map.get(this.x+3,this.y+2).color='yellow';
-                game.map.get(this.x+3,this.y+2).passable=true;
+                game.map.get(this.x+3,this.y+2).opened=true;
             }
             return true;
         } else {
@@ -120,7 +125,7 @@ RL.Tile.Types.verifier4 = {
             this.matched = true;
             if (v1 && v2 && v3) {
                 game.map.get(this.x+2,this.y+2).color='yellow';
-                game.map.get(this.x+2,this.y+2).passable=true;
+                game.map.get(this.x+2,this.y+2).opened=true;
             }
             return true;
         } else {
@@ -209,7 +214,7 @@ var mapCharToType = {
     'w': 'verifier2',
     'e': 'verifier3',
     'r': 'verifier4',
-    'g': 'gate',
+    'g': 'portal',
 };
 
 var entityCharToType = {
