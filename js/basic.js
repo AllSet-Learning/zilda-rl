@@ -1,6 +1,3 @@
-// create the game instance
-var game = new RL.Game();
-
 // Game
 RL.Game.prototype.onClick =  function(x, y){
     var coords = this.renderer.mouseToTileCoords(x, y),
@@ -17,6 +14,9 @@ RL.Game.prototype.onClick =  function(x, y){
     }
 };
 
+// create the game instance
+var game = new RL.Game();
+
 // Renderer
 RL.Renderer.prototype.tileSize = 30;
 
@@ -27,7 +27,7 @@ RL.Tile.prototype.introduced = false;
 
 RL.Tile.prototype.bump = function(entity){
     if(!this.passable){
-        this.game.console.log('You are facing the <strong>' + this.name + '</strong>, but cannot pass through it.');
+        // this.game.console.log('<strong style="color:#00a185">You</strong> are facing the <strong>' + this.name + '</strong>, but cannot pass through it.');
         return false;
     }
     return true;
@@ -191,7 +191,33 @@ RL.Entity.Types.first = {
     char: '一',
     color: 'blue',
     bgColor: '#222',
-    pushable: true
+    bump: function(entity){
+        // bumping entity is the player
+        if(entity === this.game.player){
+            var pusherX = entity.x,
+                pusherY = entity.y,
+                directionX = this.x - pusherX,
+                directionY = this.y - pusherY,
+                targetX = this.x + directionX,
+                targetY = this.y + directionY;
+
+            // check if can be pushed into destination
+            var targetPushEnt = this.game.entityManager.get(targetX, targetY);
+            if(!targetPushEnt){
+                var targetPushTile = this.game.map.get(targetX, targetY);
+                if(targetPushTile.passable){
+                    var prevX = this.x,
+                        prevY = this.y;
+                    // push target entity into tile
+                    this.moveTo(targetX, targetY);
+                    // move player into previously occupied tile
+                    entity.moveTo(prevX, prevY);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 RL.Entity.Types.second = {
@@ -200,7 +226,33 @@ RL.Entity.Types.second = {
     char: '二',
     color: 'blue',
     bgColor: '#222',
-    pushable: true
+    bump: function(entity){
+        // bumping entity is the player
+        if(entity === this.game.player){
+            var pusherX = entity.x,
+                pusherY = entity.y,
+                directionX = this.x - pusherX,
+                directionY = this.y - pusherY,
+                targetX = this.x + directionX,
+                targetY = this.y + directionY;
+
+            // check if can be pushed into destination
+            var targetPushEnt = this.game.entityManager.get(targetX, targetY);
+            if(!targetPushEnt){
+                var targetPushTile = this.game.map.get(targetX, targetY);
+                if(targetPushTile.passable){
+                    var prevX = this.x,
+                        prevY = this.y;
+                    // push target entity into tile
+                    this.moveTo(targetX, targetY);
+                    // move player into previously occupied tile
+                    entity.moveTo(prevX, prevY);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 RL.Entity.Types.third = {
@@ -209,7 +261,33 @@ RL.Entity.Types.third = {
     char: '三',
     color: 'blue',
     bgColor: '#222',
-    pushable: true
+    bump: function(entity){
+        // bumping entity is the player
+        if(entity === this.game.player){
+            var pusherX = entity.x,
+                pusherY = entity.y,
+                directionX = this.x - pusherX,
+                directionY = this.y - pusherY,
+                targetX = this.x + directionX,
+                targetY = this.y + directionY;
+
+            // check if can be pushed into destination
+            var targetPushEnt = this.game.entityManager.get(targetX, targetY);
+            if(!targetPushEnt){
+                var targetPushTile = this.game.map.get(targetX, targetY);
+                if(targetPushTile.passable){
+                    var prevX = this.x,
+                        prevY = this.y;
+                    // push target entity into tile
+                    this.moveTo(targetX, targetY);
+                    // move player into previously occupied tile
+                    entity.moveTo(prevX, prevY);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 RL.Entity.Types.fourth = {
@@ -218,10 +296,38 @@ RL.Entity.Types.fourth = {
     char: '四',
     color: 'blue',
     bgColor: '#222',
-    pushable: true
+    bump: function(entity){
+        // bumping entity is the player
+        if(entity === this.game.player){
+            var pusherX = entity.x,
+                pusherY = entity.y,
+                directionX = this.x - pusherX,
+                directionY = this.y - pusherY,
+                targetX = this.x + directionX,
+                targetY = this.y + directionY;
+
+            // check if can be pushed into destination
+            var targetPushEnt = this.game.entityManager.get(targetX, targetY);
+            if(!targetPushEnt){
+                var targetPushTile = this.game.map.get(targetX, targetY);
+                if(targetPushTile.passable){
+                    var prevX = this.x,
+                        prevY = this.y;
+                    // push target entity into tile
+                    this.moveTo(targetX, targetY);
+                    // move player into previously occupied tile
+                    entity.moveTo(prevX, prevY);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 // Player
+
+RL.Player.prototype.char = '☺';
 RL.Player.prototype.move = function (x, y){
 
     if(this.canMoveTo(x, y)){
@@ -232,7 +338,7 @@ RL.Player.prototype.move = function (x, y){
         var targetTileEnt = this.game.entityManager.get(x, y);
         // if already occupied
         if(targetTileEnt){
-            this.game.console.log('You are pushing <strong>"' + targetTileEnt.char + '"</strong>.');
+            // this.game.console.log('<strong style="color:#00a185">You</strong> are pushing <strong>"' + targetTileEnt.char + '"</strong>.');
             return targetTileEnt.bump(this);
         } else {
             // targeted tile (attempting to move into)
