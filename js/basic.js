@@ -1,8 +1,37 @@
 // create the game instance
 var game = new RL.Game();
 
+// Game
+RL.Game.prototype.onClick =  function(x, y){
+    var coords = this.renderer.mouseToTileCoords(x, y),
+    tile = this.map.get(coords.x, coords.y);
+    if(!tile){
+        return;
+    }
+    var entityTile = this.entityManager.get(tile.x, tile.y);
+    if(entityTile){
+        this.console.log('This is a <strong>' + entityTile.name + '</strong> standing on a <strong>' + tile.name + '</strong>.');
+    }
+    else{
+        this.console.log('This is a <strong>' + tile.name + '</strong>.');
+    }
+};
+
+// Renderer
+RL.Renderer.prototype.tileSize = 30;
+
 // Tiles
 RL.Tile.prototype.matched = false;
+
+RL.Tile.prototype.introduced = false;
+
+RL.Tile.prototype.bump = function(entity){
+    if(!this.passable){
+        this.game.console.log('You are facing the <strong>' + this.name + '</strong>, but cannot pass through it.');
+        return false;
+    }
+    return true;
+};
 
 RL.Tile.Types.wall.char = '▧';
 
@@ -25,12 +54,14 @@ RL.Tile.Types.portal = {
                 gameReady();
                 game.start();
             }
+        } else {
+            this.game.console.log('The <strong>' + this.name + '</strong> is closed, but there must be some way to open it.');
         }
     }
 };
 
 RL.Tile.Types.verifier1 = {
-    name: 'Verifier1',
+    name: 'Verifier',
     char: 'X',
     color: '#444',
     bgColor: '#222',
@@ -38,10 +69,14 @@ RL.Tile.Types.verifier1 = {
     blocksLos: false,
     matched: false,
     onEntityEnter: function (entity){
+        if(entity.name==='Player' && !this.introduced){
+            this.game.console.log('Move the characters here in the right order to open the Portal.');
+            this.introduced = true;
+        }
         var v2 = game.map.get(this.x+1, this.y).matched;
         var v3 = game.map.get(this.x+2, this.y).matched;
         var v4 = game.map.get(this.x+3, this.y).matched;
-        if(entity.name==='first'){
+        if(entity.codeName==='First'){
             this.matched = true;
             if (v2 && v3 && v4) {
                 game.map.get(this.x+5,this.y+2).color='yellow';
@@ -57,7 +92,7 @@ RL.Tile.Types.verifier1 = {
 };
 
 RL.Tile.Types.verifier2 = {
-    name: 'Verifier2',
+    name: 'Verifier',
     char: 'X',
     color: '#444',
     bgColor: '#222',
@@ -65,10 +100,14 @@ RL.Tile.Types.verifier2 = {
     blocksLos: false,
     matched: false,
     onEntityEnter: function(entity){
+        if(entity.name==='Player' && !this.introduced){
+            this.game.console.log('Move the characters here in the right order to open the Portal.');
+            this.introduced = true;
+        }
         var v1 = game.map.get(this.x-1, this.y).matched;
         var v3 = game.map.get(this.x+1, this.y).matched;
         var v4 = game.map.get(this.x+2, this.y).matched;
-        if(entity.name==='second'){
+        if(entity.codeName==='Second'){
             this.matched = true;
             if (v1 && v3 && v4) {
                 game.map.get(this.x+4,this.y+2).color='yellow';
@@ -83,7 +122,7 @@ RL.Tile.Types.verifier2 = {
 };
 
 RL.Tile.Types.verifier3 = {
-    name: 'Verifier3',
+    name: 'Verifier',
     char: 'X',
     color: '#444',
     bgColor: '#222',
@@ -91,10 +130,14 @@ RL.Tile.Types.verifier3 = {
     blocksLos: false,
     matched: false,
     onEntityEnter: function(entity){
+        if(entity.name==='Player' && !this.introduced){
+            this.game.console.log('Move the characters here in the right order to open the Portal.');
+            this.introduced = true;
+        }
         var v1 = game.map.get(this.x-2, this.y).matched;
         var v2 = game.map.get(this.x-1, this.y).matched;
         var v4 = game.map.get(this.x+1, this.y).matched;
-        if(entity.name==='third'){
+        if(entity.codeName==='Third'){
             this.matched = true;
             if (v1 && v2 && v4) {
                 game.map.get(this.x+3,this.y+2).color='yellow';
@@ -110,7 +153,7 @@ RL.Tile.Types.verifier3 = {
 };
 
 RL.Tile.Types.verifier4 = {
-    name: 'Verifier4',
+    name: 'Verifier',
     char: 'X',
     color: '#444',
     bgColor: '#222',
@@ -118,10 +161,14 @@ RL.Tile.Types.verifier4 = {
     blocksLos: false,
     matched: false,
     onEntityEnter: function(entity){
+        if(entity.name==='Player' && !this.introduced){
+            this.game.console.log('Move the characters here in the right order to open the Portal.');
+            this.introduced = true;
+        }
         var v1 = game.map.get(this.x-3, this.y).matched;
         var v2 = game.map.get(this.x-2, this.y).matched;
         var v3 = game.map.get(this.x-1, this.y).matched;
-        if(entity.name==='fourth'){
+        if(entity.codeName==='Fourth'){
             this.matched = true;
             if (v1 && v2 && v3) {
                 game.map.get(this.x+2,this.y+2).color='yellow';
@@ -139,7 +186,8 @@ RL.Tile.Types.verifier4 = {
 // Entities
 
 RL.Entity.Types.first = {
-    name: 'first',
+    codeName: 'First',
+    name: 'character "一"',
     char: '一',
     color: 'blue',
     bgColor: '#222',
@@ -147,7 +195,8 @@ RL.Entity.Types.first = {
 };
 
 RL.Entity.Types.second = {
-    name: 'second',
+    codeName: 'Second',
+    name: 'character "二"',
     char: '二',
     color: 'blue',
     bgColor: '#222',
@@ -155,7 +204,8 @@ RL.Entity.Types.second = {
 };
 
 RL.Entity.Types.third = {
-    name: 'third',
+    codeName: 'Third',
+    name: 'character "三"',
     char: '三',
     color: 'blue',
     bgColor: '#222',
@@ -163,11 +213,34 @@ RL.Entity.Types.third = {
 };
 
 RL.Entity.Types.fourth = {
-    name: 'fourth',
+    codeName: 'Fourth',
+    name: 'character "四"',
     char: '四',
     color: 'blue',
     bgColor: '#222',
     pushable: true
+};
+
+// Player
+RL.Player.prototype.move = function (x, y){
+
+    if(this.canMoveTo(x, y)){
+        this.moveTo(x, y);
+        return true;
+    } else {
+        // entity occupying target tile (if any)
+        var targetTileEnt = this.game.entityManager.get(x, y);
+        // if already occupied
+        if(targetTileEnt){
+            this.game.console.log('You are pushing <strong>"' + targetTileEnt.char + '"</strong>.');
+            return targetTileEnt.bump(this);
+        } else {
+            // targeted tile (attempting to move into)
+            var targetTile = this.game.map.get(x, y);
+            return targetTile.bump(this);
+        }
+    }
+    return false;
 };
 
 var mapData0 = [
