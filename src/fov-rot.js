@@ -10,6 +10,8 @@
     var FovROT = function FovROT(game) {
         this.game = game;
         this.fovMap = new RL.Array2d();
+        this.visibleTiles = [];
+        this.visibleTileKeys = [];
     };
 
     FovROT.prototype = {
@@ -49,6 +51,22 @@
         * @type Number
         */
         maxViewDistance: 10,
+
+        /**
+         * All visible map tiles
+         * Array of objects: {x: null, y: null, tile: null, range: null}
+         * @property visibleTiles
+         * @type {Array}
+         */
+        visibleTiles: null,
+
+        /**
+         * Array of visible tile keys used to prevent duplicates in this.visibleTiles.
+         * @property visibleTileKeys
+         * @type {Array}
+         * @private
+         */
+        visibleTileKeys: null,
 
         /**
         * Validates a fieldRange value.
@@ -103,11 +121,14 @@
 
             this.validateFieldRange(fieldRange);
 
+            this.visibleTiles = [];
+            this.visibleTileKeys = [];
             this.fovMap.reset();
             var entityCanSeeThrough = this.getEntityCanSeeThroughCallback(entity);
             var fov = new ROT.FOV.RecursiveShadowcasting(entityCanSeeThrough);
 
             var setMapTileVisible = this.setMapTileVisible.bind(this);
+            console.log('x');
             if(fieldRange === 360){
                 fov.compute(x, y, maxViewDistance, setMapTileVisible);
             }
@@ -155,6 +176,22 @@
         */
         setMapTileVisible: function(x, y, range, visibility){
             this.fovMap.set(x, y, visibility);
+            if(visibility){
+                var tile = this.game.map.get(x, y);
+                if(tile){
+                    var key = x + ',' + y;
+                    // check for duplicates
+                    if(this.visibleTileKeys.indexOf(key) === -1){
+                        this.visibleTiles.push({
+                            x: x,
+                            y: y,
+                            value: tile,
+                            range: range
+                        });
+                        this.visibleTileKeys.push(key);
+                    }
+                }
+            }
         },
 
         /**

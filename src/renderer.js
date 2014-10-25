@@ -158,6 +158,15 @@
         hoveredTileY: null,
 
         /**
+         * Placeholder to add extra draw functionality.
+         * Same params as this.draw
+         * function(ctx, map, entityManager, player, fov, lighting)
+         * @param drawExtra
+         * @type {Function}
+         */
+        drawExtra: false,
+
+        /**
         * Resizes canvas elements to match the tileSize and map view with/height. Also adjusts behavior to accomodate high pixel density screens.
         * @method resize
         */
@@ -260,6 +269,10 @@
             if(entityManager || player){
                 this.drawEntities(ctx, entityManager, player, fov);
             }
+            if(this.drawExtra){
+                this.drawExtra(ctx, map, entityManager, player, fov, lighting);
+            }
+
             // draw from buffer canvas to canvas in DOM only once all buffer draws are complete
             this.ctx.drawImage(this.buffer, 0, 0, this.canvas.width, this.canvas.height);
         },
@@ -420,6 +433,22 @@
                     x * (this.tileSize) + (this.tileSize * 0.5),
                     y * (this.tileSize) + (this.tileSize * 0.5)
                 );
+            }
+
+            if(tileData.borderColor){
+                var borderWidth = tileData.borderWidth || 1;
+                var borderOffset = Math.floor(borderWidth * 0.5);
+                var borderRectSize = this.tileSize - borderWidth;
+                if(borderWidth % 2 !== 0){
+                    borderOffset += 0.5;
+                }
+                ctx.lineWidth = borderWidth;
+                ctx.strokeStyle = tileData.borderColor;
+
+                var bx = x * this.tileSize + borderOffset;
+                var by = y * this.tileSize + borderOffset;
+                ctx.strokeRect(bx, by, borderRectSize, borderRectSize);
+
             }
         }
     };

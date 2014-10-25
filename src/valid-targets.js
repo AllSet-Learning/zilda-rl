@@ -5,7 +5,7 @@
      * Manages a list of valid targets and which is currently selected.
      * @class ValidTargets
      * @constructor
-     * @param {Array} [targets = []]
+     * @param {Array} [targets=Array]
      */
     var ValidTargets = function(targets){
         this.targets = targets || [];
@@ -16,14 +16,14 @@
 
         /**
          * Array of target objects.
-         * @type {Object}
+         * @type {Array}
          */
         targets: null,
 
         /**
          * Currently Selected Object.
-         * @private
          * @type {Object}
+         * @readOnly
          */
         current: null,
 
