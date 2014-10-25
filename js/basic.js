@@ -39,7 +39,7 @@ RL.Tile.Types.door.char = '▣';
 
 RL.Tile.Types.portal = {
     name: 'Portal',
-    char: 'o',
+    char: 'Ω',
     color: '#777',
     bgColor: '#222',
     passable: true,
