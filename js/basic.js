@@ -39,7 +39,7 @@ RL.Tile.Types.door.char = '▣';
 
 RL.Tile.Types.portal = {
     name: 'Portal',
-    char: 'o',
+    char: 'Ω',
     color: '#777',
     bgColor: '#222',
     passable: true,
@@ -47,6 +47,10 @@ RL.Tile.Types.portal = {
     opened: false,
     onEntityEnter: function(entity){
         var tiles = RL.Tile.Types
+        if (entity.name==='Player' && !this.introduced){
+            this.game.console.log('The <strong>' + this.name + '</strong> is closed, but there must be some way to open it.');
+            this.introduced = true;
+        }
         if (this.opened) {
             if(entity.name==='Player'){
                 mapData = mapData1;
@@ -54,8 +58,6 @@ RL.Tile.Types.portal = {
                 gameReady();
                 game.start();
             }
-        } else {
-            this.game.console.log('The <strong>' + this.name + '</strong> is closed, but there must be some way to open it.');
         }
     }
 };
@@ -72,6 +74,9 @@ RL.Tile.Types.verifier1 = {
         if(entity.name==='Player' && !this.introduced){
             this.game.console.log('Move the characters here in the right order to open the Portal.');
             this.introduced = true;
+            game.map.get(this.x+1, this.y).introduced = true;
+            game.map.get(this.x+2, this.y).introduced = true;
+            game.map.get(this.x+3, this.y).introduced = true;
         }
         var v2 = game.map.get(this.x+1, this.y).matched;
         var v3 = game.map.get(this.x+2, this.y).matched;
@@ -103,6 +108,9 @@ RL.Tile.Types.verifier2 = {
         if(entity.name==='Player' && !this.introduced){
             this.game.console.log('Move the characters here in the right order to open the Portal.');
             this.introduced = true;
+            game.map.get(this.x-1, this.y).introduced = true;
+            game.map.get(this.x+1, this.y).introduced = true;
+            game.map.get(this.x+2, this.y).introduced = true;
         }
         var v1 = game.map.get(this.x-1, this.y).matched;
         var v3 = game.map.get(this.x+1, this.y).matched;
@@ -133,6 +141,9 @@ RL.Tile.Types.verifier3 = {
         if(entity.name==='Player' && !this.introduced){
             this.game.console.log('Move the characters here in the right order to open the Portal.');
             this.introduced = true;
+            game.map.get(this.x-2, this.y).introduced = true;
+            game.map.get(this.x-1, this.y).introduced = true;
+            game.map.get(this.x+1, this.y).introduced = true;
         }
         var v1 = game.map.get(this.x-2, this.y).matched;
         var v2 = game.map.get(this.x-1, this.y).matched;
@@ -164,6 +175,9 @@ RL.Tile.Types.verifier4 = {
         if(entity.name==='Player' && !this.introduced){
             this.game.console.log('Move the characters here in the right order to open the Portal.');
             this.introduced = true;
+            game.map.get(this.x-3, this.y).introduced = true;
+            game.map.get(this.x-2, this.y).introduced = true;
+            game.map.get(this.x-1, this.y).introduced = true;
         }
         var v1 = game.map.get(this.x-3, this.y).matched;
         var v2 = game.map.get(this.x-2, this.y).matched;
