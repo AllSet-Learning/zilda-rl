@@ -19,6 +19,23 @@ var verifierOnAudio = new Audio('assets/audio/verifierOn.wav');
 var doorOpenAudio = new Audio('assets/audio/doorOpen.wav');
 var newLevelAudio = new Audio('assets/audio/newLevel.wav');
 
+var level = 1;
+var charArray = [];
+// add more phrases here
+charArray.push(['入','乡','随','俗']);
+charArray.push(['五','湖','四','海']);
+charArray.push(['杀','鸡','儆','猴']);
+function addChar(){
+    RL.Entity.Types.fourth.char = charArray[level-1].pop();
+    RL.Entity.Types.fourth.name = 'Character "'+RL.Entity.Types.fourth.char+'"';
+    RL.Entity.Types.third.char = charArray[level-1].pop();
+    RL.Entity.Types.third.name = 'Character "'+RL.Entity.Types.third.char+'"';
+    RL.Entity.Types.second.char = charArray[level-1].pop();
+    RL.Entity.Types.second.name = 'Character "'+RL.Entity.Types.second.char+'"';
+    RL.Entity.Types.first.char = charArray[level-1].pop();
+    RL.Entity.Types.first.name = 'Character "'+RL.Entity.Types.first.char+'"';
+}
+
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
 
@@ -91,14 +108,19 @@ function reset(){
             }
             if (this.opened) {
                 if(entity.name==='Player'){
-                    newLevelAudio.play();
-                    mapData = mapData1;
-                    game = new RL.Game();
-                    reset()
-                    gameReady();
-                    game.start();
-                    game.console.log('The next level starts.');
-                    this.passable = false;
+                    level++;
+                    if (level <= charArray.lenth){
+                        newLevelAudio.play();
+                        game = new RL.Game();
+                        reset();
+                        addChar();
+                        gameReady();
+                        game.start();
+                        game.console.log('The level ' + level.toString() + ' starts.');
+                        this.passable = false;
+                    } else{
+                        game.console.log('Congratulations! All levels are done.');
+                    }
                 }
             }
         }
@@ -442,7 +464,7 @@ function reset(){
 
 reset()
 
-var mapData0 = [
+var mapData = [
     "########################",
     "#........#####.........#",
     "#........#####.........#",
@@ -470,42 +492,20 @@ shuffle(nums);
 
 y = Math.floor((Math.random() * 2) + 2);
 x = Math.floor((Math.random() * 7) + 2);
-mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+mapData[y] = mapData[y].setCharAt(x,nums.pop());
 
 y = Math.floor((Math.random() * 2) + 2);
 x = Math.floor((Math.random() * 8) + 14);
-mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+mapData[y] = mapData[y].setCharAt(x,nums.pop());
 
 y = Math.floor((Math.random() * 2) + 10);
 x = Math.floor((Math.random() * 7) + 2);
-mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+mapData[y] = mapData[y].setCharAt(x,nums.pop());
 
 y = Math.floor((Math.random() * 2) + 10);
 x = Math.floor((Math.random() * 7) + 15);
-mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+mapData[y] = mapData[y].setCharAt(x,nums.pop());
 
-console.log(mapData0);
-
-var mapData1 = [
-    "########################",
-    "#........#####.........#",
-    "#........#####.......4.#",
-    "#..1.....#####.........#",
-    "########+#####+#########",
-    "#######..abcd....#######",
-    "#######..........#######",
-    "#######.......p..#######",
-    "#######..........#######",
-    "########+######+########",
-    "#..3.....######........#",
-    "#........######....2...#",
-    "#........######........#",
-    "################+#######",
-    "################......r#",
-    "########################",
-];
-
-var mapData = mapData0;
 
 var mapCharToType = {
     '#': 'wall',
@@ -533,6 +533,7 @@ var keyBindings = {
     right: ['RIGHT_ARROW', 'L', 'D'],
 };
 
+addChar();
 
 gameReady()
 
