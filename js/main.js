@@ -43,7 +43,7 @@ RL.Tile.Types.portal = {
     color: '#777',
     bgColor: '#222',
     passable: true,
-    blocksLos: true,
+    blocksLos: false,
     opened: false,
     onEntityEnter: function(entity){
         var tiles = RL.Tile.Types
