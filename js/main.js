@@ -25,6 +25,7 @@ var charArray = [];
 charArray.push(['入','乡','随','俗']);
 charArray.push(['五','湖','四','海']);
 charArray.push(['杀','鸡','儆','猴']);
+
 function addChar(){
     RL.Entity.Types.fourth.char = charArray[level-1].pop();
     RL.Entity.Types.fourth.name = 'Character "'+RL.Entity.Types.fourth.char+'"';
@@ -109,7 +110,7 @@ function reset(){
             if (this.opened) {
                 if(entity.name==='Player'){
                     level++;
-                    if (level <= charArray.lenth){
+                    if (level <= charArray.length){
                         newLevelAudio.play();
                         game = new RL.Game();
                         reset();
