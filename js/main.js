@@ -17,6 +17,26 @@ RL.Game.prototype.onClick =  function(x, y){
 var protalOpenAudio = new Audio('assets/audio/portalOpen.wav');
 var verifierOnAudio = new Audio('assets/audio/verifierOn.wav');
 var doorOpenAudio = new Audio('assets/audio/doorOpen.wav');
+var newLevelAudio = new Audio('assets/audio/newLevel.wav');
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 // create the game instance
 var game = new RL.Game();
@@ -71,13 +91,14 @@ function reset(){
             }
             if (this.opened) {
                 if(entity.name==='Player'){
+                    newLevelAudio.play();
                     mapData = mapData1;
                     game = new RL.Game();
                     reset()
                     gameReady();
                     game.start();
                     game.console.log('The next level starts.');
-                    this.opened = false;
+                    this.passable = false;
                 }
             }
         }
@@ -424,7 +445,7 @@ reset()
 var mapData0 = [
     "########################",
     "#........#####.........#",
-    "#..2.....#####...3.....#",
+    "#........#####.........#",
     "#........#####.........#",
     "########+#####+#########",
     "#######..abcd....#######",
@@ -433,12 +454,37 @@ var mapData0 = [
     "#######..........#######",
     "########+######+########",
     "#........######........#",
-    "#...1....######...4....#",
+    "#........######........#",
     "#........######........#",
     "#######+################",
     "####......r#############",
     "########################",
 ];
+
+String.prototype.setCharAt = function(index,chr) {
+    if(index > this.length-1) return str;
+    return this.substr(0,index) + chr + this.substr(index+1);
+}
+nums = ['1','2','3','4'];
+shuffle(nums);
+
+y = Math.floor((Math.random() * 2) + 2);
+x = Math.floor((Math.random() * 7) + 2);
+mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+
+y = Math.floor((Math.random() * 2) + 2);
+x = Math.floor((Math.random() * 8) + 14);
+mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+
+y = Math.floor((Math.random() * 2) + 10);
+x = Math.floor((Math.random() * 7) + 2);
+mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+
+y = Math.floor((Math.random() * 2) + 10);
+x = Math.floor((Math.random() * 7) + 15);
+mapData0[y] = mapData0[y].setCharAt(x,nums.pop());
+
+console.log(mapData0);
 
 var mapData1 = [
     "########################",
