@@ -27,6 +27,7 @@ charArray.push(['五','湖','四','海']);
 charArray.push(['杀','鸡','儆','猴']);
 
 function addChar(){
+
     RL.Entity.Types.fourth.char = charArray[level-1].pop();
     RL.Entity.Types.fourth.name = 'Character "'+RL.Entity.Types.fourth.char+'"';
     RL.Entity.Types.third.char = charArray[level-1].pop();
@@ -137,7 +138,6 @@ function reset(){
         matched: false,
         onEntityEnter: function (entity){
             game = new RL.Game();
-            reset();
             gameReady();
             game.start();
             game.console.log('The current level is reset.');
@@ -465,48 +465,12 @@ function reset(){
 
 reset()
 
-var mapData = [
-    "########################",
-    "#........#####.........#",
-    "#........#####.........#",
-    "#........#####.........#",
-    "########+#####+#########",
-    "#######..abcd....#######",
-    "#######..........#######",
-    "#######.......p..#######",
-    "#######..........#######",
-    "########+######+########",
-    "#........######........#",
-    "#........######........#",
-    "#........######........#",
-    "#######+################",
-    "####......r#############",
-    "########################",
-];
+var mapData = [];
 
 String.prototype.setCharAt = function(index,chr) {
     if(index > this.length-1) return str;
     return this.substr(0,index) + chr + this.substr(index+1);
 }
-nums = ['1','2','3','4'];
-shuffle(nums);
-
-y = Math.floor((Math.random() * 2) + 2);
-x = Math.floor((Math.random() * 7) + 2);
-mapData[y] = mapData[y].setCharAt(x,nums.pop());
-
-y = Math.floor((Math.random() * 2) + 2);
-x = Math.floor((Math.random() * 8) + 14);
-mapData[y] = mapData[y].setCharAt(x,nums.pop());
-
-y = Math.floor((Math.random() * 2) + 10);
-x = Math.floor((Math.random() * 7) + 2);
-mapData[y] = mapData[y].setCharAt(x,nums.pop());
-
-y = Math.floor((Math.random() * 2) + 10);
-x = Math.floor((Math.random() * 7) + 15);
-mapData[y] = mapData[y].setCharAt(x,nums.pop());
-
 
 var mapCharToType = {
     '#': 'wall',
@@ -539,14 +503,55 @@ addChar();
 gameReady()
 
 function gameReady() {
-	game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
-	game.entityManager.loadEntitiesFromArrayString(mapData, entityCharToType);
+
+    mapData = [
+        "########################",
+        "#........#####.........#",
+        "#........#####.........#",
+        "#........#####.........#",
+        "########+#####+#########",
+        "#######..abcd....#######",
+        "#######..........#######",
+        "#######.......p..#######",
+        "#######..........#######",
+        "########+######+########",
+        "#........######........#",
+        "#........######........#",
+        "#........######........#",
+        "#######+################",
+        "####......r#############",
+        "########################",
+    ];
+
+    nums = ['1','2','3','4'];
+    shuffle(nums);
+
+    y = Math.floor((Math.random() * 2) + 2);
+    x = Math.floor((Math.random() * 7) + 2);
+    mapData[y] = mapData[y].setCharAt(x,nums.pop());
+    game.lighting.set(x, y, 255, 0, 255);
+
+    y = Math.floor((Math.random() * 2) + 2);
+    x = Math.floor((Math.random() * 8) + 14);
+    mapData[y] = mapData[y].setCharAt(x,nums.pop());
+    game.lighting.set(x, y, 255, 0, 255);
+
+    y = Math.floor((Math.random() * 2) + 10);
+    x = Math.floor((Math.random() * 7) + 2);
+    mapData[y] = mapData[y].setCharAt(x,nums.pop());
+    game.lighting.set(x, y, 255, 0, 255);
+
+    y = Math.floor((Math.random() * 2) + 10);
+    x = Math.floor((Math.random() * 7) + 15);
+    mapData[y] = mapData[y].setCharAt(x,nums.pop());
+    game.lighting.set(x, y, 255, 0, 255);
+
+    game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
+    game.entityManager.loadEntitiesFromArrayString(mapData, entityCharToType);
 
 	// add some lights
-	game.lighting.set(10, 5, 255, 0, 0);
+	game.lighting.set(10, 5, 0, 0, 255);
 	game.lighting.set(11, 5, 0, 0, 255);
-	game.lighting.set(12, 5, 0, 0, 255);
-	game.lighting.set(13, 5, 0, 0, 255);
 
 	// generate and assign a map object (repaces empty default)
 	game.setMapSize(game.map.width, game.map.height);
@@ -566,10 +571,6 @@ function gameReady() {
 	// set player starting position
 	game.player.x = 7;
 	game.player.y = 8;
-
-// 	game.lighting.set(20, 1, 0, 255, 0);
-// 	game.lighting.set(7, 14, 0, 0, 255);
-// 	game.lighting.set(20, 12, 255, 255, 255);
 
 	// make the view a little smaller
 	game.renderer.resize(10, 14);
