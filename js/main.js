@@ -24,6 +24,7 @@ var charArray = [];
 // add more phrases here
 charArray.push(['入','乡','随','俗']);
 charArray.push(['五','湖','四','海']);
+charArray.push(['人','山','人','海']);
 charArray.push(['杀','鸡','儆','猴']);
 
 function addChar(){
@@ -161,15 +162,15 @@ function reset(){
                 game.map.get(this.x+2, this.y).introduced = true;
                 game.map.get(this.x+3, this.y).introduced = true;
             }
-            var v2 = game.map.get(this.x+1, this.y).matched;
-            var v3 = game.map.get(this.x+2, this.y).matched;
-            var v4 = game.map.get(this.x+3, this.y).matched;
+            var v2 = game.map.get(this.x+1, this.y);
+            var v3 = game.map.get(this.x+2, this.y);
+            var v4 = game.map.get(this.x+3, this.y);
             if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='First'){
+            if(entity.codeName==='First'||(this.char==v2.char&&entity.codeName==='Second')||(this.char==v3.char&&entity.codeName==='Third')||(this.char==v2.char&&entity.codeName==='Fourth')){
                 this.matched = true;
-                if (v2 && v3 && v4) {
+                if (v2.matched && v3.matched && v4.matched) {
                     game.map.get(this.x+5,this.y+2).color='yellow';
                     game.map.get(this.x+5,this.y+2).opened=true;
                     protalOpenAudio.play();
@@ -199,15 +200,15 @@ function reset(){
                 game.map.get(this.x+1, this.y).introduced = true;
                 game.map.get(this.x+2, this.y).introduced = true;
             }
-            var v1 = game.map.get(this.x-1, this.y).matched;
-            var v3 = game.map.get(this.x+1, this.y).matched;
-            var v4 = game.map.get(this.x+2, this.y).matched;
+            var v1 = game.map.get(this.x-1, this.y);
+            var v3 = game.map.get(this.x+1, this.y);
+            var v4 = game.map.get(this.x+2, this.y);
             if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Second'){
+            if(entity.codeName==='Second'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v3.char&&entity.codeName==='Third')||(this.char==v2.char&&entity.codeName==='Fourth')){
                 this.matched = true;
-                if (v1 && v3 && v4) {
+                if (v1.matched && v3.matched && v4.matched) {
                     game.map.get(this.x+4,this.y+2).color='yellow';
                     game.map.get(this.x+4,this.y+2).opened=true;
                     protalOpenAudio.play();
@@ -236,15 +237,15 @@ function reset(){
                 game.map.get(this.x-1, this.y).introduced = true;
                 game.map.get(this.x+1, this.y).introduced = true;
             }
-            var v1 = game.map.get(this.x-2, this.y).matched;
-            var v2 = game.map.get(this.x-1, this.y).matched;
-            var v4 = game.map.get(this.x+1, this.y).matched;
+            var v1 = game.map.get(this.x-2, this.y);
+            var v2 = game.map.get(this.x-1, this.y);
+            var v4 = game.map.get(this.x+1, this.y);
             if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Third'){
+            if(entity.codeName==='Third'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v2.char&&entity.codeName==='Second')||(this.char==v4.char&&entity.codeName==='Fourth')){
                 this.matched = true;
-                if (v1 && v2 && v4) {
+                if (v1.matched && v2.matched && v4.matched) {
                     game.map.get(this.x+3,this.y+2).color='yellow';
                     game.map.get(this.x+3,this.y+2).opened=true;
                     protalOpenAudio.play();
@@ -274,15 +275,15 @@ function reset(){
                 game.map.get(this.x-2, this.y).introduced = true;
                 game.map.get(this.x-1, this.y).introduced = true;
             }
-            var v1 = game.map.get(this.x-3, this.y).matched;
-            var v2 = game.map.get(this.x-2, this.y).matched;
-            var v3 = game.map.get(this.x-1, this.y).matched;
+            var v1 = game.map.get(this.x-3, this.y);
+            var v2 = game.map.get(this.x-2, this.y);
+            var v3 = game.map.get(this.x-1, this.y);
             if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Fourth'){
+            if(entity.codeName==='Fourth'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v2.char&&entity.codeName==='Second')||(this.char==v3.char&&entity.codeName==='Third')){
                 this.matched = true;
-                if (v1 && v2 && v3) {
+                if (v1.matched && v2.matched && v3.matched) {
                     game.map.get(this.x+2,this.y+2).color='yellow';
                     game.map.get(this.x+2,this.y+2).opened=true;
                     protalOpenAudio.play();
@@ -591,4 +592,3 @@ function gameReady() {
 game.console.log('The game starts.');
 // start the game
 game.start();
-
