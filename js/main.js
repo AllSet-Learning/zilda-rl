@@ -22,9 +22,9 @@ var newLevelAudio = new Audio('assets/audio/newLevel.wav');
 var level = 1;
 var charArray = [];
 // add more phrases here
+charArray.push(['人','山','人','海']);
 charArray.push(['入','乡','随','俗']);
 charArray.push(['五','湖','四','海']);
-charArray.push(['人','山','人','海']);
 charArray.push(['杀','鸡','儆','猴']);
 
 function addChar(){
