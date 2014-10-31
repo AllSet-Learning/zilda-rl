@@ -206,7 +206,7 @@ function reset(){
             if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Second'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v3.char&&entity.codeName==='Third')||(this.char==v2.char&&entity.codeName==='Fourth')){
+            if(entity.codeName==='Second'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v3.char&&entity.codeName==='Third')||(this.char==v4.char&&entity.codeName==='Fourth')){
                 this.matched = true;
                 if (v1.matched && v3.matched && v4.matched) {
                     game.map.get(this.x+4,this.y+2).color='yellow';
