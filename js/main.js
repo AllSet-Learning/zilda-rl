@@ -66,14 +66,6 @@ function reset(){
 
     RL.Tile.prototype.introduced = false;
 
-    RL.Tile.prototype.bump = function(entity){
-        if(!this.passable){
-            // this.game.console.log('<strong style="color:#00a185">You</strong> are facing the <strong>' + this.name + '</strong>, but cannot pass through it.');
-            return false;
-        }
-        return true;
-    };
-
     RL.Tile.Types.wall.char = '▧';
 
     RL.Furniture.Types.door.char = '▣';
