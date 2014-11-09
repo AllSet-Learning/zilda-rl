@@ -1,70 +1,63 @@
-// Game
-RL.Game.prototype.onClick =  function(x, y){
-    var coords = this.renderer.mouseToTileCoords(x, y),
-    tile = this.map.get(coords.x, coords.y);
-    if(!tile){
-        return;
-    }
-    var entityTile = this.entityManager.get(tile.x, tile.y);
-    if(entityTile){
-        this.console.log('This is a <strong>' + entityTile.name + '</strong> standing on a <strong>' + tile.name + '</strong>.');
-    }
-    else{
-        this.console.log('This is a <strong>' + tile.name + '</strong>.');
-    }
-};
-
-var protalOpenAudio = new Audio('assets/audio/portalOpen.wav');
+var portalOpenAudio = new Audio('assets/audio/portalOpen.wav');
 var verifierOnAudio = new Audio('assets/audio/verifierOn.wav');
 var doorOpenAudio = new Audio('assets/audio/doorOpen.wav');
 var newLevelAudio = new Audio('assets/audio/newLevel.wav');
 
-var level = 1;
-var charArray = [];
-// add more phrases here
-charArray.push(['人','山','人','海']);
-charArray.push(['入','乡','随','俗']);
-charArray.push(['五','湖','四','海']);
-charArray.push(['杀','鸡','儆','猴']);
-
-function addChar(){
-
-    RL.Entity.Types.fourth.char = charArray[level-1].pop();
-    RL.Entity.Types.fourth.name = 'Character "'+RL.Entity.Types.fourth.char+'"';
-    RL.Entity.Types.third.char = charArray[level-1].pop();
-    RL.Entity.Types.third.name = 'Character "'+RL.Entity.Types.third.char+'"';
-    RL.Entity.Types.second.char = charArray[level-1].pop();
-    RL.Entity.Types.second.name = 'Character "'+RL.Entity.Types.second.char+'"';
-    RL.Entity.Types.first.char = charArray[level-1].pop();
-    RL.Entity.Types.first.name = 'Character "'+RL.Entity.Types.first.char+'"';
-}
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex ;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-// create the game instance
-var game = new RL.Game();
+// Game
 
 function reset(){
 
     // Renderer
     RL.Renderer.prototype.tileSize = 30;
+
+    RL.Game.prototype.furnitureMoveTo = function(entity, x, y){
+        this.furnitureManager.move(x, y, entity);
+        var tile = this.map.get(x, y);
+        if(tile){
+            tile.onEntityEnter(entity);
+        }
+    };
+
+    RL.Game.prototype.checkPuzzle = function(){
+
+        var solved = true;
+
+        for(var key in this.verifierTiles){
+            var tile = this.verifierTiles[key];
+
+            if(tile.matched){
+                tile.bgColor = '#fff';
+            } else {
+                solved = false;
+                tile.bgColor = '#222';
+            }
+        }
+
+        if(solved){
+            this.portal.color = 'yellow';
+            this.portal.opened = true;
+        } else {
+            this.portal.color = '#777';
+            this.portal.opened = false;
+        }
+
+    };
+
+    RL.Game.prototype.introduceVerifier = function(){
+        if(!this.introduced){
+            this.console.log('Move the characters here in the right order to open the Portal.');
+            this.introduced = true;
+        }
+    };
+
+    RL.Game.prototype.test = function(){
+        console.log('hello');
+    }
+
+    RL.Furniture.prototype.moveTo = function(x, y) {
+        return this.game.furnitureMoveTo(this, x, y);
+    };
+
 
     // Tiles
     RL.Tile.prototype.matched = false;
@@ -81,19 +74,20 @@ function reset(){
 
     RL.Tile.Types.wall.char = '▧';
 
-    RL.Tile.Types.door.char = '▣';
+    RL.Furniture.Types.door.char = '▣';
 
-    RL.Tile.Types.door.bump = function(entity){
-        if(!this.passable){
-            this.passable = true;
-            this.blocksLos = false;
-            this.char = "'";
-            this.game.console.log('You open the <strong>' + this.name + '</strong>.');
-            doorOpenAudio.play();
-            return true;
-        }
-        return false;
-    }
+    // RL.Furniture.Types.door.bump = function(entity){
+    //     if(!this.passable){
+    //         console.log("great");
+    //         this.passable = true;
+    //         this.blocksLos = false;
+    //         this.char = "'";
+    //         this.game.console.log('You open the <strong>' + this.name + '</strong>.');
+    //         doorOpenAudio.play();
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     RL.Tile.Types.portal = {
         name: 'Portal',
@@ -104,6 +98,7 @@ function reset(){
         blocksLos: false,
         opened: false,
         onEntityEnter: function(entity){
+            console.log(this);
             var tiles = RL.Tile.Types
             if (entity.name==='Player' && !this.introduced){
                 this.game.console.log('The <strong>' + this.name + '</strong> is closed, but there must be some way to open it.');
@@ -129,25 +124,11 @@ function reset(){
         }
     };
 
-    RL.Tile.Types.reset = {
-        name: 'ResetLevel',
-        char: 'o',
-        color: '#444',
-        bgColor: '#222',
-        passable: true,
-        blocksLos: false,
-        matched: false,
-        onEntityEnter: function (entity){
-            game = new RL.Game();
-            gameReady();
-            game.start();
-            game.console.log('The current level is reset.');
-            this.passable = false;
-        }     
-    };
+
+
 
     RL.Tile.Types.verifier1 = {
-        name: 'Verifier',
+        name: 'Character Pedestal',
         char: 'X',
         color: '#444',
         bgColor: '#222',
@@ -155,37 +136,22 @@ function reset(){
         blocksLos: false,
         matched: false,
         onEntityEnter: function (entity){
-            if(entity.name==='Player' && !this.introduced){
-                this.game.console.log('Move the characters here in the right order to open the Portal.');
-                this.introduced = true;
-                game.map.get(this.x+1, this.y).introduced = true;
-                game.map.get(this.x+2, this.y).introduced = true;
-                game.map.get(this.x+3, this.y).introduced = true;
-            }
-            var v2 = game.map.get(this.x+1, this.y);
-            var v3 = game.map.get(this.x+2, this.y);
-            var v4 = game.map.get(this.x+3, this.y);
-            if(entity.name!='Player'){
+            if(entity.name==='Player'){
+                this.game.introduceVerifier();
+            } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='First'||(this.char==v2.char&&entity.codeName==='Second')||(this.char==v3.char&&entity.codeName==='Third')||(this.char==v2.char&&entity.codeName==='Fourth')){
+            if(entity.type === 'hanzi1'){
                 this.matched = true;
-                if (v2.matched && v3.matched && v4.matched) {
-                    game.map.get(this.x+5,this.y+2).color='yellow';
-                    game.map.get(this.x+5,this.y+2).opened=true;
-                    protalOpenAudio.play();
-
-                }
-                return true;
             } else {
                 this.matched = false;
-                return false;
             }
+            this.game.checkPuzzle();
         }
     };
 
     RL.Tile.Types.verifier2 = {
-        name: 'Verifier',
+        name: 'Character Pedestal',
         char: 'X',
         color: '#444',
         bgColor: '#222',
@@ -193,36 +159,22 @@ function reset(){
         blocksLos: false,
         matched: false,
         onEntityEnter: function(entity){
-            if(entity.name==='Player' && !this.introduced){
-                this.game.console.log('Move the characters here in the right order to open the Portal.');
-                this.introduced = true;
-                game.map.get(this.x-1, this.y).introduced = true;
-                game.map.get(this.x+1, this.y).introduced = true;
-                game.map.get(this.x+2, this.y).introduced = true;
-            }
-            var v1 = game.map.get(this.x-1, this.y);
-            var v3 = game.map.get(this.x+1, this.y);
-            var v4 = game.map.get(this.x+2, this.y);
-            if(entity.name!='Player'){
+            if(entity.name==='Player'){
+                this.game.introduceVerifier();
+            } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Second'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v3.char&&entity.codeName==='Third')||(this.char==v4.char&&entity.codeName==='Fourth')){
+            if(entity.type === 'hanzi2'){
                 this.matched = true;
-                if (v1.matched && v3.matched && v4.matched) {
-                    game.map.get(this.x+4,this.y+2).color='yellow';
-                    game.map.get(this.x+4,this.y+2).opened=true;
-                    protalOpenAudio.play();
-                }
-                return true;
             } else {
                 this.matched = false;
-                return false;
             }
+            this.game.checkPuzzle();
         }
     };
 
     RL.Tile.Types.verifier3 = {
-        name: 'Verifier',
+        name: 'Character Pedestal',
         char: 'X',
         color: '#444',
         bgColor: '#222',
@@ -230,37 +182,23 @@ function reset(){
         blocksLos: false,
         matched: false,
         onEntityEnter: function(entity){
-            if(entity.name==='Player' && !this.introduced){
-                this.game.console.log('Move the characters here in the right order to open the Portal.');
-                this.introduced = true;
-                game.map.get(this.x-2, this.y).introduced = true;
-                game.map.get(this.x-1, this.y).introduced = true;
-                game.map.get(this.x+1, this.y).introduced = true;
-            }
-            var v1 = game.map.get(this.x-2, this.y);
-            var v2 = game.map.get(this.x-1, this.y);
-            var v4 = game.map.get(this.x+1, this.y);
-            if(entity.name!='Player'){
+            if(entity.name==='Player'){
+                this.game.introduceVerifier();
+            } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Third'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v2.char&&entity.codeName==='Second')||(this.char==v4.char&&entity.codeName==='Fourth')){
+            if(entity.type === 'hanzi3'){
                 this.matched = true;
-                if (v1.matched && v2.matched && v4.matched) {
-                    game.map.get(this.x+3,this.y+2).color='yellow';
-                    game.map.get(this.x+3,this.y+2).opened=true;
-                    protalOpenAudio.play();
-                }
-                return true;
             } else {
                 this.matched = false;
-                return false;
             }
+            this.game.checkPuzzle();
         }
-        
+
     };
 
     RL.Tile.Types.verifier4 = {
-        name: 'Verifier',
+        name: 'Character Pedestal',
         char: 'X',
         color: '#444',
         bgColor: '#222',
@@ -268,228 +206,81 @@ function reset(){
         blocksLos: false,
         matched: false,
         onEntityEnter: function(entity){
-            if(entity.name==='Player' && !this.introduced){
-                this.game.console.log('Move the characters here in the right order to open the Portal.');
-                this.introduced = true;
-                game.map.get(this.x-3, this.y).introduced = true;
-                game.map.get(this.x-2, this.y).introduced = true;
-                game.map.get(this.x-1, this.y).introduced = true;
-            }
-            var v1 = game.map.get(this.x-3, this.y);
-            var v2 = game.map.get(this.x-2, this.y);
-            var v3 = game.map.get(this.x-1, this.y);
-            if(entity.name!='Player'){
+            if(entity.name==='Player'){
+                this.game.introduceVerifier();
+            } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.codeName==='Fourth'||(this.char==v1.char&&entity.codeName==='First')||(this.char==v2.char&&entity.codeName==='Second')||(this.char==v3.char&&entity.codeName==='Third')){
+            if(entity.type === 'hanzi4'){
                 this.matched = true;
-                if (v1.matched && v2.matched && v3.matched) {
-                    game.map.get(this.x+2,this.y+2).color='yellow';
-                    game.map.get(this.x+2,this.y+2).opened=true;
-                    protalOpenAudio.play();
-                }
-                return true;
             } else {
                 this.matched = false;
-                return false;
             }
+            this.game.checkPuzzle();
         }
-        
+
     };
 
     // Entities
 
-    RL.Entity.Types.first = {
-        codeName: 'First',
+    RL.Furniture.Types.hanzi1 = {
+        codeName: 'Hanzi1',
         name: 'character "一"',
         char: '一',
         color: 'blue',
-        bgColor: '#222',
-        bump: function(entity){
-            // bumping entity is the player
-            if(entity === this.game.player){
-                var pusherX = entity.x,
-                    pusherY = entity.y,
-                    directionX = this.x - pusherX,
-                    directionY = this.y - pusherY,
-                    targetX = this.x + directionX,
-                    targetY = this.y + directionY;
-
-                // check if can be pushed into destination
-                var targetPushEnt = this.game.entityManager.get(targetX, targetY);
-                if(!targetPushEnt){
-                    var targetPushTile = this.game.map.get(targetX, targetY);
-                    if(targetPushTile.passable){
-                        var prevX = this.x,
-                            prevY = this.y;
-                        // push target entity into tile
-                        this.moveTo(targetX, targetY);
-                        // move player into previously occupied tile
-                        entity.moveTo(prevX, prevY);
-                        return true;
-                    }
-                }
-            }
-            return false;
+        consoleColor: 'blue',
+        // bgColor: '#222',
+        passable: false,
+        init: function(){
+            RL.Actions.Resolvable.add(this, 'grab');
+            RL.Actions.Resolvable.add(this, 'push');
         }
     };
 
-    RL.Entity.Types.second = {
-        codeName: 'Second',
+    RL.Furniture.Types.hanzi2 = {
+        codeName: 'Hanzi2',
         name: 'character "二"',
         char: '二',
         color: 'blue',
-        bgColor: '#222',
-        bump: function(entity){
-            // bumping entity is the player
-            if(entity === this.game.player){
-                var pusherX = entity.x,
-                    pusherY = entity.y,
-                    directionX = this.x - pusherX,
-                    directionY = this.y - pusherY,
-                    targetX = this.x + directionX,
-                    targetY = this.y + directionY;
-
-                // check if can be pushed into destination
-                var targetPushEnt = this.game.entityManager.get(targetX, targetY);
-                if(!targetPushEnt){
-                    var targetPushTile = this.game.map.get(targetX, targetY);
-                    if(targetPushTile.passable){
-                        var prevX = this.x,
-                            prevY = this.y;
-                        // push target entity into tile
-                        this.moveTo(targetX, targetY);
-                        // move player into previously occupied tile
-                        entity.moveTo(prevX, prevY);
-                        return true;
-                    }
-                }
-            }
-            return false;
+        consoleColor: 'blue',
+        // bgColor: '#222',
+        passable: false,
+        init: function(){
+            RL.Actions.Resolvable.add(this, 'grab');
+            RL.Actions.Resolvable.add(this, 'push');
         }
     };
 
-    RL.Entity.Types.third = {
-        codeName: 'Third',
+    RL.Furniture.Types.hanzi3 = {
+        codeName: 'Hanzi3',
         name: 'character "三"',
         char: '三',
         color: 'blue',
-        bgColor: '#222',
-        bump: function(entity){
-            // bumping entity is the player
-            if(entity === this.game.player){
-                var pusherX = entity.x,
-                    pusherY = entity.y,
-                    directionX = this.x - pusherX,
-                    directionY = this.y - pusherY,
-                    targetX = this.x + directionX,
-                    targetY = this.y + directionY;
-
-                // check if can be pushed into destination
-                var targetPushEnt = this.game.entityManager.get(targetX, targetY);
-                if(!targetPushEnt){
-                    var targetPushTile = this.game.map.get(targetX, targetY);
-                    if(targetPushTile.passable){
-                        var prevX = this.x,
-                            prevY = this.y;
-                        // push target entity into tile
-                        this.moveTo(targetX, targetY);
-                        // move player into previously occupied tile
-                        entity.moveTo(prevX, prevY);
-                        return true;
-                    }
-                }
-            }
-            return false;
+        consoleColor: 'blue',
+        // bgColor: '#222',
+        init: function(){
+            RL.Actions.Resolvable.add(this, 'grab');
+            RL.Actions.Resolvable.add(this, 'push');
         }
     };
 
-    RL.Entity.Types.fourth = {
-        codeName: 'Fourth',
+    RL.Furniture.Types.hanzi4 = {
+        codeName: 'Hanzi4',
         name: 'character "四"',
         char: '四',
         color: 'blue',
-        bgColor: '#222',
-        bump: function(entity){
-            // bumping entity is the player
-            if(entity === this.game.player){
-                var pusherX = entity.x,
-                    pusherY = entity.y,
-                    directionX = this.x - pusherX,
-                    directionY = this.y - pusherY,
-                    targetX = this.x + directionX,
-                    targetY = this.y + directionY;
-
-                // check if can be pushed into destination
-                var targetPushEnt = this.game.entityManager.get(targetX, targetY);
-                if(!targetPushEnt){
-                    var targetPushTile = this.game.map.get(targetX, targetY);
-                    if(targetPushTile.passable){
-                        var prevX = this.x,
-                            prevY = this.y;
-                        // push target entity into tile
-                        this.moveTo(targetX, targetY);
-                        // move player into previously occupied tile
-                        entity.moveTo(prevX, prevY);
-                        return true;
-                    }
-                }
-            }
-            return false;
+        consoleColor: 'blue',
+        // bgColor: '#222',
+        init: function(){
+            RL.Actions.Resolvable.add(this, 'grab');
+            RL.Actions.Resolvable.add(this, 'push');
         }
     };
 
     // Player
 
     RL.Player.prototype.char = '☺';
-    RL.Player.prototype.move = function (x, y){
-
-        if(this.canMoveTo(x, y)){
-            this.moveTo(x, y);
-            return true;
-        } else {
-            // entity occupying target tile (if any)
-            var targetTileEnt = this.game.entityManager.get(x, y);
-            // if already occupied
-            if(targetTileEnt){
-                // this.game.console.log('<strong style="color:#00a185">You</strong> are pushing <strong>"' + targetTileEnt.char + '"</strong>.');
-                return targetTileEnt.bump(this);
-            } else {
-                // targeted tile (attempting to move into)
-                var targetTile = this.game.map.get(x, y);
-                return targetTile.bump(this);
-            }
-        }
-        return false;
-    };
-};
-
-reset()
-
-var mapData = [];
-
-String.prototype.setCharAt = function(index,chr) {
-    if(index > this.length-1) return str;
-    return this.substr(0,index) + chr + this.substr(index+1);
-}
-
-var mapCharToType = {
-    '#': 'wall',
-    '.': 'floor',
-    '+': 'door',
-    'a': 'verifier1',
-    'b': 'verifier2',
-    'c': 'verifier3',
-    'd': 'verifier4',
-    'p': 'portal',
-    'r': 'reset'
-};
-
-var entityCharToType = {
-	'1': 'first',
-	'2': 'second',
-	'3': 'third',
-	'4': 'fourth'
+    RL.Player.prototype.name = 'Player';
 };
 
 var keyBindings = {
@@ -497,11 +288,136 @@ var keyBindings = {
     down: ['DOWN_ARROW', 'J', 'S'],
     left: ['LEFT_ARROW', 'H', 'A'],
     right: ['RIGHT_ARROW', 'L', 'D'],
+    grab: ['G'],
+    prev_target: ['COMMA'],
+    next_target: ['PERIOD'],
+    select: ['ENTER']
 };
 
+var controlsEL = document.getElementById('controls');
+var mapContainerEl = document.getElementById('map-container');
+var consoleContainerEl = document.getElementById('console-container');
+var controlsHtml = '';
+ controlsHtml += '<div class="tr"><div class="td">Action</div> <div class="td">Keys</div></div>';
+for(var action in keyBindings){
+    controlsHtml += '<div class="tr">';
+    controlsHtml += '<div class="td">' + action + '</div>';
+
+    var val = keyBindings[action];
+    controlsHtml += '<div class="td">';
+    controlsHtml += val.join(', ');
+    controlsHtml += '</div>';
+    controlsHtml += '</div>';
+}
+
+    controlsEL.innerHTML = controlsHtml;
+
+var mapData = [];
+
+var mapCharToType = {
+    '#': 'wall',
+    '.': 'floor',
+    'a': 'verifier1',
+    'b': 'verifier2',
+    'c': 'verifier3',
+    'd': 'verifier4',
+    'p': 'portal'
+};
+
+var furnitureCharToType = {
+    '+': 'door'
+};
+
+var playerStartX = 7;
+var playerStartY = 8;
+var rendererWidth = 10;
+var rendererHeight = 14;
+
+var level = 1;
+var charArray = [];
+// add more phrases here
+charArray.push(['人','山','人','海']);
+charArray.push(['入','乡','随','俗']);
+charArray.push(['五','湖','四','海']);
+charArray.push(['杀','鸡','儆','猴']);
+
+function addChar(){
+
+    RL.Furniture.Types.hanzi4.char = charArray[level-1].pop();
+    RL.Furniture.Types.hanzi4.name = 'Character "'+RL.Furniture.Types.hanzi4.char+'"';
+    RL.Furniture.Types.hanzi3.char = charArray[level-1].pop();
+    RL.Furniture.Types.hanzi3.name = 'Character "'+RL.Furniture.Types.hanzi3.char+'"';
+    RL.Furniture.Types.hanzi2.char = charArray[level-1].pop();
+    RL.Furniture.Types.hanzi2.name = 'Character "'+RL.Furniture.Types.hanzi2.char+'"';
+    RL.Furniture.Types.hanzi1.char = charArray[level-1].pop();
+    RL.Furniture.Types.hanzi1.name = 'Character "'+RL.Furniture.Types.hanzi1.char+'"';
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+// create the game instance
+var game = new RL.Game();
+
+reset();
 addChar();
 
-gameReady()
+gameReady();
+
+
+function initHanziFurniture(){
+
+    var hanzi1 = new RL.Furniture(game, 'hanzi1');
+    var hanzi2 = new RL.Furniture(game, 'hanzi2');
+    var hanzi3 = new RL.Furniture(game, 'hanzi3');
+    var hanzi4 = new RL.Furniture(game, 'hanzi4');
+
+    game.hanzi = {
+        1: hanzi1,
+        2: hanzi2,
+        3: hanzi3,
+        4: hanzi4
+    };
+
+    var hanziTiles = shuffle([hanzi1, hanzi2, hanzi3, hanzi4]);
+
+    y = Math.floor((Math.random() * 2) + 2);
+    x = Math.floor((Math.random() * 7) + 2);
+    game.furnitureManager.add(x, y, hanziTiles.pop());
+    game.lighting.set(x, y, 150, 0, 150);
+
+    y = Math.floor((Math.random() * 2) + 2);
+    x = Math.floor((Math.random() * 8) + 14);
+    game.furnitureManager.add(x, y, hanziTiles.pop());
+    game.lighting.set(x, y, 150, 0, 150);
+
+    y = Math.floor((Math.random() * 2) + 10);
+    x = Math.floor((Math.random() * 7) + 2);
+    game.furnitureManager.add(x, y, hanziTiles.pop());
+    game.lighting.set(x, y, 150, 0, 150);
+
+    y = Math.floor((Math.random() * 2) + 10);
+    x = Math.floor((Math.random() * 7) + 15);
+    game.furnitureManager.add(x, y, hanziTiles.pop());
+    game.lighting.set(x, y, 150, 0, 150);
+
+}
 
 function gameReady() {
 
@@ -519,74 +435,93 @@ function gameReady() {
         "#........######........#",
         "#........######........#",
         "#........######........#",
-        "#######+################",
-        "####......r#############",
         "########################",
     ];
 
-    nums = ['1','2','3','4'];
-    shuffle(nums);
-
-    y = Math.floor((Math.random() * 2) + 2);
-    x = Math.floor((Math.random() * 7) + 2);
-    mapData[y] = mapData[y].setCharAt(x,nums.pop());
-    game.lighting.set(x, y, 255, 0, 255);
-
-    y = Math.floor((Math.random() * 2) + 2);
-    x = Math.floor((Math.random() * 8) + 14);
-    mapData[y] = mapData[y].setCharAt(x,nums.pop());
-    game.lighting.set(x, y, 255, 0, 255);
-
-    y = Math.floor((Math.random() * 2) + 10);
-    x = Math.floor((Math.random() * 7) + 2);
-    mapData[y] = mapData[y].setCharAt(x,nums.pop());
-    game.lighting.set(x, y, 255, 0, 255);
-
-    y = Math.floor((Math.random() * 2) + 10);
-    x = Math.floor((Math.random() * 7) + 15);
-    mapData[y] = mapData[y].setCharAt(x,nums.pop());
-    game.lighting.set(x, y, 255, 0, 255);
-
     game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
-    game.entityManager.loadEntitiesFromArrayString(mapData, entityCharToType);
 
-	// add some lights
-	game.lighting.set(10, 5, 0, 0, 255);
-	game.lighting.set(11, 5, 0, 0, 255);
 
-	// generate and assign a map object (repaces empty default)
-	game.setMapSize(game.map.width, game.map.height);
+    game.verifierTiles = {};
+    game.map.each(function(value, x, y){
+        if(value.type === 'verifier1'){
+            game.verifierTiles.verifier1 = value;
+        }
+        else if(value.type === 'verifier2'){
+            game.verifierTiles.verifier2 = value;
+        }
+        else if(value.type === 'verifier3'){
+            game.verifierTiles.verifier3 = value;
+        }
+        else if(value.type === 'verifier4'){
+            game.verifierTiles.verifier4 = value;
+        }
+        else if(value.type === 'portal'){
+            game.portal = value;
+        }
+    });
 
-	// add input keybindings
-	game.input.addBindings(keyBindings);
+    // add some lights
+    game.lighting.set(10, 5, 0, 0, 150);
+    game.lighting.set(11, 5, 0, 0, 150);
 
-	// create entities and add to game.entityManager
-// 	var entZombie = new RL.Entity(game, 'zombie');
-// 	game.entityManager.add(2, 8, entZombie);
-// 
-// 	// or just add by entity type
-// 	game.entityManager.add(5, 9, 'zombie');
-// 
-// 	game.entityManager.add(3, 11, 'next');
+    // generate and assign a map object (repaces empty default)
+    game.setMapSize(game.map.width, game.map.height);
 
-	// set player starting position
-	game.player.x = 7;
-	game.player.y = 8;
+    // game.entityManager.loadEntitiesFromArrayString(mapData, entityCharToType);
+    // game.itemManager.loadFromArrayString(mapData, itemsCharToType);
+    game.furnitureManager.loadFromArrayString(mapData, furnitureCharToType);
 
-	// make the view a little smaller
-	game.renderer.resize(10, 14);
+    initHanziFurniture();
 
-	// get existing DOM elements
-	var mapContainerEl = document.getElementById('example-map-container');
-	var consoleContainerEl = document.getElementById('example-console-container');
+    // add input keybindings
+    game.input.addBindings(keyBindings);
 
-	// empty existing elements
-	mapContainerEl.innerHTML = '';
-	consoleContainerEl.innerHTML = '';
+    // set player starting position
+    game.player.x = playerStartX;
+    game.player.y = playerStartY;
 
-	// append elements created by the game to the DOM
-	mapContainerEl.appendChild(game.renderer.canvas);
-	consoleContainerEl.appendChild(game.console.el);
+    // make the view a little smaller
+    game.renderer.resize(rendererWidth, rendererHeight);
+
+    game.renderer.layers = [
+        new RL.RendererLayer(game, 'map',       {draw: false,   mergeWithPrevLayer: false}),
+
+        new RL.RendererLayer(game, 'furniture', {draw: false,   mergeWithPrevLayer: true}),
+        new RL.RendererLayer(game, 'item',      {draw: false,   mergeWithPrevLayer: true}),
+        new RL.RendererLayer(game, 'entity',    {draw: true,   mergeWithPrevLayer: true}),
+
+        new RL.RendererLayer(game, 'lighting',  {draw: true,    mergeWithPrevLayer: false}),
+        new RL.RendererLayer(game, 'fov',       {draw: true,    mergeWithPrevLayer: false}),
+    ];
+
+    game.renderer.uiLayers = [
+
+    ];
+
+    // get existing DOM elements
+    mapContainerEl.appendChild(game.renderer.canvas);
+    consoleContainerEl.appendChild(game.console.el);
+
+    // empty existing elements
+    mapContainerEl.innerHTML = '';
+    consoleContainerEl.innerHTML = '';
+
+    // append elements created by the game to the DOM
+    mapContainerEl.appendChild(game.renderer.canvas);
+    consoleContainerEl.appendChild(game.console.el);
+
+    var statElements = {
+        hpEl: document.getElementById('stat-hp'),
+        hpMaxEl: document.getElementById('stat-hp-max'),
+        meleeWeaponNameEl: document.getElementById('stat-melee-weapon-name'),
+        meleeWeaponStatsEl: document.getElementById('stat-melee-weapon-stats'),
+        rangedWeaponNameEl: document.getElementById('stat-ranged-weapon-name'),
+        rangedWeaponStatsEl: document.getElementById('stat-ranged-weapon-stats'),
+    };
+
+    RL.Util.merge(game.player, statElements);
+
+    game.player.renderHtml();
 };
 
 game.console.log('The game starts.');

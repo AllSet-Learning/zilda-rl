@@ -5,10 +5,11 @@
      * Manages a list of valid targets and which is currently selected.
      * @class ValidTargets
      * @constructor
-     * @param {Array} [targets=Array]
+     * @param {Array} [targets=Array] An Array of valid target objects to select from.
      */
     var ValidTargets = function(targets){
         this.targets = targets || [];
+        this.sortByRange();
     };
 
     ValidTargets.prototype = {
@@ -28,7 +29,7 @@
         current: null,
 
         /**
-         * Sets the currently selected target.
+         * Sets the currently selected target object.
          * @method setCurrent
          * @param {Object} target
          */
@@ -45,12 +46,13 @@
         },
 
         /**
-         * Gets the currently selected target.
+         * Gets the currently selected target object.
          * @method getCurrent
          * @return {Object}
          */
         getCurrent: function(){
             if(!this.current && this.targets.length){
+                this.sortByRange();
                 this.setCurrent(this.targets[0]);
             }
 
@@ -60,7 +62,7 @@
         /**
          * Sets the object after the currently selected object to be the selected object.
          * @method next
-         * @return {Object}
+         * @return {Object} The new currently selected object.
          */
         next: function(){
             if(!this.current){
@@ -81,7 +83,7 @@
         /**
          * Sets the object before the currently selected object to be the selected object.
          * @method prev
-         * @return {Object}
+         * @return {Object} The new currently selected object.
          */
         prev: function(){
             if(!this.current){
@@ -97,6 +99,40 @@
             this.setCurrent(this.targets[index]);
 
             return this.current;
+        },
+
+        /**
+         * Checks if `this.targets` contains `obj`.
+         * @method contains
+         * @param {Object} obj
+         * @return {Bool}
+         */
+        contains: function(obj){
+            for(var i = this.targets.length - 1; i >= 0; i--){
+                var target = this.targets[i];
+                if(target.value === obj){
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        /**
+         * Gets the closest target object.
+         * @method getClosest
+         * @return {Object}
+         */
+        getClosest: function(){
+            this.sortByRange();
+            if(this.targets[0]){
+                return this.targets[0];
+            }
+        },
+
+        sortByRange: function(){
+            this.targets.sort(function(a, b){
+                return a.range - b.range;
+            });
         }
     };
 

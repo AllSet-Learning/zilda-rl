@@ -1,83 +1,88 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://dl.dropboxusercontent.com/u/11720959/rl-demo/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
 
-<head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-
-    <title>AllSet Learning RL Game Ver 0.1</title>
-    <link href="assets/css/main.css" rel="stylesheet">
+    <title>RL Demo</title>
+<!--     <link href="https://dl.dropboxusercontent.com/u/11720959/rl-demo/css/main.css" rel="stylesheet"> -->
+	<link href="assets/css/main.css" rel="stylesheet">
 
 </head>
 
 <body>
     <div class="page container">
 
-        <div class="section">
-            <ol class="breadcrumb">
-                <li class="active">AllSet Learning RL Game Ver 0.1</li>
-            </ol>
-        </div>
-
-        <div class="section">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Block Pushing Game
-                </div>
-                <div class="panel-body">
-                    
-                    <!-- Example Content Start -->
-                    <div id="example-map-container" class="game-container"></div>
-<div id="example-console-container" class="game-container"></div>
-                    <!-- Example Content End -->
-                    
-                </div>
+        <div id="map-container" class="map-container"><canvas class="renderer" width="640" height="352"></canvas></div>
+        <div class="stats-container">
+            <h3>Stats</h3>
+            <div class="tr">
+                <span class="td">HP:</span>
+                <span class="td"><span id="stat-hp">20</span>/<span id="stat-hp-max">20</span></span>
             </div>
+
+            <h3>Weapons</h3>
+            <div class="tr">
+                <span class="td">Melee:</span>
+                <span class="td" id="stat-melee-weapon-name">Fists</span>
+                <span class="td" id="stat-melee-weapon-stats">[Damage: 1]</span>
+            </div>
+
+            <div class="tr">
+                <span class="td">Ranged:</span>
+                <span class="td" id="stat-ranged-weapon-name">Pistol</span>
+                <span class="td" id="stat-ranged-weapon-stats">[Damage: 2, Range: 5]</span>
+            </div>
+
+
+            <br>
+
+            <h3>Controls</h3>
+            <div id="controls" class="controls"><div class="tr"><div class="td">Action</div> <div class="td">Keys</div></div><div class="tr"><div class="td">up</div><div class="td">UP_ARROW, K, W</div></div><div class="tr"><div class="td">down</div><div class="td">DOWN_ARROW, J, S</div></div><div class="tr"><div class="td">left</div><div class="td">LEFT_ARROW, H, A</div></div><div class="tr"><div class="td">right</div><div class="td">RIGHT_ARROW, L, D</div></div><div class="tr"><div class="td">close</div><div class="td">C</div></div><div class="tr"><div class="td">open</div><div class="td">O</div></div><div class="tr"><div class="td">prev_target</div><div class="td">COMMA</div></div><div class="tr"><div class="td">next_target</div><div class="td">PERIOD</div></div><div class="tr"><div class="td">select</div><div class="td">ENTER</div></div><div class="tr"><div class="td">ranged_attack</div><div class="td">F</div></div><div class="tr"><div class="td">wait</div><div class="td">SPACE</div></div><div class="tr"><div class="td">grab</div><div class="td">G</div></div></div>
+
         </div>
-
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/main.js"></script>
-        <script src="assets/js/bootstrap/button.js"></script>
-        <script src="assets/js/bootstrap/collapse.js"></script>
-
+        <div id="console-container" class="console-container"><div class="console"></div></div>
+        <hr>
+        <p>
+            WIP Demo game using  <a href="https://github.com/unstoppablecarl/js-roguelike-skeleton">js-roguelike-skeleton</a>
+        </p>
         <!-- Load Vendor js files -->
-        <script src="assets/js/rot.js"></script>
-        
+        <script src="./src/rot.js"></script>
 
         <!-- Load Lib js files -->
-        <script src="src/rl.js"></script>
-        <script src="src/util.js"></script>
-        <script src="src/array-2d.js"></script>
-        <script src="src/map.js"></script>
-        <script src="src/entity.js"></script>
-        <script src="src/entity-manager.js"></script>
-        <script src="src/input.js"></script>
-        <script src="src/mouse.js"></script>
-        <script src="src/player.js"></script>
-        <script src="src/renderer.js"></script>
-        <script src="src/tile.js"></script>
-        <script src="src/console.js"></script>
-        <script src="src/fov-rot.js"></script>
-        <script src="src/lighting-rot.js"></script>
-        <script src="src/game.js"></script>
+        <script src="./src/rl.js"></script>
 
-        <!-- Load Example js files -->
-        <script src="js/main.js"></script>
-        
+        <script src="./src/util.js"></script>
+        <script src="./src/array-2d.js"></script>
+        <script src="./src/map.js"></script>
+        <script src="./src/entity.js"></script>
+        <script src="./src/entity-manager.js"></script>
+        <script src="./src/input.js"></script>
+        <script src="./src/mouse.js"></script>
+        <script src="./src/player.js"></script>
+        <script src="./src/renderer.js"></script>
+        <script src="./src/tile.js"></script>
+        <script src="./src/console.js"></script>
+        <script src="./src/fov-rot.js"></script>
+        <script src="./src/lighting-rot.js"></script>
+        <script src="./src/valid-targets.js"></script>
+        <script src="./src/valid-targets-finder.js"></script>
+        <script src="./src/game.js"></script>
 
-        <div class="panel panel-default">
-</div>
-<hr>
-<h4>
-    Roguelike JS Skeleton
-    |
-    <a href="http://unstoppablecarl.github.io/js-roguelike-skeleton/">Manual Home</a>
-    |
-    <a href="https://github.com/unstoppablecarl/js-roguelike-skeleton">Github</a>
-    |
-    <a href="https://api.github.com/repos/unstoppablecarl/js-roguelike-skeleton/zipball/master">Download Zip</a>
-</h4>
+        <script src="./src/console(1).js"></script>
+        <script src="./src/furniture.js"></script>
+        <script src="./src/multi-object-manager.js"></script>
+        <script src="./src/actions.js"></script>
+        <script src="./src/object-manager.js"></script>
+        <script src="./src/player(1).js"></script>
+        <script src="./src/game(1).js"></script>
+        <script src="./src/item.js"></script>
+        <script src="./src/renderer(1).js"></script>
+        <script src="./src/renderer-layer.js"></script>
+        <script src="./src/tile(1).js"></script>
+        <script src="./src/entity-types.js"></script>
+        <script src="./js/main.js"></script>
 
-    </div>
-</body>
 
-</html>
+
+
+</div></body></html>

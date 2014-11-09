@@ -2579,3 +2579,91 @@ pre[class*="language-"] {
   border-bottom: 1px dotted #353535;
   padding-bottom: 10px;
 }
+.tr {
+    display: table-row;
+}
+.td {
+    display: table-cell;
+    padding: 0 3px;
+}
+.map-container {
+    float:left;
+}
+.stats-container {
+    float:left;
+    margin: 0 0 0 20px;
+}
+
+.console-container {
+    font-size: 14px;
+    clear:both;
+}
+
+.teal {
+    color: #00bd9c;
+}
+
+.color-test .block {
+  float: left;
+  width: 100px;
+  height: 100px;
+}
+
+.color-test .blue {
+  background-color: #2c97de;
+}
+.color-test .blue-alt {
+  background-color: #227fbb;
+}
+.color-test .yellow {
+  background-color: #f2c500;
+}
+.color-test .yellow-alt {
+  background-color: #f59d00;
+}
+.color-test .orange {
+  background-color: #e87e04;
+}
+.color-test .orange-alt {
+  background-color: #d55400;
+}
+.color-test .red {
+  background-color: #e94b35;
+}
+.color-test .red-alt {
+  background-color: #c23824;
+}
+.color-test .green {
+  background-color: #1eca6b;
+}
+.color-test .green-alt {
+  background-color: #1aaf5d;
+}
+.color-test .purple {
+  background-color: #9c56b8;
+}
+.color-test .purple-alt {
+  background-color: #8f3faf;
+}
+.color-test .teal {
+  background-color: #00bd9c;
+}
+.color-test .teal-alt {
+  background-color: #00a185;
+}
+.color-test .slate {
+  background-color: #33495f;
+}
+.color-test .slate-alt {
+  background-color: #2b3e51;
+}
+.color-test .gray {
+  background-color: #95a5a6;
+}
+.color-test .gray-alt {
+  background-color: #7f8c8d;
+}
+
+.controls {
+    font-size: 12px;
+}

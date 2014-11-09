@@ -23,6 +23,10 @@
                 }
             }
         };
+
+        if(this.initialize){
+            this.initialize();
+        }
     };
 
     Player.prototype = {
@@ -187,7 +191,6 @@
                 var targetTileEnt = this.game.entityManager.get(x, y);
                 // if already occupied
                 if(targetTileEnt){
-                    this.game.console.log('Excuse me <strong>Mr.' + targetTileEnt.name + '</strong>, you appear to be in the way.');
                     return targetTileEnt.bump(this);
                 } else {
                     // targeted tile (attempting to move into)
@@ -205,6 +208,8 @@
         wait: function(){
             this.game.console.log('You wait for a moment.');
         },
+
+
 
     };
 
