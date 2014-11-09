@@ -401,23 +401,23 @@ function initHanziFurniture(){
 
     var hanziTiles = shuffle([hanzi1, hanzi2, hanzi3, hanzi4]);
 
-    y = Math.floor((Math.random() * 2) + 2);
-    x = Math.floor((Math.random() * 7) + 2);
+    y = Math.floor((Math.random() * 3) + 1);
+    x = Math.floor((Math.random() * 8) + 1);
     game.furnitureManager.add(x, y, hanziTiles.pop());
     game.lighting.set(x, y, 150, 0, 150);
 
-    y = Math.floor((Math.random() * 2) + 2);
-    x = Math.floor((Math.random() * 8) + 14);
+    y = Math.floor((Math.random() * 3) + 1);
+    x = Math.floor((Math.random() * 9) + 14);
     game.furnitureManager.add(x, y, hanziTiles.pop());
     game.lighting.set(x, y, 150, 0, 150);
 
-    y = Math.floor((Math.random() * 2) + 10);
-    x = Math.floor((Math.random() * 7) + 2);
+    y = Math.floor((Math.random() * 3) + 10);
+    x = Math.floor((Math.random() * 8) + 1);
     game.furnitureManager.add(x, y, hanziTiles.pop());
     game.lighting.set(x, y, 150, 0, 150);
 
-    y = Math.floor((Math.random() * 2) + 10);
-    x = Math.floor((Math.random() * 7) + 15);
+    y = Math.floor((Math.random() * 3) + 10);
+    x = Math.floor((Math.random() * 8) + 15);
     game.furnitureManager.add(x, y, hanziTiles.pop());
     game.lighting.set(x, y, 150, 0, 150);
 
