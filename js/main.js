@@ -76,19 +76,6 @@ function reset(){
 
     RL.Furniture.Types.door.char = '▣';
 
-    // RL.Furniture.Types.door.bump = function(entity){
-    //     if(!this.passable){
-    //         console.log("great");
-    //         this.passable = true;
-    //         this.blocksLos = false;
-    //         this.char = "'";
-    //         this.game.console.log('You open the <strong>' + this.name + '</strong>.');
-    //         doorOpenAudio.play();
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
     RL.Tile.Types.portal = {
         name: 'Portal',
         char: 'Ω',
@@ -293,14 +280,12 @@ var keyBindings = {
     left: ['LEFT_ARROW', 'H', 'A'],
     right: ['RIGHT_ARROW', 'L', 'D'],
     grab: ['G'],
-    prev_target: ['COMMA'],
-    next_target: ['PERIOD'],
-    select: ['ENTER']
 };
 
 var controlsEL = document.getElementById('controls');
 var mapContainerEl = document.getElementById('map-container');
 var consoleContainerEl = document.getElementById('console-container');
+var consoleDirectionsEl = document.getElementById('console-directions');
 var controlsHtml = '';
  controlsHtml += '<div class="tr"><div class="td">Action</div> <div class="td">Keys</div></div>';
 for(var action in keyBindings){
@@ -513,6 +498,7 @@ function gameReady() {
     // append elements created by the game to the DOM
     mapContainerEl.appendChild(game.renderer.canvas);
     consoleContainerEl.appendChild(game.console.el);
+    game.console.directionsEl = document.getElementById('console-directions');
 
     var statElements = {
         hpEl: document.getElementById('stat-hp'),
