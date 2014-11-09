@@ -141,7 +141,8 @@ function reset(){
             } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.type === 'hanzi1'){
+            var handzis = this.game.hanzi
+            if(entity.type === 'hanzi1' || (entity.type === 'hanzi2' && handzis[2].char===handzis[1].char) || (entity.type === 'hanzi3' && handzis[3].char===handzis[1].char) || (entity.type === 'hanzi4' && handzis[4].char===handzis[1].char)){
                 this.matched = true;
             } else {
                 this.matched = false;
@@ -164,7 +165,8 @@ function reset(){
             } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.type === 'hanzi2'){
+            var handzis = this.game.hanzi
+            if(entity.type === 'hanzi2' || (entity.type === 'hanzi1' && handzis[1].char===handzis[2].char) || (entity.type === 'hanzi3' && handzis[3].char===handzis[2].char) || (entity.type === 'hanzi4' && handzis[4].char===handzis[2].char)){
                 this.matched = true;
             } else {
                 this.matched = false;
@@ -187,7 +189,8 @@ function reset(){
             } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.type === 'hanzi3'){
+            var handzis = this.game.hanzi
+            if(entity.type === 'hanzi3' || (entity.type === 'hanzi1' && handzis[1].char===handzis[3].char) || (entity.type === 'hanzi2' && handzis[2].char===handzis[3].char) || (entity.type === 'hanzi4' && handzis[4].char===handzis[3].char)){
                 this.matched = true;
             } else {
                 this.matched = false;
@@ -211,7 +214,8 @@ function reset(){
             } else if(entity.name!='Player'){
                 verifierOnAudio.play();
             }
-            if(entity.type === 'hanzi4'){
+            var handzis = this.game.hanzi
+            if(entity.type === 'hanzi4' || (entity.type === 'hanzi1' && handzis[1].char===handzis[4].char) || (entity.type === 'hanzi2' && handzis[2].char===handzis[4].char) || (entity.type === 'hanzi3' && handzis[3].char===handzis[4].char)){
                 this.matched = true;
             } else {
                 this.matched = false;
