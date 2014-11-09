@@ -12,25 +12,42 @@
 <body>
     <div class="page container">
 
+
+        <div class="section">
+            <ol class="breadcrumb">
+                <li class="active">AllSet Learning RL Game Ver 1.0</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Block Pushing Game
+                </div>
+            </div>
+        </div>
+
         <div id="map-container" class="map-container"><canvas class="renderer" width="640" height="352"></canvas></div>
         <div class="stats-container">
-            <h3>Stats</h3>
-            <div class="tr">
-                <span class="td">HP:</span>
-                <span class="td"><span id="stat-hp">20</span>/<span id="stat-hp-max">20</span></span>
-            </div>
+            <div style="display:none;">
+                <h3>Stats</h3>
+                <div class="tr">
+                    <span class="td">HP:</span>
+                    <span class="td"><span id="stat-hp">20</span>/<span id="stat-hp-max">20</span></span>
+                </div>
 
-            <h3>Weapons</h3>
-            <div class="tr">
-                <span class="td">Melee:</span>
-                <span class="td" id="stat-melee-weapon-name">Fists</span>
-                <span class="td" id="stat-melee-weapon-stats">[Damage: 1]</span>
-            </div>
+                <h3>Weapons</h3>
+                <div class="tr">
+                    <span class="td">Melee:</span>
+                    <span class="td" id="stat-melee-weapon-name">Fists</span>
+                    <span class="td" id="stat-melee-weapon-stats">[Damage: 1]</span>
+                </div>
 
-            <div class="tr">
-                <span class="td">Ranged:</span>
-                <span class="td" id="stat-ranged-weapon-name">Pistol</span>
-                <span class="td" id="stat-ranged-weapon-stats">[Damage: 2, Range: 5]</span>
+                <div class="tr">
+                    <span class="td">Ranged:</span>
+                    <span class="td" id="stat-ranged-weapon-name">Pistol</span>
+                    <span class="td" id="stat-ranged-weapon-stats">[Damage: 2, Range: 5]</span>
+                </div>
             </div>
 
 
@@ -43,7 +60,7 @@
         <div id="console-container" class="console-container"><div class="console"></div></div>
         <hr>
         <p>
-            WIP Demo game using  <a href="https://github.com/unstoppablecarl/js-roguelike-skeleton">js-roguelike-skeleton</a>
+            WIP Chinese Learning RL game using  <a href="https://github.com/unstoppablecarl/js-roguelike-skeleton">js-roguelike-skeleton</a>
         </p>
         <!-- Load Vendor js files -->
         <script src="./src/rot.js"></script>
