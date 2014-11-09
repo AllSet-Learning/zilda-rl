@@ -2,6 +2,7 @@ var portalOpenAudio = new Audio('assets/audio/portalOpen.wav');
 var verifierOnAudio = new Audio('assets/audio/verifierOn.wav');
 var doorOpenAudio = new Audio('assets/audio/doorOpen.wav');
 var newLevelAudio = new Audio('assets/audio/newLevel.wav');
+var levelsDoneAudio = new Audio('assets/audio/levelsDone.wav');
 
 // Game
 
@@ -26,16 +27,17 @@ function reset(){
             var tile = this.verifierTiles[key];
 
             if(tile.matched){
-                tile.bgColor = '#fff';
+                // tile.bgColor = '#fff';
             } else {
                 solved = false;
-                tile.bgColor = '#222';
+                // tile.bgColor = '#222';
             }
         }
 
         if(solved){
             this.portal.color = 'yellow';
             this.portal.opened = true;
+            portalOpenAudio.play();
         } else {
             this.portal.color = '#777';
             this.portal.opened = false;
@@ -85,7 +87,6 @@ function reset(){
         blocksLos: false,
         opened: false,
         onEntityEnter: function(entity){
-            console.log(this);
             var tiles = RL.Tile.Types
             if (entity.name==='Player' && !this.introduced){
                 this.game.console.log('The <strong>' + this.name + '</strong> is closed, but there must be some way to open it.');
@@ -104,6 +105,7 @@ function reset(){
                         game.console.log('The level ' + level.toString() + ' starts.');
                         this.passable = false;
                     } else{
+                    	levelsDoneAudio.play();
                         game.console.log('Congratulations! All levels are done.');
                     }
                 }
