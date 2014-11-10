@@ -310,9 +310,8 @@ var mapCharToType = {
 var furnitureCharToType = {
     '+': 'door'
 };
+Math.floor((Math.random() * 3) + 1)
 
-var playerStartX = 7;
-var playerStartY = 8;
 var rendererWidth = 10;
 var rendererHeight = 14;
 
@@ -470,6 +469,13 @@ function gameReady() {
 
     // add input keybindings
     game.input.addBindings(keyBindings);
+
+    var playerStartX = Math.floor((Math.random() * 10) + 7);
+    var playerStartY = Math.floor((Math.random() * 4) + 5);
+    while (game.map.get(playerStartX, playerStartY).name==='Character Pedestal'||game.map.get(playerStartX, playerStartY).name==='Portal') {
+        playerStartX = Math.floor((Math.random() * 10) + 7);
+        playerStartY = Math.floor((Math.random() * 4) + 5);
+    }
 
     // set player starting position
     game.player.x = playerStartX;
