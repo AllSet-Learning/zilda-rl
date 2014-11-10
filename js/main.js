@@ -323,6 +323,18 @@ charArray.push(['人','山','人','海']);
 charArray.push(['入','乡','随','俗']);
 charArray.push(['五','湖','四','海']);
 charArray.push(['杀','鸡','儆','猴']);
+charArray.push(['垂','头','丧','气']);
+charArray.push(['无','动','于','衷']);
+charArray.push(['滔','滔','不','绝']);
+charArray.push(['无','懈','可','击']);
+charArray.push(['雷','厉','风','行']);
+charArray.push(['震','耳','欲','聋']);
+charArray.push(['头','头','是','道']);
+charArray.push(['咄','咄','逼','人']);
+
+// levels shuffled
+charArray = shuffle(charArray);
+
 
 function addChar(){
 
