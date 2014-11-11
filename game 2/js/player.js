@@ -5,8 +5,11 @@
 
     var NewPlayer = function Player(game){
         proto.constructor.call(this, game);
-
-        this.meleeWeapon = new RL.Item(this.game, 'fists');
+        this.meleeWeapon = new RL.Item(this.game, 'radical');
+        this.meleeWeapon1 = new RL.Item(this.game, 'radical');
+        this.meleeWeapon2 = new RL.Item(this.game, 'radical');
+        this.meleeWeapon3 = new RL.Item(this.game, 'radical');
+        this.meleeWeapon4 = new RL.Item(this.game, 'radical');
         this.rangedWeapon = new RL.Item(this.game, 'pistol');
 
         RL.Actions.Performable.add(this, 'open');
@@ -14,9 +17,16 @@
         RL.Actions.Performable.add(this, 'grab');
         RL.Actions.Performable.add(this, 'push');
         RL.Actions.Performable.add(this, 'melee_attack');
+        RL.Actions.Performable.add(this, 'melee_attack1');
+        RL.Actions.Performable.add(this, 'melee_attack2');
+        RL.Actions.Performable.add(this, 'melee_attack3');
+        RL.Actions.Performable.add(this, 'melee_attack4');
         RL.Actions.Performable.add(this, 'ranged_attack');
-
         RL.Actions.Resolvable.add(this, 'melee_attack');
+        RL.Actions.Resolvable.add(this, 'melee_attack1');
+        RL.Actions.Resolvable.add(this, 'melee_attack2');
+        RL.Actions.Resolvable.add(this, 'melee_attack3');
+        RL.Actions.Resolvable.add(this, 'melee_attack4');
 
     };
 
@@ -33,11 +43,19 @@
         hpMax: 20,
 
         meleeWeapon: null,
+        meleeWeapon1: null,
+        meleeWeapon2: null,
+        meleeWeapon3: null,
+        meleeWeapon4: null,
         rangedWeapon: null,
 
         hpEl: null,
         hpMaxEl: null,
         meleeWeaponEl: null,
+        meleeWeaponEl1: null,
+        meleeWeaponEl2: null,
+        meleeWeaponEl3: null,
+        meleeWeaponEl4: null,
         rangedWeaponEl: null,
 
         pendingAction: false,
@@ -79,6 +97,22 @@
             if(action === 'melee_attack'){
                 return this.meleeAttack();
             }
+
+            if(action === 'melee_attack1'){
+                return this.meleeAttack1();
+            }
+
+            if(action === 'melee_attack2'){
+                return this.meleeAttack2();
+            }
+
+            if(action === 'melee_attack3'){
+                return this.meleeAttack3();
+            }
+
+            if(action === 'melee_attack4'){
+                return this.meleeAttack4();
+            }            
 
             if(action === 'ranged_attack'){
                 return this.rangedAttack();
@@ -143,7 +177,18 @@
             if(!entity){
                 return false;
             }
-            return this.performAction('melee_attack', entity);
+            if(entity.type === 'character1'){
+                return this.performAction('melee_attack1', entity);
+            }
+            if(entity.type === 'character2'){
+                return this.performAction('melee_attack2', entity);
+            }
+            if(entity.type === 'character3'){
+                return this.performAction('melee_attack3', entity);
+            }
+            if(entity.type === 'character4'){
+                return this.performAction('melee_attack4', entity);
+            }
         },
 
         moveOpen: function(x, y){
@@ -186,9 +231,30 @@
         },
 
         // action
+
         meleeAttack: function(){
             this.pendingActionName = 'melee_attack';
             return this.actionAdjacentTargetSelect('melee_attack');
+        },
+
+        meleeAttack1: function(){
+            this.pendingActionName = 'melee_attack1';
+            return this.actionAdjacentTargetSelect('melee_attack1');
+        },
+
+        meleeAttack2: function(){
+            this.pendingActionName = 'melee_attack2';
+            return this.actionAdjacentTargetSelect('melee_attack2');
+        },
+
+        meleeAttack3: function(){
+            this.pendingActionName = 'melee_attack3';
+            return this.actionAdjacentTargetSelect('melee_attack3');
+        },
+
+        meleeAttack4: function(){
+            this.pendingActionName = 'melee_attack4';
+            return this.actionAdjacentTargetSelect('melee_attack4');
         },
 
         // action
@@ -361,6 +427,27 @@
                 this.meleeWeaponNameEl.innerHTML = meleeWeaponConsoleName.name;
                 this.meleeWeaponStatsEl.innerHTML = meleeWeaponConsoleName.stats;
             }
+            if(this.meleeWeapon1NameEl){
+                var meleeWeapon1ConsoleName = this.meleeWeapon1.getConsoleName();
+                this.meleeWeapon1NameEl.innerHTML = meleeWeapon1ConsoleName.name;
+                this.meleeWeapon1StatsEl.innerHTML = meleeWeapon1ConsoleName.stats;
+            }
+            if(this.meleeWeapon2NameEl){
+                var meleeWeapon2ConsoleName = this.meleeWeapon2.getConsoleName();
+                this.meleeWeapon2NameEl.innerHTML = meleeWeapon2ConsoleName.name;
+                this.meleeWeapon2StatsEl.innerHTML = meleeWeapon2ConsoleName.stats;
+            }
+            if(this.meleeWeapon3NameEl){
+                var meleeWeapon3ConsoleName = this.meleeWeapon3.getConsoleName();
+                this.meleeWeapon3NameEl.innerHTML = meleeWeapon3ConsoleName.name;
+                this.meleeWeapon3StatsEl.innerHTML = meleeWeapon3ConsoleName.stats;
+            }
+            if(this.meleeWeapon4NameEl){
+                var meleeWeapon4ConsoleName = this.meleeWeapon4.getConsoleName();
+                this.meleeWeapon4NameEl.innerHTML = meleeWeapon4ConsoleName.name;
+                this.meleeWeapon4StatsEl.innerHTML = meleeWeapon4ConsoleName.stats;
+            }
+
             if(this.rangedWeapon){
                 var rangedWeaponConsoleName = this.rangedWeapon.getConsoleName();
                 this.rangedWeaponNameEl.innerHTML = rangedWeaponConsoleName.name;

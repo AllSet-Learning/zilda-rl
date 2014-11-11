@@ -19,8 +19,6 @@ function reset(){
         }
     };
 
-    RL.Entity.Types.zombie.char = '滑';
-
     RL.Game.prototype.checkPuzzle = function(){
 
         var solved = true;
@@ -149,7 +147,10 @@ var mapCharToType = {
 };
 
 var entityCharToType = {
-    z: 'zombie'
+    A: 'character1',
+    B: 'character2',
+    C: 'character3',
+    D: 'character4',
 };
 
 var furnitureCharToType = {
@@ -163,9 +164,9 @@ var furnitureCharToType = {
 
 var itemsCharToType = {
     '1': 'radical1',
-    '2': 'umbrella',
-    '3': 'folding_chair',
-    '4': 'meat_tenderizer',
+    '2': 'radical2',
+    '3': 'radical3',
+    '4': 'radical4',
     '5': 'pointy_stick',
     m: 'medkit',
     b: 'bandage',
@@ -210,26 +211,26 @@ function gameReady() {
 
     mapData = [
         "######################",
-        "#1...................#",
+        "#1..................2#",
         "#....................#",
         "#....................#",
         "#....................#",
         "#....................#",
-        "#.............m......#",
+        "#....................#",
+        "#....................#",
+        "#........A......B....#",
+        "#....................#",
+        "#....................#",
+        "#..........p.........#",
+        "#....................#",
+        "#....................#",
+        "#....................#",
+        "#......C........D....#",
         "#....................#",
         "#....................#",
         "#....................#",
         "#....................#",
-        "#........z.p.........#",
-        "#....................#",
-        "#.....z..............#",
-        "#....................#",
-        "#....................#",
-        "#....................#",
-        "#.....z..............#",
-        "#....................#",
-        "#....................#",
-        "#....................#",
+        "#3..................4#",
         "######################",
     ];
 
@@ -244,7 +245,7 @@ function gameReady() {
     game.lighting.set(11, 20, 0, 0, 150);
     game.lighting.set(20, 11, 0, 0, 150);
     game.lighting.set(1, 11, 0, 0, 150);
-    game.lighting.set(11, 11, 255, 255, 255);
+    game.lighting.set(11, 11, 0, 150, 150);
 
     // generate and assign a map object (repaces empty default)
     game.setMapSize(game.map.width, game.map.height);
@@ -303,6 +304,14 @@ function gameReady() {
         hpMaxEl: document.getElementById('stat-hp-max'),
         meleeWeaponNameEl: document.getElementById('stat-melee-weapon-name'),
         meleeWeaponStatsEl: document.getElementById('stat-melee-weapon-stats'),
+        meleeWeapon1NameEl: document.getElementById('stat-melee-weapon1-name'),
+        meleeWeapon1StatsEl: document.getElementById('stat-melee-weapon1-stats'),
+        meleeWeapon2NameEl: document.getElementById('stat-melee-weapon2-name'),
+        meleeWeapon2StatsEl: document.getElementById('stat-melee-weapon2-stats'),
+        meleeWeapon3NameEl: document.getElementById('stat-melee-weapon3-name'),
+        meleeWeapon3StatsEl: document.getElementById('stat-melee-weapon3-stats'),
+        meleeWeapon4NameEl: document.getElementById('stat-melee-weapon4-name'),
+        meleeWeapon4StatsEl: document.getElementById('stat-melee-weapon4-stats'),
         rangedWeaponNameEl: document.getElementById('stat-ranged-weapon-name'),
         rangedWeaponStatsEl: document.getElementById('stat-ranged-weapon-stats'),
     };

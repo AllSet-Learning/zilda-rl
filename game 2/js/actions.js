@@ -95,14 +95,12 @@
             } else if(!settings.skipCanPerformAction && !this.canPerformAction(action, settings)){
                 return false;
             }
-
             var result;
             if(handler.performAction === true){
                 result = {};
             } else {
                 result = handler.performAction.call(this, target, settings);
             }
-
             if(result === false){
                 return false;
             }
@@ -119,6 +117,7 @@
                 target: target,
                 settings: settings,
             };
+
             return outcome;
         },
     };
@@ -274,6 +273,78 @@
             getTargetsForAction: makeAdjacentTargetsFinder('melee_attack')
         },
 
+        melee_attack1: {
+            canPerformAction: function(target, settings){
+                if(!this.meleeWeapon1){
+                    this.game.console.log('you do not have a melee weapon');
+                    return false;
+                }
+                return true;
+            },
+            canPerformActionOnTarget: true,
+            performAction: function(target, settings){
+                return {
+                    damage: this.meleeWeapon1.damage,
+                    weapon: this.meleeWeapon1
+                };
+            },
+            getTargetsForAction: makeAdjacentTargetsFinder('melee_attack1')
+        },
+
+        melee_attack2: {
+            canPerformAction: function(target, settings){
+                if(!this.meleeWeapon2){
+                    this.game.console.log('you do not have a melee weapon');
+                    return false;
+                }
+                return true;
+            },
+            canPerformActionOnTarget: true,
+            performAction: function(target, settings){
+                return {
+                    damage: this.meleeWeapon2.damage,
+                    weapon: this.meleeWeapon2
+                };
+            },
+            getTargetsForAction: makeAdjacentTargetsFinder('melee_attack2')
+        },
+
+        melee_attack3: {
+            canPerformAction: function(target, settings){
+                if(!this.meleeWeapon3){
+                    this.game.console.log('you do not have a melee weapon');
+                    return false;
+                }
+                return true;
+            },
+            canPerformActionOnTarget: true,
+            performAction: function(target, settings){
+                return {
+                    damage: this.meleeWeapon3.damage,
+                    weapon: this.meleeWeapon3
+                };
+            },
+            getTargetsForAction: makeAdjacentTargetsFinder('melee_attack3')
+        },
+
+        melee_attack4: {
+            canPerformAction: function(target, settings){
+                if(!this.meleeWeapon4){
+                    this.game.console.log('you do not have a melee weapon');
+                    return false;
+                }
+                return true;
+            },
+            canPerformActionOnTarget: true,
+            performAction: function(target, settings){
+                return {
+                    damage: this.meleeWeapon4.damage,
+                    weapon: this.meleeWeapon4
+                };
+            },
+            getTargetsForAction: makeAdjacentTargetsFinder('melee_attack4')
+        },
+
         ranged_attack: {
             canPerformAction: function(target, settings){
                 if(!this.rangedWeapon){
@@ -320,7 +391,6 @@
             }
         }
     };
-
     performableActions.zombie_melee_attack = RL.Util.merge({}, performableActions.melee_attack);
 
     RL.Util.merge(performableActions.zombie_melee_attack, {
@@ -431,6 +501,154 @@
                     source: source,
                     target: this,
                     type: 'melee_attack',
+                    targetX: this.x,
+                    targetY: this.y,
+                    sourceX: source.x,
+                    sourceY: source.y
+                };
+                this.game.smashLayer.set(source.x, source.y, smash);
+
+
+
+
+                if(this.bleeds){
+                    var splatter = result.damage / 10;
+                    if(this.dead){
+                        splatter *= 1.5;
+                    }
+                    this.game.splatter(this.x, this.y, splatter);
+                }
+                return true;
+            },
+        },
+        melee_attack1: {
+            canResolveAction: true,
+            resolveAction: function(source, settings){
+                var result = settings.result;
+
+                this.takeDamage(result.damage);
+
+                var weapon = {
+                    name: result.weapon.name,
+                    damage: result.damage
+                };
+                this.game.console.logAttack(source, weapon, this);
+
+                var smash = {
+                    source: source,
+                    target: this,
+                    type: 'melee_attack1',
+                    targetX: this.x,
+                    targetY: this.y,
+                    sourceX: source.x,
+                    sourceY: source.y
+                };
+                this.game.smashLayer.set(source.x, source.y, smash);
+
+
+
+
+                if(this.bleeds){
+                    var splatter = result.damage / 10;
+                    if(this.dead){
+                        splatter *= 1.5;
+                    }
+                    this.game.splatter(this.x, this.y, splatter);
+                }
+                return true;
+            },
+        },
+        melee_attack2: {
+            canResolveAction: true,
+            resolveAction: function(source, settings){
+                var result = settings.result;
+
+                this.takeDamage(result.damage);
+
+                var weapon = {
+                    name: result.weapon.name,
+                    damage: result.damage
+                };
+                this.game.console.logAttack(source, weapon, this);
+
+                var smash = {
+                    source: source,
+                    target: this,
+                    type: 'melee_attack2',
+                    targetX: this.x,
+                    targetY: this.y,
+                    sourceX: source.x,
+                    sourceY: source.y
+                };
+                this.game.smashLayer.set(source.x, source.y, smash);
+
+
+
+
+                if(this.bleeds){
+                    var splatter = result.damage / 10;
+                    if(this.dead){
+                        splatter *= 1.5;
+                    }
+                    this.game.splatter(this.x, this.y, splatter);
+                }
+                return true;
+            },
+        },
+        melee_attack3: {
+            canResolveAction: true,
+            resolveAction: function(source, settings){
+                var result = settings.result;
+
+                this.takeDamage(result.damage);
+
+                var weapon = {
+                    name: result.weapon.name,
+                    damage: result.damage
+                };
+                this.game.console.logAttack(source, weapon, this);
+
+                var smash = {
+                    source: source,
+                    target: this,
+                    type: 'melee_attack3',
+                    targetX: this.x,
+                    targetY: this.y,
+                    sourceX: source.x,
+                    sourceY: source.y
+                };
+                this.game.smashLayer.set(source.x, source.y, smash);
+
+
+
+
+                if(this.bleeds){
+                    var splatter = result.damage / 10;
+                    if(this.dead){
+                        splatter *= 1.5;
+                    }
+                    this.game.splatter(this.x, this.y, splatter);
+                }
+                return true;
+            },
+        },
+        melee_attack4: {
+            canResolveAction: true,
+            resolveAction: function(source, settings){
+                var result = settings.result;
+
+                this.takeDamage(result.damage);
+
+                var weapon = {
+                    name: result.weapon.name,
+                    damage: result.damage
+                };
+                this.game.console.logAttack(source, weapon, this);
+
+                var smash = {
+                    source: source,
+                    target: this,
+                    type: 'melee_attack4',
                     targetX: this.x,
                     targetY: this.y,
                     sourceX: source.x,

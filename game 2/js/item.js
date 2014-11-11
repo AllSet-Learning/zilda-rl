@@ -180,7 +180,99 @@
                     color: this.consoleColor
                 };
             }
-        }
+        },
+        meleeWeapon1: {
+            canAttachTo: function(entity){
+                if(this.game.player !== entity){
+                    return false;
+                }
+                if(this.damage < entity.meleeWeapon1.damage){
+                    this.game.console.logCanNotPickupWeapon(entity, entity.meleeWeapon1, this);
+                    return false;
+                }
+                return true;
+            },
+            attachTo: function(entity){
+                Item.prototype.attachTo.call(this, entity);
+                entity.meleeWeapon1 = this;
+            },
+            getConsoleName: function(){
+                return {
+                    name: this.name,
+                    stats: '[Damage: ' + this.damage + ']',
+                    color: this.consoleColor
+                };
+            }
+        },
+        meleeWeapon2: {
+            canAttachTo: function(entity){
+                if(this.game.player !== entity){
+                    return false;
+                }
+                if(this.damage < entity.meleeWeapon2.damage){
+                    this.game.console.logCanNotPickupWeapon(entity, entity.meleeWeapon2, this);
+                    return false;
+                }
+                return true;
+            },
+            attachTo: function(entity){
+                Item.prototype.attachTo.call(this, entity);
+                entity.meleeWeapon2 = this;
+            },
+            getConsoleName: function(){
+                return {
+                    name: this.name,
+                    stats: '[Damage: ' + this.damage + ']',
+                    color: this.consoleColor
+                };
+            }
+        },
+        meleeWeapon3: {
+            canAttachTo: function(entity){
+                if(this.game.player !== entity){
+                    return false;
+                }
+                if(this.damage < entity.meleeWeapon3.damage){
+                    this.game.console.logCanNotPickupWeapon(entity, entity.meleeWeapon3, this);
+                    return false;
+                }
+                return true;
+            },
+            attachTo: function(entity){
+                Item.prototype.attachTo.call(this, entity);
+                entity.meleeWeapon3 = this;
+            },
+            getConsoleName: function(){
+                return {
+                    name: this.name,
+                    stats: '[Damage: ' + this.damage + ']',
+                    color: this.consoleColor
+                };
+            }
+        },
+        meleeWeapon4: {
+            canAttachTo: function(entity){
+                if(this.game.player !== entity){
+                    return false;
+                }
+                if(this.damage < entity.meleeWeapon4.damage){
+                    this.game.console.logCanNotPickupWeapon(entity, entity.meleeWeapon4, this);
+                    return false;
+                }
+                return true;
+            },
+            attachTo: function(entity){
+                Item.prototype.attachTo.call(this, entity);
+                entity.meleeWeapon4 = this;
+            },
+            getConsoleName: function(){
+                return {
+                    name: this.name,
+                    stats: '[Damage: ' + this.damage + ']',
+                    color: this.consoleColor
+                };
+            }
+        },
     };
 
     RL.Util.merge(Item.prototype, RL.Mixins.TileDraw);
@@ -196,6 +288,22 @@
 
     var makeRangedWeapon = function(obj){
         return RL.Util.merge(obj, Defaults.rangedWeapon);
+    };
+
+    var makeMeleeWeapon1 = function(obj){
+        return RL.Util.merge(obj, Defaults.meleeWeapon1);
+    };
+
+    var makeMeleeWeapon2 = function(obj){
+        return RL.Util.merge(obj, Defaults.meleeWeapon2);
+    };
+
+    var makeMeleeWeapon3 = function(obj){
+        return RL.Util.merge(obj, Defaults.meleeWeapon3);
+    };
+
+    var makeMeleeWeapon4 = function(obj){
+        return RL.Util.merge(obj, Defaults.meleeWeapon4);
     };
 
     /**
@@ -379,11 +487,44 @@
         }),
 
         // radical weapons
-        radical1: makeMeleeWeapon({
-            name: 'Weapon "水"',
-            color: 'brown',
+
+        radical: makeMeleeWeapon({
+            name: 'None',
+            color: '#808080',
             bgColor: false,
             char: '水',
+            damage: 0,
+        }),
+
+        radical1: makeMeleeWeapon1({
+            name: 'Radical "水"',
+            color: '#808080',
+            bgColor: false,
+            char: '水',
+            damage: 1,
+        }),
+
+        radical2: makeMeleeWeapon2({
+            name: 'Radical "人"',
+            color: '#808080',
+            bgColor: false,
+            char: '人',
+            damage: 1,
+        }),
+
+        radical3: makeMeleeWeapon3({
+            name: 'Radical "木"',
+            color: '#808080',
+            bgColor: false,
+            char: '木',
+            damage: 1,
+        }),
+
+        radical4: makeMeleeWeapon4({
+            name: 'Radical "日"',
+            color: '#808080',
+            bgColor: false,
+            char: '日',
             damage: 1,
         }),
 
