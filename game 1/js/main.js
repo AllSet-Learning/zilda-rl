@@ -52,10 +52,6 @@ function reset(){
         }
     };
 
-    RL.Game.prototype.test = function(){
-        console.log('hello');
-    }
-
     RL.Furniture.prototype.moveTo = function(x, y) {
         return this.game.furnitureMoveTo(this, x, y);
     };
