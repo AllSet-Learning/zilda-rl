@@ -100,6 +100,7 @@
          */
         attachTo: function(entity){
             this.game.console.logPickUp(entity, this);
+            itemPickedAudio.play();
         },
 
         getConsoleName: function(){
@@ -492,39 +493,39 @@
             name: 'None',
             color: '#808080',
             bgColor: false,
-            char: '水',
+            char: '无',
             damage: 0,
         }),
 
         radical1: makeMeleeWeapon1({
-            name: 'Radical "水"',
+            name: 'Radical "一"',
             color: '#808080',
             bgColor: false,
-            char: '水',
+            char: '一',
             damage: 1,
         }),
 
         radical2: makeMeleeWeapon2({
-            name: 'Radical "人"',
+            name: 'Radical "二"',
             color: '#808080',
             bgColor: false,
-            char: '人',
+            char: '二',
             damage: 1,
         }),
 
         radical3: makeMeleeWeapon3({
-            name: 'Radical "木"',
+            name: 'Radical "三"',
             color: '#808080',
             bgColor: false,
-            char: '木',
+            char: '三',
             damage: 1,
         }),
 
         radical4: makeMeleeWeapon4({
-            name: 'Radical "日"',
+            name: 'Radical "四"',
             color: '#808080',
             bgColor: false,
-            char: '日',
+            char: '四',
             damage: 1,
         }),
 

@@ -199,8 +199,8 @@
         },
 
         character1: {
-            name: 'Character "滑"',
-            char: '滑',
+            name: 'Character "一"',
+            char: '一',
             color: RL.Util.COLORS.red,
             bgColor: false,
             charStrokeColor: '#000',
@@ -232,6 +232,8 @@
                 this.hp -= amount;
                 if(this.hp <= 0) {
                     this.dead = true;
+                    entityDeadAudio.play();
+                    this.game.checkDead();
                 }
             },
 
@@ -246,7 +248,8 @@
              */
             _update: function() {
 
-                var stumbleChance = this.turnsSinceStumble / this.maxTurnsWithoutStumble;
+                // behavior modified: stumble change tripled
+                var stumbleChance = 3 * this.turnsSinceStumble / this.maxTurnsWithoutStumble;
                 if(this.turnsSinceStumble && Math.random() < stumbleChance) {
                     this.turnsSinceStumble = 0;
                     return true;
@@ -392,8 +395,8 @@
             },
         },
         character2: {
-            name: 'Character "体"',
-            char: '体',
+            name: 'Character "二"',
+            char: '三',
             color: RL.Util.COLORS.red,
             bgColor: false,
             charStrokeColor: '#000',
@@ -425,6 +428,8 @@
                 this.hp -= amount;
                 if(this.hp <= 0) {
                     this.dead = true;
+                    entityDeadAudio.play();
+                    this.game.checkDead();
                 }
             },
 
@@ -487,11 +492,12 @@
                 }
             },
 
+            // behavior modified: opposed last seen so as to behave inversely
             updatePlayerLastSeen: function() {
                 if(this.playerVisible()) {
                     this.playerLastSeen = {
-                        x: this.game.player.x,
-                        y: this.game.player.y
+                        x: -this.game.player.x,
+                        y: -this.game.player.y
                     };
                 }
 
@@ -585,8 +591,8 @@
             },
         },
         character3: {
-            name: 'Character "林"',
-            char: '林',
+            name: 'Character "三"',
+            char: '三',
             color: RL.Util.COLORS.red,
             bgColor: false,
             charStrokeColor: '#000',
@@ -618,6 +624,8 @@
                 this.hp -= amount;
                 if(this.hp <= 0) {
                     this.dead = true;
+                    entityDeadAudio.play();
+                    this.game.checkDead();
                 }
             },
 
@@ -680,10 +688,11 @@
                 }
             },
 
+            // behavior modified: weird behavior
             updatePlayerLastSeen: function() {
                 if(this.playerVisible()) {
                     this.playerLastSeen = {
-                        x: this.game.player.x,
+                        x: -this.game.player.x,
                         y: this.game.player.y
                     };
                 }
@@ -778,8 +787,8 @@
             },
         },
         character4: {
-            name: 'Character "明"',
-            char: '明',
+            name: 'Character "四"',
+            char: '四',
             color: RL.Util.COLORS.red,
             bgColor: false,
             charStrokeColor: '#000',
@@ -811,6 +820,8 @@
                 this.hp -= amount;
                 if(this.hp <= 0) {
                     this.dead = true;
+                    entityDeadAudio.play();
+                    this.game.checkDead();
                 }
             },
 

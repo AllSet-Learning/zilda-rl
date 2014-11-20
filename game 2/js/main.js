@@ -3,11 +3,48 @@ var verifierOnAudio = new Audio('assets/audio/verifierOn.wav');
 var doorOpenAudio = new Audio('assets/audio/doorOpen.wav');
 var newLevelAudio = new Audio('assets/audio/newLevel.wav');
 var levelsDoneAudio = new Audio('assets/audio/levelsDone.wav');
+var entityDeadAudio = new Audio('assets/audio/entityDead.wav');
+var itemPickedAudio = new Audio('assets/audio/itemPicked.wav');
+
+var level = 1;
+var charArray = [];
+// add more radicals and characters here
+charArray.push(['水','木','日','人','滑','林','明','体']);
+charArray.push(['火','口','耳','月','煮','喝','聆','胖']);
+
+// randomize the levels
+charArray = shuffle(charArray);
 
 // Game
 
-function reset(){
 
+
+function reset(){
+	RL.Game.prototype.checkDead = function(){
+
+        var allDead = true;
+
+        for(var key in this.characters){
+            var character = this.characters[key];
+
+            if(character.dead){
+                // tile.bgColor = '#fff';
+            } else {
+                allDead = false;
+                // tile.bgColor = '#222';
+            }
+        }
+
+        if(allDead){
+            this.portal.color = 'yellow';
+            this.portal.opened = true;
+            portalOpenAudio.play();
+        } else {
+            this.portal.color = '#777';
+            this.portal.opened = false;
+        }
+
+    };
     // Renderer
     RL.Renderer.prototype.tileSize = 30;
 
@@ -17,32 +54,6 @@ function reset(){
         if(tile){
             tile.onEntityEnter(entity);
         }
-    };
-
-    RL.Game.prototype.checkPuzzle = function(){
-
-        var solved = true;
-
-        for(var key in this.verifierTiles){
-            var tile = this.verifierTiles[key];
-
-            if(tile.matched){
-                // tile.bgColor = '#fff';
-            } else {
-                solved = false;
-                // tile.bgColor = '#222';
-            }
-        }
-
-        if(solved){
-            this.portal.color = 'yellow';
-            this.portal.opened = true;
-            portalOpenAudio.play();
-        } else {
-            this.portal.color = '#777';
-            this.portal.opened = false;
-        }
-
     };
 
     RL.Game.prototype.introduceVerifier = function(){
@@ -74,12 +85,12 @@ function reset(){
         bgColor: '#222',
         passable: true,
         blocksLos: false,
-        opened: true,
+        opened: false,
         onEntityEnter: function(entity){
             if (this.opened) {
                 if(entity.name==='Player'){
                     level++;
-                    if (level<10){
+                    if (level<=charArray.length){
                         newLevelAudio.play();
                         game = new RL.Game();
                         reset();
@@ -178,8 +189,6 @@ Math.floor((Math.random() * 3) + 1)
 var rendererWidth = 10;
 var rendererHeight = 15;
 
-var level = 1;
-
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
 
@@ -206,35 +215,126 @@ reset();
 
 gameReady();
 
+function addChar() {
+    // add char to entities
+    RL.Entity.Types.character1.char = charArray[level-1].pop();
+    RL.Entity.Types.character1.name = 'Character "'+RL.Entity.Types.character1.char+'"';
+    RL.Entity.Types.character2.char = charArray[level-1].pop();
+    RL.Entity.Types.character2.name = 'Character "'+RL.Entity.Types.character2.char+'"';
+    RL.Entity.Types.character3.char = charArray[level-1].pop();
+    RL.Entity.Types.character3.name = 'Character "'+RL.Entity.Types.character3.char+'"';
+    RL.Entity.Types.character4.char = charArray[level-1].pop();
+    RL.Entity.Types.character4.name = 'Character "'+RL.Entity.Types.character4.char+'"';
+
+	// add char to items
+    RL.Item.Types.radical1.char = charArray[level-1].pop();
+    RL.Item.Types.radical1.name = 'Radical "'+RL.Item.Types.radical1.char+'"';
+    RL.Item.Types.radical2.char = charArray[level-1].pop();
+    RL.Item.Types.radical2.name = 'Radical "'+RL.Item.Types.radical2.char+'"';
+    RL.Item.Types.radical3.char = charArray[level-1].pop();
+    RL.Item.Types.radical3.name = 'Radical "'+RL.Item.Types.radical3.char+'"';
+    RL.Item.Types.radical4.char = charArray[level-1].pop();
+    RL.Item.Types.radical4.name = 'Radical "'+RL.Item.Types.radical4.char+'"';
+}
+
+function initRadicals(){
+
+	var radical1 = new RL.Item(game, 'radical1');
+	var radical2 = new RL.Item(game, 'radical2');
+	var radical3 = new RL.Item(game, 'radical3');
+	var radical4 = new RL.Item(game, 'radical4');
+
+	var radicalItems = shuffle([radical1, radical2, radical3, radical4]);
+	x = 1;
+	y = 1;
+	game.itemManager.add(x, y, radicalItems.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+
+	x = mapData[0].length - 2;
+	y = 1;
+	game.itemManager.add(x, y, radicalItems.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+
+	x = mapData[0].length - 2;
+	y = mapData.length - 2;
+	game.itemManager.add(x, y, radicalItems.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+
+	x = 1;
+	y = mapData.length - 2;
+	game.itemManager.add(x, y, radicalItems.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+}
+
+function initCharacters(){
+	var character1 = new RL.Entity(game, 'character1');
+	var character2 = new RL.Entity(game, 'character2');
+	var character3 = new RL.Entity(game, 'character3');
+	var character4 = new RL.Entity(game, 'character4');
+
+    game.characters = {
+        1: character1,
+        2: character2,
+        3: character3,
+        4: character4
+    };
+
+	var characterEntities = shuffle([character1, character2, character3, character4]);
+    x = Math.floor((Math.random() * (mapData[0].length - 4)) + 2);
+    y = Math.floor((Math.random() * (mapData.length - 4)) + 2);
+	game.entityManager.add(x, y, characterEntities.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+
+    x = Math.floor((Math.random() * (mapData[0].length - 4)) + 2);
+    y = Math.floor((Math.random() * (mapData.length - 4)) + 2);
+	game.entityManager.add(x, y, characterEntities.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+
+    x = Math.floor((Math.random() * (mapData[0].length - 4)) + 2);
+    y = Math.floor((Math.random() * (mapData.length - 4)) + 2);
+	game.entityManager.add(x, y, characterEntities.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+
+    x = Math.floor((Math.random() * (mapData[0].length - 4)) + 2);
+    y = Math.floor((Math.random() * (mapData.length - 4)) + 2);
+	game.entityManager.add(x, y, characterEntities.pop());
+	game.lighting.set(x, y, 150, 0, 150);
+}
 
 function gameReady() {
 
     mapData = [
         "######################",
-        "#1..................2#",
         "#....................#",
         "#....................#",
         "#....................#",
         "#....................#",
         "#....................#",
         "#....................#",
-        "#........A......B....#",
+        "#....................#",
+        "#....................#",
         "#....................#",
         "#....................#",
         "#..........p.........#",
         "#....................#",
         "#....................#",
         "#....................#",
-        "#......C........D....#",
         "#....................#",
         "#....................#",
         "#....................#",
         "#....................#",
-        "#3..................4#",
+        "#....................#",
+        "#....................#",
         "######################",
     ];
 
     game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
+
+    game.map.each(function(value, x, y){
+        if(value.type === 'portal'){
+            game.portal = value;
+        }
+    });
 
     // add some lights
     game.lighting.set(1, 1, 0, 0, 150);
@@ -257,12 +357,16 @@ function gameReady() {
     // add input keybindings
     game.input.addBindings(keyBindings);
 
-    var playerStartX = Math.floor((Math.random() * 10) + 7);
-    var playerStartY = Math.floor((Math.random() * 4) + 5);
+    var playerStartX = Math.floor((Math.random() * (mapData[0].length - 4)) + 2);
+    var playerStartY = Math.floor((Math.random() * (mapData.length - 4)) + 2);
     while (game.map.get(playerStartX, playerStartY).name==='Character Pedestal'||game.map.get(playerStartX, playerStartY).name==='Portal') {
-        playerStartX = Math.floor((Math.random() * 10) + 7);
-        playerStartY = Math.floor((Math.random() * 4) + 5);
+        playerStartX = Math.floor((Math.random() * (mapData[0].length - 4)) + 2);
+        playerStartY = Math.floor((Math.random() * (mapData.length - 4)) + 2);
     }
+
+    addChar();
+    initRadicals();
+    initCharacters();
 
     // set player starting position
     game.player.x = playerStartX;
@@ -270,7 +374,6 @@ function gameReady() {
 
     // make the view a little smaller
     game.renderer.resize(rendererWidth, rendererHeight);
-
     game.renderer.layers = [
         new RL.RendererLayer(game, 'map',       {draw: false,   mergeWithPrevLayer: false}),
 
