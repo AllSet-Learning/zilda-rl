@@ -275,8 +275,9 @@
 
         melee_attack1: {
             canPerformAction: function(target, settings){
-                if(!this.meleeWeapon1){
-                    this.game.console.log('you do not have a melee weapon');
+                // console.log(this.meleeWeapon1);
+                if(this.meleeWeapon1.name==="None"){
+                    this.game.console.log('You do not have the right melee weapon.');
                     return false;
                 }
                 return true;
@@ -293,8 +294,9 @@
 
         melee_attack2: {
             canPerformAction: function(target, settings){
-                if(!this.meleeWeapon2){
-                    this.game.console.log('you do not have a melee weapon');
+                // console.log(this.meleeWeapon2);
+                if(this.meleeWeapon2.name==="None"){
+                    this.game.console.log('You do not have the right melee weapon.');
                     return false;
                 }
                 return true;
@@ -311,8 +313,9 @@
 
         melee_attack3: {
             canPerformAction: function(target, settings){
-                if(!this.meleeWeapon3){
-                    this.game.console.log('you do not have a melee weapon');
+                // console.log(this.meleeWeapon3);
+                if(this.meleeWeapon3.name==="None"){
+                    this.game.console.log('You do not have the right melee weapon.');
                     return false;
                 }
                 return true;
@@ -329,8 +332,9 @@
 
         melee_attack4: {
             canPerformAction: function(target, settings){
-                if(!this.meleeWeapon4){
-                    this.game.console.log('you do not have a melee weapon');
+                // console.log(this.meleeWeapon4);
+                if(this.meleeWeapon4.name==="None"){
+                    this.game.console.log('You do not have the right melee weapon.');
                     return false;
                 }
                 return true;

@@ -124,7 +124,7 @@ function reset(){
             } else {
                 this.matched = false;
             }
-            this.game.checkPuzzle();
+            this.game.checkPuzzle(); //if hanzi moved off, portal remains open
         }
     };
 

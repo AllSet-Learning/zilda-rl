@@ -1,3 +1,5 @@
+// changes also made in actions.js, enetity-types.js, item.js
+
 var portalOpenAudio = new Audio('assets/audio/portalOpen.wav');
 var verifierOnAudio = new Audio('assets/audio/verifierOn.wav');
 var doorOpenAudio = new Audio('assets/audio/doorOpen.wav');
@@ -8,7 +10,7 @@ var itemPickedAudio = new Audio('assets/audio/itemPicked.wav');
 
 var level = 1;
 var charArray = [];
-// add more radicals and characters here
+// add more radicals and characters here, one radical matches only one hanzi
 charArray.push(['水','木','日','人','滑','林','明','体']);
 charArray.push(['火','口','耳','月','煮','喝','聆','胖']);
 
