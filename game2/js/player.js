@@ -18,9 +18,9 @@
         RL.Actions.Performable.add(this, 'push');
         RL.Actions.Performable.add(this, 'melee_attack');
         RL.Actions.Performable.add(this, 'melee_attack1');
-        RL.Actions.Performable.add(this, 'melee_attack2');
-        RL.Actions.Performable.add(this, 'melee_attack3');
-        RL.Actions.Performable.add(this, 'melee_attack4');
+        //RL.Actions.Performable.add(this, 'melee_attack2');
+        //RL.Actions.Performable.add(this, 'melee_attack3');
+        //RL.Actions.Performable.add(this, 'melee_attack4');
         RL.Actions.Performable.add(this, 'ranged_attack');
         RL.Actions.Resolvable.add(this, 'melee_attack');
         RL.Actions.Resolvable.add(this, 'melee_attack1');

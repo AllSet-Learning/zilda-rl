@@ -334,70 +334,6 @@
             char: "'",
             healAmount: 1,
         }),
-        disinfectant: makeHealingItem({
-            name: 'Disinfectant',
-            color: '#fff',
-            bgColor: false,
-            char: ",",
-            healAmount: 2,
-        }),
-        bandage: makeHealingItem({
-            name: 'Bandage',
-            color: '#fff',
-            bgColor: false,
-            char: 'o',
-            healAmount: 3,
-        }),
-        icy_hot: makeHealingItem({
-            name: 'Icy Hot',
-            color: '#fff',
-            bgColor: false,
-            char: '[',
-            healAmount: 4,
-        }),
-        medical_tape: makeHealingItem({
-            name: 'Medical Tape',
-            color: '#fff',
-            bgColor: false,
-            char: '~',
-            healAmount: 5,
-        }),
-        asprin: makeHealingItem({
-            name: 'Asprin',
-            color: '#fff',
-            bgColor: false,
-            char: ':',
-            healAmount: 6,
-        }),
-        stitch_kit: makeHealingItem({
-            name: 'Stitch Kit',
-            color: '#fff',
-            bgColor: false,
-            char: '\\',
-            healAmount: 7,
-        }),
-        medkit: makeHealingItem({
-            name: 'Medkit',
-            color: 'red',
-            bgColor: '#fff',
-            char: '+',
-            healAmount: 8,
-        }),
-        rx_pain_killers: makeHealingItem({
-            name: 'Rx Pain Killers',
-            color: 'red',
-            bgColor: '#fff',
-            char: ';',
-            healAmount: 9,
-        }),
-        quik_clot: makeHealingItem({
-            name: 'Quik Clot',
-            color: 'red',
-            bgColor: '#fff',
-            char: '!',
-            healAmount: 10,
-        }),
-
 
         // enemy weapons
         claws: makeMeleeWeapon({
@@ -412,83 +348,9 @@
         fists: makeMeleeWeapon({
             name: 'Fists',
             damage: 1,
-        }),
-        umbrella: makeMeleeWeapon({
-            name: 'Umbrella',
-            color: '#2c97de',
-            bgColor: false,
-            char: '☂',
-            damage: 2,
-        }),
-        folding_chair: makeMeleeWeapon({
-            name: 'Folding Chair',
-            color: '#9c56b8',
-            bgColor: false,
-            char: '}',
-            damage: 3,
-        }),
-        meat_tenderizer: makeMeleeWeapon({
-            name: 'Meat Tenderizer',
-            color: '#9c56b8',
-            bgColor: false,
-            char: '}',
-            damage: 4,
-        }),
-        pointy_stick: makeMeleeWeapon({
-            name: 'Pointy Stick',
-            color: 'brown',
-            bgColor: false,
-            char: '/',
-            damage: 5,
-        }),
-        wooden_baseball_bat: makeMeleeWeapon({
-            name: 'Wooden Baseball Bat',
-            color: 'brown',
-            bgColor: false,
-            char: '_',
-            damage: 6,
-        }),
-        crowbar: makeMeleeWeapon({
-            name: 'Crowbar',
-            color: 'red',
-            bgColor: false,
-            char: '~',
-            damage: 7,
-        }),
-        shovel: makeMeleeWeapon({
-            name: 'Shovel',
-            color: 'tan',
-            bgColor: false,
-            char: 'T',
-            damage: 8,
-        }),
-        fire_axe: makeMeleeWeapon({
-            name: 'Fire Axe',
-            color: 'red',
-            bgColor: false,
-            char: 'r',
-            damage: 9,
-        }),
-        chainsaw: makeMeleeWeapon({
-            name: 'Chainsaw',
-            color: 'red',
-            bgColor: false,
-            char: '*',
-            damage: 10,
-        }),
-
-
-        // ranged weapons
-        pistol: makeRangedWeapon({
-            name: 'Pistol',
-            color: '#808080',
-            char: 'r',
-            damage: 2,
-            range: 5,
-        }),
+	}),
 
         // radical weapons
-
         radical: makeMeleeWeapon({
             name: 'None',
             color: '#808080',

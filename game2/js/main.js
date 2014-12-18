@@ -11,8 +11,8 @@ var itemPickedAudio = new Audio('assets/audio/itemPicked.wav');
 var level = 1;
 var charArray = [];
 // add more radicals and characters here, one radical matches only one hanzi
-charArray.push(['水','木','日','人','滑','林','明','体']);
-charArray.push(['火','口','耳','月','煮','喝','聆','胖']);
+charArray.push([ ['水','滑'], ['木','林'], ['日','明'], ['人','体'] ]);
+// charArray.push(['火','口','耳','月','煮','喝','聆','胖']);
 
 // randomize the levels
 charArray = shuffle(charArray);
@@ -219,24 +219,18 @@ gameReady();
 
 function addChar() {
     // add char to entities
-    RL.Entity.Types.character1.char = charArray[level-1].pop();
-    RL.Entity.Types.character1.name = 'Character "'+RL.Entity.Types.character1.char+'"';
-    RL.Entity.Types.character2.char = charArray[level-1].pop();
-    RL.Entity.Types.character2.name = 'Character "'+RL.Entity.Types.character2.char+'"';
-    RL.Entity.Types.character3.char = charArray[level-1].pop();
-    RL.Entity.Types.character3.name = 'Character "'+RL.Entity.Types.character3.char+'"';
-    RL.Entity.Types.character4.char = charArray[level-1].pop();
-    RL.Entity.Types.character4.name = 'Character "'+RL.Entity.Types.character4.char+'"';
+    for ( var i=0; i<charArray[level-1].length; i++ ) {
+	entityType = 'character' + (i+1).toString();
+	entity = RL.Entity.Types[entityType];
+	entity.char = charArray[level-1][i][1];
+	entity.name = 'Character ' + charArray[level-1][i][1];
+	entity.radical = 'Character ' + charArray[level-1][i][0];
 
-	// add char to items
-    RL.Item.Types.radical1.char = charArray[level-1].pop();
-    RL.Item.Types.radical1.name = 'Radical "'+RL.Item.Types.radical1.char+'"';
-    RL.Item.Types.radical2.char = charArray[level-1].pop();
-    RL.Item.Types.radical2.name = 'Radical "'+RL.Item.Types.radical2.char+'"';
-    RL.Item.Types.radical3.char = charArray[level-1].pop();
-    RL.Item.Types.radical3.name = 'Radical "'+RL.Item.Types.radical3.char+'"';
-    RL.Item.Types.radical4.char = charArray[level-1].pop();
-    RL.Item.Types.radical4.name = 'Radical "'+RL.Item.Types.radical4.char+'"';
+	itemType = 'radical' + (i+1).toString();
+	item = RL.Item.Types[itemType];
+	item.char = charArray[level-1][i][0];
+	item.name = 'Radical ' + charArray[level-1][i][0];
+    };
 }
 
 function initRadicals(){
@@ -269,10 +263,10 @@ function initRadicals(){
 }
 
 function initCharacters(){
-	var character1 = new RL.Entity(game, 'character1');
-	var character2 = new RL.Entity(game, 'character2');
-	var character3 = new RL.Entity(game, 'character3');
-	var character4 = new RL.Entity(game, 'character4');
+    var character1 = new RL.Entity(game, 'character1');
+    var character2 = new RL.Entity(game, 'character2');
+    var character3 = new RL.Entity(game, 'character3');
+    var character4 = new RL.Entity(game, 'character4');
 
     game.characters = {
         1: character1,

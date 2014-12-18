@@ -276,11 +276,21 @@
         melee_attack1: {
             canPerformAction: function(target, settings){
                 // console.log(this.meleeWeapon1);
-                if(this.meleeWeapon1.name==="None"){
-                    this.game.console.log('You do not have the right melee weapon.');
+                /*if(this.meleeWeapon1.name==="None"){
+                    this.game.console.log('You do not have the right melee weapon (1).');
                     return false;
-                }
-                return true;
+                }*/
+		var weapons = [ this.meleeWeapon1,
+				this.meleeWeapon2,
+				this.meleeWeapon3,
+				this.meleeWeapon4, ];
+		for ( var w in weapons ) {
+		    if ( w.char == target.radical ) {
+			return true;
+		    };
+		};
+		this.game.console.log("You do not have a matching radical!");
+                return false;
             },
             canPerformActionOnTarget: true,
             performAction: function(target, settings){
@@ -292,6 +302,7 @@
             getTargetsForAction: makeAdjacentTargetsFinder('melee_attack1')
         },
 
+	/*
         melee_attack2: {
             canPerformAction: function(target, settings){
                 // console.log(this.meleeWeapon2);
@@ -382,7 +393,7 @@
                 var validTargetsFinder = new RL.ValidTargetsFinder(this.game, this, validTargetsSettings);
                 return validTargetsFinder.getValidTargets();
             }
-        },
+        },*/
         horde_push_bonus: {
             initialize: function(){
                 this.hordePushBonus = 0;
