@@ -128,7 +128,7 @@
             this.entityManager.add(this.player.x, this.player.y, this.player);
             this.player.updateFov();
             this.lighting.update();
-            this.renderer.setCenter(this.player.x, this.player.y);
+            //this.renderer.setCenter(this.player.x, this.player.y);
             this.renderer.draw();
         },
 
@@ -146,7 +146,7 @@
                     this.player.updateFov();
 
                     this.lighting.update();
-                    this.renderer.setCenter(this.player.x, this.player.y);
+                    //this.renderer.setCenter(this.player.x, this.player.y);
                     this.renderer.draw();
 
                 } else if(this.queueDraw){

@@ -24,6 +24,7 @@ var rendererWidth  = mapData[0].length;
 var rendererHeight = mapData.length;
 
 game.renderer.resize(rendererWidth, rendererHeight);
+game.renderer.setCenter(3,3)
 
 game.renderer.layers = [
   new RL.RendererLayer(game, 'map', {draw: false, mergeWithPrevLayer: false}),
