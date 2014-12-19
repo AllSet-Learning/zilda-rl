@@ -92,7 +92,7 @@
         * @property tileSize
         * @type Number
         */
-        tileSize: 16,
+        tileSize: 32,
 
         /**
         * Font used to render tile characters.

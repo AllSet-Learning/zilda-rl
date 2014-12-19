@@ -1,47 +1,17 @@
 var game = new RL.Game();
 
-//set up the map
-var mapData = [
-  '##############',
-  '#.....##.....#',
-  '#.....##.....#',
-  '#.....++.....#',
-  '#.....##.....#',
-  '#.....##.....#',
-  '###+######+###',
-  '###+######+###',
-  '#.....##.....#',
-  '#.....##.....#',
-  '#.....++.....#',
-  '#.....##.....#',
-  '#.....##.....#',
-  '##############'
-];
-
-var mapCharToType = {
-  '#': 'wall',
-  '.': 'floor',
-  '+': 'door'
-};
-
-game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
-game.setMapSize(game.map.width, game.map.height);
-
-//set up rooms
-var roomW = 7;
+//make map
+var dungeonW = 2;
+var dungeonH = 2;
+var roomW = 13;
 var roomH = 7;
-game.rooms = []
-game.rooms.push( new Room(0,0,roomW,roomH) );
-game.rooms.push( new Room(7,0,roomW,roomH) );
-game.rooms.push( new Room(0,7,roomW,roomH) );
-game.rooms.push( new Room(7,7,roomW,roomH) );
+makeDungeon(game, dungeonW, dungeonH, roomW, roomH);
 
 //set up the renderer
 var rendererWidth  = roomW;
 var rendererHeight = roomH;
 
 game.renderer.resize(rendererWidth, rendererHeight);
-game.renderer.setCenter(3,3)
 
 game.renderer.layers = [
   new RL.RendererLayer(game, 'map', {draw: false, mergeWithPrevLayer: false}),
@@ -56,11 +26,13 @@ var keyBindings = {
 };
 game.input.addBindings(keyBindings);
 
-var playerStartX = 3;
-var playerStartY = 3;
+var playerStartX = Math.floor(roomW/2);
+var playerStartY = Math.floor(roomH/2);
 
 game.player.x = playerStartX;
 game.player.y = playerStartY;
+var startingRoom = game.getRoom(game.player.x, game.player.y)
+game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
 
 //set up map
 var mapContainerEl = document.getElementById('map-container')

@@ -1,0 +1,9 @@
+RL.Tile.Types.floor.bgColor = '#000';
+RL.Tile.Types.floor.color = '#fff';
+RL.Tile.Types.wall.char = '墙';
+RL.Tile.Types.wall.bgColor = '#000';
+RL.Tile.Types.wall.color = '#fff';
+RL.Tile.Types.door.char = '门';
+RL.Tile.Types.door.bgColor = '#000';
+RL.Tile.Types.door.color = '#fff';
+RL.Tile.Types.door.passable = true;
