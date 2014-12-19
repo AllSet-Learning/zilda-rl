@@ -51,7 +51,7 @@
         * @property explored
         * @type {Bool}
         */
-        explored: false,
+        explored: true,
 
         /**
         * If entities can move through this tile.

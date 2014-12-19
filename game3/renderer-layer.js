@@ -182,6 +182,7 @@
                 }
 
                 if(
+                    false &&
                     this.game.player &&
                     this.game.player.fov &&
                     !this.game.player.fov.get(x, y)
@@ -225,6 +226,7 @@
                     return false;
                 }
                 if(
+                    false &&
                     this.game.player &&
                     this.game.player.fov &&
                     this.game.player.fov.get(x, y)

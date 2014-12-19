@@ -13,7 +13,9 @@
     var Player = function Player(game) {
         this.game = game;
         this.fov = new RL.FovROT(game);
+        //this.fov = new RL.FovROT(game);
 
+        /*
         // modify fov to set tiles as explored
         this.fov.setMapTileVisible = function(x, y, range, visibility){
             RL.FovROT.prototype.setMapTileVisible.call(this, x, y, range, visibility);
@@ -23,7 +25,7 @@
                     tile.explored = true;
                 }
             }
-        };
+        };*/
 
         if(this.init){
             this.init();
