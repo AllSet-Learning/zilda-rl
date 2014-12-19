@@ -2,26 +2,43 @@ var game = new RL.Game();
 
 //set up the map
 var mapData = [
-  '#######',
-  '#.....#',
-  '#.....#',
-  '#.....#',
-  '#.....#',
-  '#.....#',
-  '#######'
+  '##############',
+  '#.....##.....#',
+  '#.....##.....#',
+  '#.....++.....#',
+  '#.....##.....#',
+  '#.....##.....#',
+  '###+######+###',
+  '###+######+###',
+  '#.....##.....#',
+  '#.....##.....#',
+  '#.....++.....#',
+  '#.....##.....#',
+  '#.....##.....#',
+  '##############'
 ];
 
 var mapCharToType = {
   '#': 'wall',
-  '.': 'floor'
+  '.': 'floor',
+  '+': 'door'
 };
 
 game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
 game.setMapSize(game.map.width, game.map.height);
 
+//set up rooms
+var roomW = 7;
+var roomH = 7;
+game.rooms = []
+game.rooms.push( new Room(0,0,roomW,roomH) );
+game.rooms.push( new Room(7,0,roomW,roomH) );
+game.rooms.push( new Room(0,7,roomW,roomH) );
+game.rooms.push( new Room(7,7,roomW,roomH) );
+
 //set up the renderer
-var rendererWidth  = mapData[0].length;
-var rendererHeight = mapData.length;
+var rendererWidth  = roomW;
+var rendererHeight = roomH;
 
 game.renderer.resize(rendererWidth, rendererHeight);
 game.renderer.setCenter(3,3)
