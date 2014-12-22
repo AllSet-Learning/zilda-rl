@@ -106,18 +106,6 @@
          */
         queueDraw: false,
 
-        rooms: [],
-        getRoom: function(x,y) {
-            for ( var i=0; i<this.rooms.length; i++ ) {
-                if ( x>=this.rooms[i].x &&
-                     x< this.rooms[i].x+this.rooms[i].w &&
-                     y>=this.rooms[i].y &&
-                     y< this.rooms[i].y+this.rooms[i].h ) {
-                    return this.rooms[i];
-                };
-            };
-        },
-
         /**
         * Sets the size of the map resizing this.map and this.entityManager.
         * @method setMapSize
@@ -140,7 +128,7 @@
             this.entityManager.add(this.player.x, this.player.y, this.player);
             this.player.updateFov();
             this.lighting.update();
-            //this.renderer.setCenter(this.player.x, this.player.y);
+            this.renderer.setCenter(this.player.x, this.player.y);
             this.renderer.draw();
         },
 
@@ -158,10 +146,7 @@
                     this.player.updateFov();
 
                     this.lighting.update();
-                    //this.renderer.setCenter(this.player.x, this.player.y);
-                    var room = this.getRoom(this.player.x, this.player.y);
-                    //var room = this.rooms[0];
-                    this.renderer.setCenter(room.centerX, room.centerY);
+                    this.renderer.setCenter(this.player.x, this.player.y);
                     this.renderer.draw();
 
                 } else if(this.queueDraw){

@@ -1,3 +1,77 @@
+//add room list and getRoom
+RL.Game.prototype.rooms=[]
+RL.Game.prototype.getRoom = function(x,y) {
+  for ( var i=0; i<this.rooms.length; i++ ) {
+    if ( x>=this.rooms[i].x &&
+         x< this.rooms[i].x+this.rooms[i].w &&
+         y>=this.rooms[i].y &&
+         y< this.rooms[i].y+this.rooms[i].h ) {
+      return this.rooms[i];
+    };
+  };
+};
+
+//customize basic game "turn"
+RL.Game.prototype.onKeyAction = function(action) {
+ if(!this.gameOver){
+   var result = this.player.update(action);
+   if(result){
+     this.entityManager.update(this.player);
+
+     //Don't update map the fov or lighting!
+     //this.player.updateFov();
+     //this.lighting.update();
+
+     //center in current room instead of on player
+     //this.renderer.setCenter(this.player.x, this.player.y);
+     var room = this.getRoom(this.player.x, this.player.y);
+     this.renderer.setCenter(room.centerX, room.centerY);
+     this.renderer.draw();
+   } else if(this.queueDraw){
+     this.renderer.draw();
+   }
+ }
+ this.queueDraw = false;
+};
+
+//make tiles bigger for Hanzi readability
+RL.Renderer.prototype.tileSize = 32;
+//make tiles explored by default
+RL.Tile.prototype.explored = true;
+
+RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {
+  if(!this.game){
+    return false;
+  }
+  var player = this.game.player;
+  var entity = false;
+  if (
+    player &&
+    x === player.x &&
+    y === player.y
+  ) {
+    entity = player;
+  } else if(this.game.entityManager){
+    entity = this.game.entityManager.get(x, y);
+  }
+  //skip the fov check
+  /*
+  if(
+    this.game.player &&
+    this.game.player.fov &&
+    !this.game.player.fov.get(x, y)
+  ){
+    return false;
+  }
+  */
+  if(entity){
+    var tileData = entity.getTileDrawData();
+    return tileData;
+  }
+  return false;
+};
+
+
 var game = new RL.Game();
 
 //make map
