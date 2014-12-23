@@ -1,4 +1,3 @@
-console.log('Loading room.js');
 var Room = function Room(game,x,y,w,h) {
   this.game = game;
   this.x = x;

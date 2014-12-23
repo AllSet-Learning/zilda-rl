@@ -1,0 +1,1 @@
+var MiniMap = function(game) {};

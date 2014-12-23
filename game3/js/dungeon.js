@@ -1,4 +1,3 @@
-console.log('Loading dungeon.js');
 var Dungeon = function(game, dungeonW, dungeonH, roomW, roomH) {
   this.game = game;
   this.w = dungeonW;
