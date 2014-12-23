@@ -89,9 +89,5 @@ RL.Tile.Types.door = {
   char: '+',
   color: '#fff',
   bgColor: '#000',
-  passable: false
+  passable: true
 };
-RL.Tile.Types.northDoor = makePassage(RL.Tile.Types.door,'n');
-RL.Tile.Types.southDoor = makePassage(RL.Tile.Types.door,'s');
-RL.Tile.Types.eastDoor  = makePassage(RL.Tile.Types.door,'e');
-RL.Tile.Types.westDoor  = makePassage(RL.Tile.Types.door,'w');

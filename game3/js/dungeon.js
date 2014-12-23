@@ -11,21 +11,19 @@ var Dungeon = function(game, dungeonW, dungeonH, roomW, roomH) {
   for ( var x=0; x<dungeonW; x++ ) {
     for ( var y=0; y<dungeonH; y++ ) {
       var room = new Room(game,x,y,roomW,roomH);
-      var roomData = ['######NN######',
+      var roomData = ['######++######',
                       '#............#',
                       '#............#',
                       '#............#',
-                      'W............E',
+                      '+............+',
                       '#............#',
                       '#............#',
                       '#............#',
-                      '######SS######'];
+                      '######++######'];
       var charToTile = {
+        '.':'floor',
         '#':'wall',
-        'N':'northDoor',
-        'S':'southDoor',
-        'E':'eastDoor',
-        'W':'westDoor'
+        '+':'door'
       };
       room.loadTilesFromArrayString(roomData, charToTile, 'floor');
       this.rooms.set(x,y,room);
