@@ -1,16 +1,3 @@
-//add room list and getRoom
-RL.Game.prototype.rooms=[]
-RL.Game.prototype.getRoom = function(x,y) {
-  for ( var i=0; i<this.rooms.length; i++ ) {
-    if ( x>=this.rooms[i].x &&
-         x< this.rooms[i].x+this.rooms[i].w &&
-         y>=this.rooms[i].y &&
-         y< this.rooms[i].y+this.rooms[i].h ) {
-      return this.rooms[i];
-    };
-  };
-};
-
 //customize basic game "turn"
 RL.Game.prototype.onKeyAction = function(action) {
  if(!this.gameOver){
@@ -24,14 +11,21 @@ RL.Game.prototype.onKeyAction = function(action) {
 
      //center in current room instead of on player
      //this.renderer.setCenter(this.player.x, this.player.y);
-     var room = this.getRoom(this.player.x, this.player.y);
-     this.renderer.setCenter(room.centerX, room.centerY);
+     //var room = this.getRoom(this.player.x, this.player.y);
+     //this.renderer.setCenter(room.centerX, room.centerY);
      this.renderer.draw();
    } else if(this.queueDraw){
      this.renderer.draw();
    }
  }
  this.queueDraw = false;
+};
+
+//custom start function
+RL.Game.prototype.start = function() {
+  this.entityManager.add(this.player.x, this.player.y, this.player);
+  this.renderer.setCenter(this.player.x,this.player.y);
+  this.renderer.draw();
 };
 
 //make tiles bigger for Hanzi readability
@@ -74,12 +68,15 @@ RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {
 
 var game = new RL.Game();
 
-//make map
+//adding dungeon to game
+console.log('Adding dungeon to game');
 var dungeonW = 2;
 var dungeonH = 2;
-var roomW = 13;
-var roomH = 7;
-makeDungeon(game, dungeonW, dungeonH, roomW, roomH);
+var roomW = 14;
+var roomH = 9;
+game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
+game.map = game.dungeon.rooms.get(0,0).map;
+game.entityManager = game.dungeon.rooms.get(0,0).entityManager;
 
 //set up the renderer
 var rendererWidth  = roomW;
@@ -105,8 +102,9 @@ var playerStartY = Math.floor(roomH/2);
 
 game.player.x = playerStartX;
 game.player.y = playerStartY;
-var startingRoom = game.getRoom(game.player.x, game.player.y)
-game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
+game.player.room = game.dungeon.rooms.get(0,0);
+//var startingRoom = game.getRoom(game.player.x, game.player.y)
+//game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
 
 //set up map
 var mapContainerEl = document.getElementById('map-container')
