@@ -16,6 +16,11 @@ var Room = function Room(game,x,y,width,height) {
             this.tags.push(tag.toUpperCase())
         };
     };
+    this.untag = function(tag) {
+        if ( this.hasTag(tag) ) {
+            this.tags.splice(this.tags.indexOf(tag.toUpperCase()),1);
+        };
+    };
 
     this.loadTilesFromArrayString = function(mapData, charToType, defaultTileType) {
         this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);

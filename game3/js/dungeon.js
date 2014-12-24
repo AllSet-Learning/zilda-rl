@@ -51,6 +51,23 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         return roomArray;
     };
 
+    this.tagDeadEnds = function() {
+        var roomArray = this.getAllRooms();
+        for ( var i=0; i<roomArray.length; i++ ) {
+            var connections = 0;
+            var directions = ['n','s','e','w'];
+            var room = roomArray[i];
+            for ( var j=0; j<directions.length; j++ ) {
+                if (room.hasTag(directions[j])) { connections++; };
+            };
+            if (connections===1) {
+                room.tag('DEADEND');
+            } else {
+                room.untag('DEADEND');
+            };
+        };
+    };
+
     this.generate = function(startX,startY) {
         this.rooms.reset(this.width, this.height);
         for ( var x=0; x<this.width; x++ ) {
@@ -100,22 +117,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
 
         var roomArray = this.getAllRooms();
 
-        //Add other tags
-        for ( var i=0; i<roomArray.length; i++ ) {
-            var room = roomArray[i];
-            var numberOfConnections = 0;
-            var directions = ['n','s','e','w'];
-            for ( var j=0; j<directions.length; j++ ) {
-                if (room.hasTag(directions[j])) {
-                    numberOfConnections++;
-                };
-            };
-            if (numberOfConnections===1) {
-                room.tag('DEADEND');
-            } else if (numberOfConnections===0) {
-                room.tag('ISOLATED');
-            };
-        };
+        this.tagDeadEnds();
 
         //Dig rooms
         for ( var i=0; i<roomArray.length; i++ ) {
