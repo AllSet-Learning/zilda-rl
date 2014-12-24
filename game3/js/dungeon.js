@@ -30,7 +30,28 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         return directions;
     };
 
-    this.generate = function (startX,startY) {
+    this.getAllRooms = function() {
+        var roomArray = [];
+        for ( var x=0; x<this.width; x++ ) {
+            for ( var y=0; y<this.height; y++ ) {
+                roomArray.push(this.rooms.get(x,y));
+            };
+        };
+        return roomArray;
+    };
+
+    this.getRoomsWithTag = function(tag) {
+        var roomsWithTag = [];
+        var roomArray = this.getAllRooms();
+        for ( var i=0; i<roomArray.length; i++ ) {
+            if (roomArray[i].hasTag(tag)) {
+                roomsWithTag.push(roomArray[i]);
+            };
+        };
+        return roomArray;
+    };
+
+    this.generate = function(startX,startY) {
         this.rooms.reset(this.width, this.height);
         for ( var x=0; x<this.width; x++ ) {
             for ( var y=0; y<this.height; y++ ) {
@@ -76,34 +97,53 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             walls.splice(walls.indexOf(wall),1);
         };
         console.log('Finished maze');
-        for ( var x=0; x<this.width; x++ ) {
-            for ( var y=0; y<this.height; y++ ) {
-                var roomType = this.roomTypes[0];
-                var room = this.rooms.get(x,y)
-                room.loadTilesFromArrayString(roomType.mapData,roomType.charToTileType,'floor');
-                if (!room.hasTag('n')) {
-                    var roomY=0;
-                    for ( var roomX=0; roomX<room.width; roomX++ ) {
-                        room.map.set(roomX,roomY,'wall');
-                    };
+
+        var roomArray = this.getAllRooms();
+
+        //Add other tags
+        for ( var i=0; i<roomArray.length; i++ ) {
+            var room = roomArray[i];
+            var numberOfConnections = 0;
+            var directions = ['n','s','e','w'];
+            for ( var j=0; j<directions.length; j++ ) {
+                if (room.hasTag(directions[j])) {
+                    numberOfConnections++;
                 };
-                if (!room.hasTag('s')) {
-                    var roomY=room.height-1;
-                    for ( var roomX=0; roomX<room.width; roomX++ ) {
-                        room.map.set(roomX,roomY,'wall');
-                    };
+            };
+            if (numberOfConnections===1) {
+                room.tag('DEADEND');
+            } else if (numberOfConnections===0) {
+                room.tag('ISOLATED');
+            };
+        };
+
+        //Dig rooms
+        for ( var i=0; i<roomArray.length; i++ ) {
+            var roomType = this.roomTypes[0];
+            var room = roomArray[i];
+            room.loadTilesFromArrayString(roomType.mapData,roomType.charToTileType,'floor');
+            if (!room.hasTag('n')) {
+                var roomY=0;
+                for ( var roomX=0; roomX<room.width; roomX++ ) {
+                    room.map.set(roomX,roomY,'wall');
                 };
-                if (!room.hasTag('e')) {
-                    var roomX=room.width-1;
-                    for ( var roomY=0; roomY<room.height; roomY++ ) {
-                        room.map.set(roomX,roomY,'wall');
-                    };
+            };
+            if (!room.hasTag('s')) {
+                var roomY=room.height-1;
+                for ( var roomX=0; roomX<room.width; roomX++ ) {
+                    room.map.set(roomX,roomY,'wall');
                 };
-                if (!room.hasTag('w')) {
-                    var roomX=0;
-                    for ( var roomY=0; roomY<room.height; roomY++ ) {
-                        room.map.set(roomX,roomY,'wall');
-                    };
+            };
+            if (!room.hasTag('e')) {
+                var roomX=room.width-1;
+                for ( var roomY=0; roomY<room.height; roomY++ ) {
+                    room.map.set(roomX,roomY,'wall');
+                };
+            };
+            if (!room.hasTag('w')) {
+                var roomX=0;
+                for ( var roomY=0; roomY<room.height; roomY++ ) {
+                    room.map.set(roomX,roomY,'wall');
                 };
             };
         };
