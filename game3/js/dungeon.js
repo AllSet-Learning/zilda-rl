@@ -30,6 +30,26 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         return directions;
     };
 
+    this.getRoomToDirection = function(fromRoom,direction) {
+        newRoomX = fromRoom.x;
+        newRoomY = fromRoom.y;
+        switch (direction) {
+        case 'n':
+            newRoomY -= 1;
+            break;
+        case 's':
+            newRoomY += 1;
+            break;
+        case 'e':
+            newRoomX += 1;
+            break;
+        case 'w':
+            newRoomX -= 1;
+            break;
+        };
+        return this.rooms.get(newRoomX,newRoomY);
+    };
+
     this.getAllRooms = function() {
         var roomArray = [];
         for ( var x=0; x<this.width; x++ ) {
@@ -115,11 +135,50 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         };
         console.log('Finished maze');
 
-        var roomArray = this.getAllRooms();
-
+        //handle dead ends
+        this.tagDeadEnds();
+        var deadEnds = this.getRoomsWithTag('DEADEND');
+        //choose a dead end as the boss room
+        var bossRoom = RL.Util.randomChoice(deadEnds);
+        bossRoom.tag('BOSS');
+        bossRoom.untag('DEADEND');
+        deadEnds.splice(deadEnds.indexOf(bossRoom),1);
+        //delete some dead ends
+        for ( var i=0; i<deadEnds.length/3; i++ ) {
+            var room = RL.Util.randomChoice(deadEnds);
+            var directions = ['n','s','e','w']
+            for ( var j=0; j<directions.length; j++ ) {
+                if (room.hasTag(directions[j])) {
+                    room.untag(directions[j]);
+                    this.getRoomToDirection(room,directions[j]).untag(RL.Util.oppositeDirection(directions[j]));
+                };
+                room.tag('ISOLATED');
+            };
+        };
+        deadEnds = this.getRoomsWithTag('DEADEND');
+        //connect remaining dead ends
+        for ( var i=0; i<deadEnds.length; i++ ) {
+            var room = RL.Util.randomChoice(deadEnds);
+            deadEnds.splice(deadEnds.indexOf(room),1);
+            var directions = this.validDirections(room.x,room.y);
+            var madeNewConnection = false;
+            while ( (!madeNewConnection) && (directions.length) ) {
+                var direction = RL.Util.randomChoice(directions);
+                directions.splice(directions.indexOf(direction),1);
+                if (!room.hasTag(direction)) {
+                    var toRoom = this.getRoomToDirection(room,direction);
+                    if (!toRoom.hasTag('BOSS')) {
+                        room.tag(direction);
+                        toRoom.tag(RL.Util.oppositeDirection(direction));
+                        madeNewConnection = true;
+                    };
+                };
+            };
+        };
         this.tagDeadEnds();
 
         //Dig rooms
+        var roomArray = this.getAllRooms();
         for ( var i=0; i<roomArray.length; i++ ) {
             var roomType = this.roomTypes[0];
             var room = roomArray[i];

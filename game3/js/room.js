@@ -66,6 +66,4 @@ var Room = function Room(game,x,y,width,height) {
         this.map.setSize(w,h);
         this.entityManager.setSize(w,h);
     };
-    
-    this.setSize();
 };
