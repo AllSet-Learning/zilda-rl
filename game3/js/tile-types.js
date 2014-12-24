@@ -3,15 +3,15 @@ var passageBump = function(entity,direction) {
   if ( entity === game.player ) {
     var currentRoom = entity.room;
     if (direction==='n' && currentRoom.y > 0 ||
-        direction==='s' && currentRoom.y < game.dungeon.h-1 ||
-        direction==='e' && currentRoom.x < game.dungeon.w-1 ||
+        direction==='s' && currentRoom.y < game.dungeon.height-1 ||
+        direction==='e' && currentRoom.x < game.dungeon.width-1 ||
         direction==='w' && currentRoom.x > 0) {
       var newRoom = null
       currentRoom.entityManager.remove(entity);
       switch (direction) {
         case 'n':
           newRoom = game.dungeon.rooms.get(currentRoom.x,currentRoom.y-1)
-          entity.y = newRoom.h-2;
+          entity.y = newRoom.height-2;
           break;
         case 's':
           newRoom = game.dungeon.rooms.get(currentRoom.x,currentRoom.y+1)
@@ -23,7 +23,7 @@ var passageBump = function(entity,direction) {
           break;
         case 'w':
           newRoom = game.dungeon.rooms.get(currentRoom.x-1,currentRoom.y)
-          entity.x = newRoom.w-2;
+          entity.x = newRoom.width-2;
           break;
       };
       newRoom.entityManager.add(entity.x,entity.y,entity);

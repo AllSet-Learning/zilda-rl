@@ -80,6 +80,7 @@ var dungeonH = 4;
 var roomW = 14;
 var roomH = 9;
 game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
+game.dungeon.generate(0,0);
 game.map = game.dungeon.rooms.get(0,0).map;
 game.entityManager = game.dungeon.rooms.get(0,0).entityManager;
 
