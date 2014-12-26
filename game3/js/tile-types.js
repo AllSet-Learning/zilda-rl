@@ -76,22 +76,22 @@ var makePassage = function(baseType,direction) {
 RL.Tile.Types.floor = {
     name: 'Floor',
     char: '.',
-    color: '#fff',
-    bgColor: '#000',
+    color: '#444',
+    bgColor: '#222',
     passable: true
 };
 RL.Tile.Types.wall = {
     name: 'Wall',
     char: '#',
-    color: '#fff',
-    bgColor: '#000',
+    color: '#777',
+    bgColor: '#2e2e2e',
     passable: false
 };
 RL.Tile.Types.door = {
     name: 'Door',
     char: '+',
-    color: '#fff',
-    bgColor: '#000',
+    color: 'yellow',
+    bgColor: '#222',
     passable: true
 };
 RL.Tile.Types.minimapRoom = {
