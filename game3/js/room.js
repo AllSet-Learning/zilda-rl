@@ -22,6 +22,15 @@ var Room = function Room(game,x,y,width,height) {
         };
     };
 
+    this.countConnections = function() {
+        var directions = ['n','e','s','w'];
+        var count = 0;
+        for ( var i=0; i<4; i++ ) {
+            if (this.hasTag(directions[i])) { count++; };
+        };
+        return count;
+    };
+
     this.loadTilesFromArrayString = function(mapData, charToType, defaultTileType) {
         this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
         for ( var x=0; x<this.width; x++ ) {
