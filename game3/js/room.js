@@ -4,6 +4,8 @@ var Room = function Room(game,x,y,width,height) {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.centerX = Math.floor(width/2);
+    this.centerY = Math.floor(height/2);
     this.tags = [];
     this.map = new RL.Map(game);
     this.entityManager = new RL.ObjectManager(game, RL.Entity, width, height);
@@ -21,16 +23,20 @@ var Room = function Room(game,x,y,width,height) {
             this.tags.splice(this.tags.indexOf(tag.toUpperCase()),1);
         };
     };
-
-    this.countConnections = function() {
-        var directions = ['n','e','s','w'];
-        var count = 0;
+    this.connectionTags = function() {
+        var connectionTags = [];
+        var directions = ['N','S','E','W'];
         for ( var i=0; i<4; i++ ) {
-            if (this.hasTag(directions[i])) { count++; };
+            if ( this.hasTag(directions[i]) ) {
+                connectionTags.push(directions[i]);
+            };
         };
-        return count;
+        return connectionTags;
     };
 
+    this.countConnections = function() {
+        return this.connectionTags().length;
+    };
     this.loadTilesFromArrayString = function(mapData, charToType, defaultTileType) {
         this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
         for ( var x=0; x<this.width; x++ ) {

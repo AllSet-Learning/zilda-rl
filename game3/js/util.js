@@ -5,6 +5,21 @@ RL.Util.randomChoice = function(array) {
     return array[i];
 };
 
+RL.Util.weightedChoice = function(array, weightFunc) {
+    var totalWeight = 0;
+    for ( var i=0; i<array.length; i++ ) {
+        totalWeight += weightFunc(array[i]);
+    };
+    var choice = Math.floor(Math.random()*totalWeight);
+    var currentWeight = 0;
+    for ( var i=0; i<array.length; i++ ) {
+        currentWeight += weightFunc(array[i]);
+        if (choice < currentWeight) {
+            return array[i];
+        };
+    };
+};
+
 RL.Util.shuffle = function(array) {
     var tempArray = array.slice(0,array.length);
     for ( var i=0; i<array.length; i++ ) {

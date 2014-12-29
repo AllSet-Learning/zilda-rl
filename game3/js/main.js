@@ -77,7 +77,7 @@ var game = new RL.Game();
 console.log('Adding dungeon to game');
 var dungeonW = 5;
 var dungeonH = 4;
-var roomW = 14;
+var roomW = 15;
 var roomH = 9;
 game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
 game.dungeon.generate(0,0);

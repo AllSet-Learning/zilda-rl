@@ -7,11 +7,10 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.tilesWidth  = dungeonWidth*roomWidth;
     this.tilesHeight = dungeonHeight*roomHeight;
     this.rooms = new RL.Array2d(dungeonWidth,dungeonHeight);
-    var xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest(); //TODO clean this up
     xmlHttp.open("GET","data/rooms.json",false);
     xmlHttp.send(null);
-    this.roomTypes = JSON.parse(xmlHttp.responseText);
-    console.log(this.roomTypes);
+    this.roomLayouts = JSON.parse(xmlHttp.responseText);
 
     this.validDirections = function(roomX, roomY) {
         var directions = ['n','s','e','w'];
@@ -63,11 +62,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.getRoomsWithTag = function(tag) {
         var roomsWithTag = [];
         var roomArray = this.getAllRooms();
-        console.log('Getting rooms with tag',tag);
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
             if (room.hasTag(tag)) {
-                console.log('Matched room is start:',room.hasTag('START'));
                 roomsWithTag.push(room);
             };
         };
@@ -80,7 +77,6 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             var room = roomArray[i];
             var connections = room.countConnections();
             if ( !room.hasTag('START') ) {
-                if (room.hasTag('START')) { console.log('WARNING: checking connections of start'); };
                 if (connections===1) {
                     room.untag('ISOLATED');
                     room.tag('DEADEND');
@@ -155,7 +151,6 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             walls.push( [[startX,startY],directions[i]] );
         };
 
-        console.log('Starting maze');
         while (walls.length) {
             var wall = RL.Util.randomChoice(walls);
             var room = this.rooms.get(wall[0][0],wall[0][1]);
@@ -170,11 +165,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             };
             walls.splice(walls.indexOf(wall),1);
         };
-        console.log('Finished maze');
     };
 
     this.isolateRoom = function(room) {
-        if (room.hasTag('START')) { console.log('WARNING: isolated start'); };
         var directions = this.validDirections(room.x,room.y);
         for ( var i=0; i<directions.length; i++ ) {
             var d = directions[i];
@@ -188,56 +181,85 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     };
 
     this.attemptNewConnection = function(room) {
-        console.log('Connecting room',room.x,room.y);
         var validDirections = this.validDirections(room.x,room.y);
         var madeNewConnection = false;
         while ( (!madeNewConnection) && (validDirections.length) ) {
             var direction = RL.Util.randomChoice(validDirections);
-            console.log('Trying direction',direction);
             validDirections.splice(validDirections.indexOf(direction),1);
             if (!room.hasTag(direction)) {
                 var toRoom = this.getRoomToDirection(room,direction);
                 if ( !toRoom.hasTag('ISOLATED') ) {
-                    console.log('Success');
                     this.connectRooms(room,toRoom);
-                } else {
-                    console.log('Canceled connection to isolated room');
                 };
-            } else {console.log('Already connected to',direction);};
+            };
         };
     };
 
+    this.getCompatibleRoomLayouts = function(room) {
+        var compatibleLayouts = [];
+        for ( var i=0; i<this.roomLayouts.length; i++ ) {
+            var layout = this.roomLayouts[i];
+            var compatible = true;
+            //room has connections where layout required doors
+            for ( var j=0; j<layout.requiredDoors.length; j++ ) {
+                if ( ! room.hasTag(layout.requiredDoors[j]) ) {
+                    compatible = false;
+                };
+            };
+            //layout accepts doors where room has connections
+            var connectionTags = room.connectionTags();
+            for ( var j=0; j<connectionTags.length; j++ ) {
+                if ( layout.requiredDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
+                     layout.requiredDoors.indexOf(connectionTags[j].toLowerCase()) === -1 &&
+                     layout.optionalDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
+                     layout.optionalDoors.indexOf(connectionTags[j].toLowerCase()) === -1 ) {
+                    compatible = false;
+                };
+            };
+            if (compatible) {
+                compatibleLayouts.push(layout);
+            };
+        };
+        return compatibleLayouts;
+    };
 
     this.digRooms = function() {
         var roomArray = this.getAllRooms();
         for ( var i=0; i<roomArray.length; i++ ) {
-            var roomType = this.roomTypes[0];
             var room = roomArray[i];
-            room.loadTilesFromArrayString(roomType.mapData,roomType.charToTileType,'floor');
-            if (!room.hasTag('n')) {
-                var roomY=0;
-                for ( var roomX=0; roomX<room.width; roomX++ ) {
-                    room.map.set(roomX,roomY,'wall');
-                };
+            var layouts = this.getCompatibleRoomLayouts(room);
+            var layout = RL.Util.weightedChoice( layouts, function(layout) { return layout.weight; } );
+
+            //make a copy of mapData, so we're changing future layouts
+            var mapData = layout.mapData.slice(0,layout.mapData.length)
+
+            //add walls around room
+            for ( var j=0; j<mapData.length; j++ ) {
+                mapData[j] = "#" + mapData[j] + "#";
             };
-            if (!room.hasTag('s')) {
-                var roomY=room.height-1;
-                for ( var roomX=0; roomX<room.width; roomX++ ) {
-                    room.map.set(roomX,roomY,'wall');
-                };
+            var wallNS = '';
+            for ( var j=0; j<room.width; j++ ) {
+                wallNS += "#";
             };
-            if (!room.hasTag('e')) {
-                var roomX=room.width-1;
-                for ( var roomY=0; roomY<room.height; roomY++ ) {
-                    room.map.set(roomX,roomY,'wall');
-                };
+            mapData.unshift(wallNS);
+            mapData.push(wallNS);
+
+            //add doors in walls
+            if ( room.hasTag('N') ) {
+                mapData[0] = mapData[0].slice(0,room.centerX) + "+" + mapData[0].slice(room.xenterX+1,room.width);
             };
-            if (!room.hasTag('w')) {
-                var roomX=0;
-                for ( var roomY=0; roomY<room.height; roomY++ ) {
-                    room.map.set(roomX,roomY,'wall');
-                };
+            if ( room.hasTag('S') ) {
+                mapData[room.height-1] = mapData[room.height-1].slice(0,room.centerX) + "+" + mapData[room.height-1].slice(room.centerX+1,room.width);
             };
+            if ( room.hasTag('E') ) {
+                mapData[room.centerY] = mapData[room.centerY].slice(0,room.width-1) + "+";
+            };
+            if ( room.hasTag('W') ) {
+                mapData[room.centerY] = "+" + mapData[room.centerY].slice(1,room.width);
+            };
+
+            //load the room data
+            room.loadTilesFromArrayString(mapData,layout.charToTileType,'floor');
         };
     };
 
