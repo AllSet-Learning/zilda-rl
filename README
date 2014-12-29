@@ -1,0 +1,5 @@
+The Chinese RL Lab is a series of roguelike roleplaying games designed to help teach Chinese. It currently contains three in-development games. To run these games, open a terminal, go to this directory, then enter:
+
+python -m SimpleHTTPServer
+
+You can than open your browser of choice and enter "localhost:8000/<game>" as the url, replacing <game> with "game1", "game2", or "game3".
