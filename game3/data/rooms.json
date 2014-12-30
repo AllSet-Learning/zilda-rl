@@ -380,6 +380,7 @@
         "requiredDoors": [],
         "optionalDoors": ["n", "s", "w"],
         "weight":1
+    },
     {
         "name": "Cave-like 4",
         "mapData": [
