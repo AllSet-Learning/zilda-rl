@@ -86,6 +86,16 @@ RL.Tile.Types.door = {
     bgColor: '#222',
     passable: true
 };
+RL.Tile.Types.fire = {
+    name: 'Fire',
+    char: '^',
+    color: 'red',
+    bgColor: '#522',
+    passable: true,
+    onEntityEnter: function(entity) {
+        entity.takeDamage(1);
+    }
+};
 RL.Tile.Types.hud = {
     name: 'HUD',
     char: '■',

@@ -13,7 +13,8 @@
         "charToTileType": {
             "#": "wall",
             ".": "floor",
-            "+": "door"
+            "+": "door",
+            "^": "fire"
         },
         "requiredDoors": [],
         "optionalDoors": ["n", "s", "e", "w"],
@@ -25,7 +26,7 @@
             ".............",
             "....##.##....",
             "...##...##...",
-            ".............",
+            "...^.....^...",
             "...##...##...",
             "....##.##....",
             "............."
@@ -33,7 +34,8 @@
         "charToTileType": {
             "#": "wall",
             ".": "floor",
-            "+": "door"
+            "+": "door",
+            "^": "fire"
         },
         "requiredDoors": [],
         "optionalDoors": ["n", "s", "e", "w"],

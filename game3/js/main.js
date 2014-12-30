@@ -144,7 +144,6 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
 
 //make tiles bigger for Hanzi readability
 RL.Renderer.prototype.tileSize = 32;
-RL.Renderer.prototype.font = "monospace";
 //make tiles explored by default
 RL.Tile.prototype.explored = true;
 
@@ -196,6 +195,17 @@ RL.RendererLayer.Types.hud = {
         var tileData = tile.getTileDrawData();
         return tileData;
     }
+};
+
+RL.Player.prototype.takeDamage = function(amount) {
+    this.game.console.log('You take <strong>'+amount+'</strong> damage.');
+    this.life -= amount;
+    if (this.life<0) { this.life=0; };
+    if (this.life===0) { this.dead=true; };
+};
+RL.Player.prototype.heal = function(amount) {
+    this.life += amount;
+    if (this.life>this.maxLife) { this.life=this.maxLife; };
 };
 
 var game = new RL.Game();
