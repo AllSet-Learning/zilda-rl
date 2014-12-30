@@ -267,14 +267,18 @@ var keyBindings = {
 };
 game.input.addBindings(keyBindings);
 
-var playerStartX = Math.floor(roomW/2);
-var playerStartY = Math.floor(roomH/2);
-
+var startRoomX = 0
+var startRoomY = 0
+var startRoom = game.dungeon.rooms.get(0,0);
+var playerStartX = 0
+var playerStartY = 0
+while ( startRoom.map.get(playerStartX,playerStartY).type !== 'floor' ) {
+    playerStartX = Math.floor(Math.random()*startRoom.width);
+    playerStartY = Math.floor(Math.random()*startRoom.height);
+};
 game.player.x = playerStartX;
 game.player.y = playerStartY;
-game.player.room = game.dungeon.rooms.get(0,0);
-//var startingRoom = game.getRoom(game.player.x, game.player.y)
-//game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
+game.player.room = startRoom;
 
 //set up map
 var mapContainerEl = document.getElementById('map-container');
