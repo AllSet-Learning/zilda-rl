@@ -436,7 +436,8 @@
         "charToTileType": {
             "#": "wall",
             ".": "floor",
-            "+": "door"
+            "+": "door",
+            "^": "fire"
         },
         "requiredDoors": [],
         "optionalDoors": ["n", "s", "e", "w"],
