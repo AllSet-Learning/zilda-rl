@@ -56,35 +56,22 @@ RL.Game.prototype.initHud = function() {
     this.hudMap.get(this.dungeon.width+1,1).color = "yellow";
     this.hudMap.get(this.dungeon.width+2,1).char  = "X";
     this.hudMap.get(this.dungeon.width+2,1).color = "white";
-    this.hudMap.get(this.dungeon.width+3,1).char  = "0";
     this.hudMap.get(this.dungeon.width+3,1).color = "white";
+    this.hudMap.get(this.dungeon.width+4,1).color = "white";
 
     this.hudMap.get(this.dungeon.width+1,2).char  = "۴";//"স";// ۴ ߞ ߓ ᚩ ᚨ ᚡ শ  ไ ᶋ
     this.hudMap.get(this.dungeon.width+1,2).color = "gray";
     this.hudMap.get(this.dungeon.width+2,2).char  = "X";
     this.hudMap.get(this.dungeon.width+2,2).color = "white";
-    this.hudMap.get(this.dungeon.width+3,2).char  = "0";
     this.hudMap.get(this.dungeon.width+3,2).color = "white";
+    this.hudMap.get(this.dungeon.width+4,2).color = "white";
 
     this.hudMap.get(this.dungeon.width+1,3).char  = "ර"; //Ȯ Q ᵹ Ố
     this.hudMap.get(this.dungeon.width+1,3).color = "blue";
     this.hudMap.get(this.dungeon.width+2,3).char  = "X";
     this.hudMap.get(this.dungeon.width+2,3).color = "white";
-    this.hudMap.get(this.dungeon.width+3,3).char  = "0";
     this.hudMap.get(this.dungeon.width+3,3).color = "white";
-
-    this.hudMap.get(this.dungeon.width+4,1).char  = "-";
-    this.hudMap.get(this.dungeon.width+4,1).color = "red";
-    this.hudMap.get(this.dungeon.width+5,1).char  = "L";
-    this.hudMap.get(this.dungeon.width+5,1).color = "red";
-    this.hudMap.get(this.dungeon.width+6,1).char  = "I";
-    this.hudMap.get(this.dungeon.width+6,1).color = "red";
-    this.hudMap.get(this.dungeon.width+7,1).char  = "F";
-    this.hudMap.get(this.dungeon.width+7,1).color = "red";
-    this.hudMap.get(this.dungeon.width+8,1).char  = "E";
-    this.hudMap.get(this.dungeon.width+8,1).color = "red";
-    this.hudMap.get(this.dungeon.width+9,1).char  = "-";
-    this.hudMap.get(this.dungeon.width+9,1).color = "red";
+    this.hudMap.get(this.dungeon.width+4,3).color = "white";
 
     for ( var x=0; x<this.hudMap.width; x++ ) {
         for ( var y=0; y<this.hudMap.height; y++ ) {
@@ -113,16 +100,27 @@ RL.Game.prototype.updateHud = function() {
             };
         };
     };
-    for ( var i=0; i<this.player.maxLife; i++ ) {
-        var x=i;
-        var y=2;
-        while (x>5) { x-=6; };
-        x += this.dungeon.width+4;
-        if (i>5)  { y=3; };
-        if (i>11) { y=4; };
+
+    var goldString = this.player.gold.toString();
+    if (goldString.length===1) { goldString="0"+goldString; };
+    this.hudMap.get(this.dungeon.width+3,1).char = goldString[0];
+    this.hudMap.get(this.dungeon.width+4,1).char = goldString[1];
+
+    var keysString = this.player.keys.toString();
+    if (keysString.length===1) { keysString="0"+keysString; };
+    this.hudMap.get(this.dungeon.width+3,2).char = keysString[0];
+    this.hudMap.get(this.dungeon.width+4,2).char = keysString[1];
+
+    var bombsString = this.player.bombs.toString();
+    if (bombsString.length===1) { bombsString="0"+bombsString; };
+    this.hudMap.get(this.dungeon.width+3,3).char = bombsString[0];
+    this.hudMap.get(this.dungeon.width+4,3).char = bombsString[1];
+
+    for ( var x=this.hudMap.width-this.player.maxLife; x<this.hudMap.width; x++ ) {
+        var y=0;
         tile = this.hudMap.get(x,y);
         tile.char = "♥";
-        if (i>=this.player.life) {
+        if (x-(this.hudMap.width-this.player.maxLife) >= this.player.life) {
             tile.color = "gray";
         } else {
             tile.color = "red";
@@ -198,17 +196,6 @@ RL.RendererLayer.Types.hud = {
     }
 };
 
-RL.Player.prototype.takeDamage = function(amount) {
-    this.game.console.log('You take <strong>'+amount+'</strong> damage.');
-    this.life -= amount;
-    if (this.life<0) { this.life=0; };
-    if (this.life===0) { this.dead=true; };
-};
-RL.Player.prototype.heal = function(amount) {
-    this.life += amount;
-    if (this.life>this.maxLife) { this.life=this.maxLife; };
-};
-
 var game = new RL.Game();
 
 //adding dungeon to game
@@ -260,8 +247,8 @@ var playerStartY = Math.floor(roomH/2);
 game.player.x = playerStartX;
 game.player.y = playerStartY;
 game.player.room = game.dungeon.rooms.get(0,0);
-game.player.life = 2
-game.player.maxLife = 3
+//game.player.life = 2
+//game.player.maxLife = 3
 //var startingRoom = game.getRoom(game.player.x, game.player.y)
 //game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
 
