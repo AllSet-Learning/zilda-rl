@@ -49,7 +49,7 @@ RL.Item.Types = {
     },
     key: {
         name: "Key",
-        color: "gray",
+        color: "orange",
         bgColor: false,
         char: "۴",
         canAttachTo: function(entity) {

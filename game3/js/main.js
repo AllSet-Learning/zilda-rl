@@ -66,7 +66,7 @@ RL.Game.prototype.initHud = function() {
     this.hudMap.get(this.dungeon.width+4,1).color = "white";
 
     this.hudMap.get(this.dungeon.width+1,2).char  = "۴";//"স";// ۴ ߞ ߓ ᚩ ᚨ ᚡ শ  ไ ᶋ
-    this.hudMap.get(this.dungeon.width+1,2).color = "gray";
+    this.hudMap.get(this.dungeon.width+1,2).color = "orange";
     this.hudMap.get(this.dungeon.width+2,2).char  = "X";
     this.hudMap.get(this.dungeon.width+2,2).color = "white";
     this.hudMap.get(this.dungeon.width+3,2).color = "white";
