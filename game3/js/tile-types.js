@@ -81,9 +81,9 @@ RL.Tile.Types.wall = {
 };
 RL.Tile.Types.door = {
     name: 'Door',
-    char: '+',
-    color: 'yellow',
-    bgColor: '#222',
+    char: '▮',
+    color: '#000',
+    bgColor: '#2e2e2e',
     passable: true
 };
 RL.Tile.Types.fire = {
