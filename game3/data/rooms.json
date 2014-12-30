@@ -124,12 +124,12 @@
     {
         "name": "random debris 3",
         "mapData": [
-            "##........###",
-            "##.........##",
-            "#............",
+            "##..........#",
+            "...#.......##",
+            "...#.....##..",
             ".............",
-            "............#",
-            "#.........###",
+            "####.......##",
+            "#.......##...",
             "##......#####"
         ],
         "charToTileType": {
@@ -217,9 +217,9 @@
             ".": "floor",
             "+": "door"
         },
-        "requiredDoors": ["n","s"],
+        "requiredDoors": ["n","s","e","w"],
         "optionalDoors": [],
-        "weight":3
+        "weight":2
     },
     {
         "name": "closed NSE",
@@ -237,8 +237,8 @@
             ".": "floor",
             "+": "door"
         },
-        "requiredDoors": ["n","s","e"],
-        "optionalDoors": [],
+        "requiredDoors": ["n","s"],
+        "optionalDoors": ["e"],
         "weight":5
     },
     {
@@ -257,8 +257,8 @@
             ".": "floor",
             "+": "door"
         },
-        "requiredDoors": ["n","s","w"],
-        "optionalDoors": [],
+        "requiredDoors": ["n","s"],
+        "optionalDoors": ["w"],
         "weight":3
     },
     {
@@ -277,8 +277,8 @@
             ".": "floor",
             "+": "door"
         },
-        "requiredDoors": ["e","s","w"],
-        "optionalDoors": [],
+        "requiredDoors": ["e","w"],
+        "optionalDoors": ["s"],
         "weight":3
     },
     {
@@ -297,8 +297,107 @@
             ".": "floor",
             "+": "door"
         },
-        "requiredDoors": ["n","e","w"],
+        "requiredDoors": ["e","w"],
+        "optionalDoors": ["n"],
+        "weight":3
+    },
+    {
+        "name": "closed ubble EWNS",
+        "mapData": [
+            "######.######",
+            "######.######",
+            "####.....####",
+            ".............",
+            "####.....####",
+            "######.######",
+            "######.######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","s","e","w"],
         "optionalDoors": [],
         "weight":3
-    }
+    },
+    {
+        "name": "Cave-like 1",
+        "mapData": [
+            "##........###",
+            "##.........##",
+            "#............",
+            ".............",
+            "............#",
+            "#.........###",
+            "##......#####"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "e", "w"],
+        "weight":1
+    },
+    {
+        "name": "Cave-like 2",
+        "mapData": [
+            "####......###",
+            "###........##",
+            "#............",
+            ".............",
+            "...###......#",
+            "#######...###",
+            "#############"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "e", "w"],
+        "weight":1
+    },
+    {
+        "name": "Cave-like 3",
+        "mapData": [
+            "##........###",
+            "##.........##",
+            "#.........###",
+            "...........##",
+            "..........####",
+            "#.......#####",
+            "##.....######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "w"],
+        "weight":1
+    {
+        "name": "Cave-like 4",
+        "mapData": [
+            "##........###",
+            "####....#####",
+            "#####....##..",
+            "...###.......",
+            "....###.....#",
+            "#...##....###",
+            "##......#####"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "e", "w"],
+        "weight":1
+    },
 ]
