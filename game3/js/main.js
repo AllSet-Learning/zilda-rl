@@ -14,7 +14,8 @@ RL.Game.prototype.onKeyAction = function(action) {
             //var room = this.getRoom(this.player.x, this.player.y);
             //this.renderer.setCenter(room.centerX, room.centerY);
             this.renderer.draw();
-            this.minimapRenderer.draw();
+            this.updateHud();
+            this.hudRenderer.draw();
         } else if(this.queueDraw){
             this.renderer.draw();
         }
@@ -29,8 +30,9 @@ RL.Game.prototype.start = function() {
     this.renderer.draw();
     
     var playerRoom = this.player.room;
-    this.minimap.get(playerRoom.x,playerRoom.y).color = "yellow";
-    this.minimapRenderer.draw();
+    this.initHud();
+    this.updateHud();
+    this.hudRenderer.draw();
 };
 
 //make tiles bigger for Hanzi readability
@@ -84,28 +86,127 @@ game.dungeon.generate(0,0);
 game.map = game.dungeon.rooms.get(0,0).map;
 game.entityManager = game.dungeon.rooms.get(0,0).entityManager;
 
-//add minimap
-game.minimap = new RL.Map(game);
-game.minimap.setSize(dungeonW,dungeonH);
-for ( var x=0; x<game.minimap.width; x++ ) {
-    for ( var y=0; y<game.minimap.height; y++ ) {
-        game.minimap.set(x,y,'minimapRoom');
+game.initHud = function() {
+    this.hudMap.get(0,0).char = "L";
+    this.hudMap.get(0,0).color = "white";
+    this.hudMap.get(1,0).char = ":";
+    this.hudMap.get(1,0).color = "white";
+    this.hudMap.get(2,0).char = "1";
+    this.hudMap.get(2,0).color = "white";
+
+    this.hudMap.get(this.dungeon.width+1,1).char  = "$";
+    this.hudMap.get(this.dungeon.width+1,1).color = "yellow";
+    this.hudMap.get(this.dungeon.width+2,1).char  = "X";
+    this.hudMap.get(this.dungeon.width+2,1).color = "white";
+    this.hudMap.get(this.dungeon.width+3,1).char  = "0";
+    this.hudMap.get(this.dungeon.width+3,1).color = "white";
+
+    this.hudMap.get(this.dungeon.width+1,2).char  = "k";
+    this.hudMap.get(this.dungeon.width+1,2).color = "gray";
+    this.hudMap.get(this.dungeon.width+2,2).char  = "X";
+    this.hudMap.get(this.dungeon.width+2,2).color = "white";
+    this.hudMap.get(this.dungeon.width+3,2).char  = "0";
+    this.hudMap.get(this.dungeon.width+3,2).color = "white";
+
+    this.hudMap.get(this.dungeon.width+1,3).char  = "b";
+    this.hudMap.get(this.dungeon.width+1,3).color = "blue";
+    this.hudMap.get(this.dungeon.width+2,3).char  = "X";
+    this.hudMap.get(this.dungeon.width+2,3).color = "white";
+    this.hudMap.get(this.dungeon.width+3,3).char  = "0";
+    this.hudMap.get(this.dungeon.width+3,3).color = "white";
+
+    this.hudMap.get(this.dungeon.width+4,1).char  = "-";
+    this.hudMap.get(this.dungeon.width+4,1).color = "red";
+    this.hudMap.get(this.dungeon.width+5,1).char  = "L";
+    this.hudMap.get(this.dungeon.width+5,1).color = "red";
+    this.hudMap.get(this.dungeon.width+6,1).char  = "I";
+    this.hudMap.get(this.dungeon.width+6,1).color = "red";
+    this.hudMap.get(this.dungeon.width+7,1).char  = "F";
+    this.hudMap.get(this.dungeon.width+7,1).color = "red";
+    this.hudMap.get(this.dungeon.width+8,1).char  = "E";
+    this.hudMap.get(this.dungeon.width+8,1).color = "red";
+    this.hudMap.get(this.dungeon.width+9,1).char  = "-";
+    this.hudMap.get(this.dungeon.width+9,1).color = "red";
+
+    for ( var x=0; x<this.hudMap.width; x++ ) {
+        for ( var y=0; y<this.hudMap.height; y++ ) {
+            this.hudMap.get(x,y).explored = true;
+        };
+    };
+    for ( var x=0; x<this.dungeon.width; x++ ) {
+        for ( var y=0; y<this.dungeon.height; y++ ) {
+            tile = this.hudMap.get(x,y+1);
+            tile.explored = false;
+            tile.color = "blue";
+        };
     };
 };
-game.minimapRenderer = new RL.Renderer(game,dungeonW,dungeonH,'minimap');
-RL.RendererLayer.Types.minimap = {
+
+game.updateHud = function() {
+    for ( var x=0; x<this.dungeon.width; x++ ) {
+        for ( var y=0; y<this.dungeon.height; y++ ) {
+            tile = this.hudMap.get(x,y+1);
+            if (this.player.room.x == x && this.player.room.y == y) {
+                tile.explored = true;
+                tile.color = "yellow";
+            } else {
+                tile.color = "blue";
+            };
+        };
+    };
+    for ( var i=0; i<this.player.maxLife; i++ ) {
+        var x=i;
+        var y=2;
+        while (x>5) { x-=6; };
+        x += this.dungeon.width+4;
+        if (i>5)  { y=3; };
+        if (i>11) { y=4; };
+        tile = this.hudMap.get(x,y);
+        tile.char = "♥";
+        if (i>=this.player.life) {
+            tile.color = "gray";
+        } else {
+            tile.color = "red";
+        };
+    };
+};
+
+game.movePlayerRoom = function(fromRoom,toRoom) {
+    toRoom.entityManager.add(this.player.x,this.player.y,this.player);
+    this.player.room = toRoom;
+    this.entityManager = toRoom.entityManager;
+    this.map = toRoom.map;
+    this.updateHud();
+    this.renderer.draw();
+    this.hudRenderer.draw();
+    console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
+};
+
+//add hud
+game.hudMap = new RL.Map(game);
+game.hudMap.setSize(roomW,dungeonH+1);
+for ( var x=0; x<game.hudMap.width; x++ ) {
+    for ( var y=0; y<game.hudMap.height; y++ ) {
+        game.hudMap.set(x,y,'hud');
+    };
+};
+game.hudRenderer = new RL.Renderer(game,game.hudMap.width,game.hudMap.height,'hud');
+RL.RendererLayer.Types.hud = {
   merge: true,
     cancelTileDrawWhenNotFound: true,
     getTileData: function(x,y) {
         if (!this.game) {
             return false;
         };
-        var tile = this.game.minimap.get(x,y);
+        var tile = this.game.hudMap.get(x,y);
+        if (!tile.explored) {
+            return false;
+        };
         var tileData = tile.getTileDrawData();
         return tileData;
     }
 };
-game.minimapRenderer.layers = [ new RL.RendererLayer(game, 'minimap', {draw: true}) ];
+game.hudRenderer.layers = [ new RL.RendererLayer(game, 'hud', {draw: true}) ];
 
 //set up the renderer
 var rendererWidth  = roomW;
@@ -132,16 +233,18 @@ var playerStartY = Math.floor(roomH/2);
 game.player.x = playerStartX;
 game.player.y = playerStartY;
 game.player.room = game.dungeon.rooms.get(0,0);
+game.player.life = 2
+game.player.maxLife = 3
 //var startingRoom = game.getRoom(game.player.x, game.player.y)
 //game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
 
 //set up map
 var mapContainerEl = document.getElementById('map-container');
 var consoleContainerEl = document.getElementById('console-container');
-var minimapContainerEl = document.getElementById('minimap-container');
+var hudContainerEl = document.getElementById('hud-container');
 
 mapContainerEl.appendChild(game.renderer.canvas);
-minimapContainerEl.appendChild(game.minimapRenderer.canvas);
+hudContainerEl.appendChild(game.hudRenderer.canvas);
 consoleContainerEl.appendChild(game.console.el);
 
 game.start();

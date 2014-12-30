@@ -26,15 +26,7 @@ var passageBump = function(entity,direction) {
                 entity.x = newRoom.width-2;
                 break;
             };
-            newRoom.entityManager.add(entity.x,entity.y,entity);
-            entity.room = newRoom;
-            game.map = newRoom.map;
-            game.entityManager = newRoom.entityManager;
-            game.minimap.get(currentRoom.x,currentRoom.y).color = "blue";
-            game.minimap.get(newRoom.x,newRoom.y).color = "yellow";
-            game.renderer.draw();
-            game.minimapRenderer.draw();
-            console.log('Moved ' + direction + ' from ('+currentRoom.x+','+currentRoom.y + ') to (' + newRoom.x+','+newRoom.y+')');
+            game.movePlayerRoom(currentRoom,newRoom);
         };
     };
 };
@@ -94,8 +86,8 @@ RL.Tile.Types.door = {
     bgColor: '#222',
     passable: true
 };
-RL.Tile.Types.minimapRoom = {
-    name: 'Room',
+RL.Tile.Types.hud = {
+    name: 'HUD',
     char: '■',
     color: '#000',
     bgColor: '#000',
