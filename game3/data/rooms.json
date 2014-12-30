@@ -78,5 +78,225 @@
         "requiredDoors": ["n","s"],
         "optionalDoors": [],
         "weight":5
+    },
+    {
+        "name": "random debris 1",
+        "mapData": [
+            "#............",
+            ".......#.....",
+            "..........#..",
+            ".....#.......",
+            ".............",
+            "....#.......#",
+            "............."
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "e", "w"],
+        "weight":1
+    },
+    {
+        "name": "random debris 2",
+        "mapData": [
+            ".............",
+            "..........#..",
+            ".............",
+            ".##..........",
+            "........##...",
+            "..#..........",
+            "..........##."
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "e", "w"],
+        "weight":1
+    },
+    {
+        "name": "random debris 3",
+        "mapData": [
+            "##........###",
+            "##.........##",
+            "#............",
+            ".............",
+            "............#",
+            "#.........###",
+            "##......#####"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "e", "w"],
+        "weight":1
+    },
+    {
+        "name": "random debris 4",
+        "mapData": [
+            ".............",
+            ".............",
+            ".....###.....",
+            "...###.......",
+            ".....##..##..",
+            "...#.........",
+            "............."
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": [],
+        "optionalDoors": ["n", "s", "e", "w"],
+        "weight":1
+    },
+    {
+        "name": "closed E-W",
+        "mapData": [
+            "#############",
+            "#############",
+            "#############",
+            ".............",
+            "#############",
+            "#############",
+            "#############"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","s"],
+        "optionalDoors": [],
+        "weight":1
+    },
+    {
+        "name": "closed N-S",
+        "mapData": [
+            "######.######",
+            "######.######",
+            "######.######",
+            "######.######",
+            "######.######",
+            "######.######",
+            "######.######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","s"],
+        "optionalDoors": [],
+        "weight":1
+    },
+    {
+        "name": "closed EWNS",
+        "mapData": [
+            "######.######",
+            "######.######",
+            "######.######",
+            ".............",
+            "######.######",
+            "######.######",
+            "######.######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","s"],
+        "optionalDoors": [],
+        "weight":3
+    },
+    {
+        "name": "closed NSE",
+        "mapData": [
+            "######.######",
+            "######.######",
+            "######.######",
+            "######.......",
+            "######.######",
+            "######.######",
+            "######.######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","s","e"],
+        "optionalDoors": [],
+        "weight":5
+    },
+    {
+        "name": "closed NSW",
+        "mapData": [
+            "######.######",
+            "######.######",
+            "######.######",
+            ".......######",
+            "######.######",
+            "######.######",
+            "######.######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","s","w"],
+        "optionalDoors": [],
+        "weight":3
+    },
+    {
+        "name": "closed EWS",
+        "mapData": [
+            "#############",
+            "#############",
+            "#############",
+            ".............",
+            "######.######",
+            "######.######",
+            "######.######"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["e","s","w"],
+        "optionalDoors": [],
+        "weight":3
+    },
+    {
+        "name": "closed EWN",
+        "mapData": [
+            "######.######",
+            "######.######",
+            "######.######",
+            ".............",
+            "#############",
+            "#############",
+            "#############"
+        ],
+        "charToTileType": {
+            "#": "wall",
+            ".": "floor",
+            "+": "door"
+        },
+        "requiredDoors": ["n","e","w"],
+        "optionalDoors": [],
+        "weight":3
     }
 ]
