@@ -35,58 +35,8 @@ RL.Game.prototype.start = function() {
     this.hudRenderer.draw();
 };
 
-//make tiles bigger for Hanzi readability
-RL.Renderer.prototype.tileSize = 32;
-//make tiles explored by default
-RL.Tile.prototype.explored = true;
-
-RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {
-    if(!this.game){
-        return false;
-    }
-    var player = this.game.player;
-    var entity = false;
-    if (
-        player &&
-            x === player.x &&
-            y === player.y
-    ) {
-        entity = player;
-    } else if(this.game.entityManager){
-        entity = this.game.entityManager.get(x, y);
-  }
-    //skip the fov check
-    /*
-      if(
-      this.game.player &&
-      this.game.player.fov &&
-      !this.game.player.fov.get(x, y)
-      ){
-      return false;
-      }
-    */
-    if(entity){
-        var tileData = entity.getTileDrawData();
-        return tileData;
-    }
-    return false;
-};
-
-
-var game = new RL.Game();
-
-//adding dungeon to game
-console.log('Adding dungeon to game');
-var dungeonW = 5;
-var dungeonH = 4;
-var roomW = 15;
-var roomH = 9;
-game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
-game.dungeon.generate(0,0);
-game.map = game.dungeon.rooms.get(0,0).map;
-game.entityManager = game.dungeon.rooms.get(0,0).entityManager;
-
-game.initHud = function() {
+//New function to initializes the HUD tiles
+RL.Game.prototype.initHud = function() {
     this.hudMap.get(0,0).char = "L";
     this.hudMap.get(0,0).color = "white";
     this.hudMap.get(1,0).char = "E";
@@ -150,7 +100,8 @@ game.initHud = function() {
     };
 };
 
-game.updateHud = function() {
+//New function to update the hud
+RL.Game.prototype.updateHud = function() {
     for ( var x=0; x<this.dungeon.width; x++ ) {
         for ( var y=0; y<this.dungeon.height; y++ ) {
             tile = this.hudMap.get(x,y+1);
@@ -179,7 +130,8 @@ game.updateHud = function() {
     };
 };
 
-game.movePlayerRoom = function(fromRoom,toRoom) {
+//New function that handles player moving from one room to another
+RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
     toRoom.entityManager.add(this.player.x,this.player.y,this.player);
     this.player.room = toRoom;
     this.entityManager = toRoom.entityManager;
@@ -190,15 +142,45 @@ game.movePlayerRoom = function(fromRoom,toRoom) {
     console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
 };
 
-//add hud
-game.hudMap = new RL.Map(game);
-game.hudMap.setSize(roomW,dungeonH+1);
-for ( var x=0; x<game.hudMap.width; x++ ) {
-    for ( var y=0; y<game.hudMap.height; y++ ) {
-        game.hudMap.set(x,y,'hud');
-    };
+//make tiles bigger for Hanzi readability
+RL.Renderer.prototype.tileSize = 32;
+//make tiles explored by default
+RL.Tile.prototype.explored = true;
+
+//Customize renderer to ignore field of view
+RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {
+    if(!this.game){
+        return false;
+    }
+    var player = this.game.player;
+    var entity = false;
+    if (
+        player &&
+            x === player.x &&
+            y === player.y
+    ) {
+        entity = player;
+    } else if(this.game.entityManager){
+        entity = this.game.entityManager.get(x, y);
+  }
+    //skip the fov check
+    /*
+      if(
+      this.game.player &&
+      this.game.player.fov &&
+      !this.game.player.fov.get(x, y)
+      ){
+      return false;
+      }
+    */
+    if(entity){
+        var tileData = entity.getTileDrawData();
+        return tileData;
+    }
+    return false;
 };
-game.hudRenderer = new RL.Renderer(game,game.hudMap.width,game.hudMap.height,'hud');
+
+//New type of renderer layer for hud
 RL.RendererLayer.Types.hud = {
   merge: true,
     cancelTileDrawWhenNotFound: true,
@@ -214,6 +196,42 @@ RL.RendererLayer.Types.hud = {
         return tileData;
     }
 };
+
+RL.Player.prototype.takeDamage = function(amount) {
+    this.game.console.log('You take <strong>'+amount+'</strong> damage.');
+    this.life -= amount;
+    if (this.life<0) { this.life=0; };
+    if (this.life===0) { this.dead=true; };
+};
+RL.Player.prototype.heal = function(amount) {
+    this.life += amount;
+    if (this.life>this.maxLife) { this.life=this.maxLife; };
+};
+
+var game = new RL.Game();
+
+//adding dungeon to game
+console.log('Adding dungeon to game');
+var dungeonW = 5;
+var dungeonH = 4;
+var roomW = 15;
+var roomH = 9;
+game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
+game.dungeon.generate(0,0);
+game.map = game.dungeon.rooms.get(0,0).map;
+game.entityManager = game.dungeon.rooms.get(0,0).entityManager;
+
+//add hud
+game.hudMap = new RL.Map(game);
+game.hudMap.setSize(roomW,dungeonH+1);
+for ( var x=0; x<game.hudMap.width; x++ ) {
+    for ( var y=0; y<game.hudMap.height; y++ ) {
+        game.hudMap.set(x,y,'hud');
+    };
+};
+
+game.hudRenderer = new RL.Renderer(game,game.hudMap.width,game.hudMap.height,'hud');
+
 game.hudRenderer.layers = [ new RL.RendererLayer(game, 'hud', {draw: true}) ];
 
 //set up the renderer
