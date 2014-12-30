@@ -52,21 +52,21 @@ RL.Game.prototype.initHud = function() {
     this.hudMap.get(6,0).char = "1";
     this.hudMap.get(6,0).color = "white";
 
-    this.hudMap.get(this.dungeon.width+1,1).char  = "$";
+    this.hudMap.get(this.dungeon.width+1,1).char  = "⁂";
     this.hudMap.get(this.dungeon.width+1,1).color = "yellow";
     this.hudMap.get(this.dungeon.width+2,1).char  = "X";
     this.hudMap.get(this.dungeon.width+2,1).color = "white";
     this.hudMap.get(this.dungeon.width+3,1).char  = "0";
     this.hudMap.get(this.dungeon.width+3,1).color = "white";
 
-    this.hudMap.get(this.dungeon.width+1,2).char  = "k";
+    this.hudMap.get(this.dungeon.width+1,2).char  = "۴";//"স";// ۴ ߞ ߓ ᚩ ᚨ ᚡ শ  ไ ᶋ
     this.hudMap.get(this.dungeon.width+1,2).color = "gray";
     this.hudMap.get(this.dungeon.width+2,2).char  = "X";
     this.hudMap.get(this.dungeon.width+2,2).color = "white";
     this.hudMap.get(this.dungeon.width+3,2).char  = "0";
     this.hudMap.get(this.dungeon.width+3,2).color = "white";
 
-    this.hudMap.get(this.dungeon.width+1,3).char  = "b";
+    this.hudMap.get(this.dungeon.width+1,3).char  = "ර"; //Ȯ Q ᵹ Ố
     this.hudMap.get(this.dungeon.width+1,3).color = "blue";
     this.hudMap.get(this.dungeon.width+2,3).char  = "X";
     this.hudMap.get(this.dungeon.width+2,3).color = "white";
@@ -144,6 +144,7 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
 
 //make tiles bigger for Hanzi readability
 RL.Renderer.prototype.tileSize = 32;
+RL.Renderer.prototype.font = "Arial Black";
 //make tiles explored by default
 RL.Tile.prototype.explored = true;
 

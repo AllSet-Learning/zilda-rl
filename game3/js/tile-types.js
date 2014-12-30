@@ -88,7 +88,7 @@ RL.Tile.Types.door = {
 };
 RL.Tile.Types.fire = {
     name: 'Fire',
-    char: '^',
+    char: '火',
     color: 'red',
     bgColor: '#522',
     passable: true,
