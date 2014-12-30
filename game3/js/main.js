@@ -25,11 +25,17 @@ RL.Game.prototype.onKeyAction = function(action) {
 
 //custom start function
 RL.Game.prototype.start = function() {
+    var playerRoom = this.player.room;
+
+    this.entityManager = playerRoom.entityManager;
+    this.itemManager = playerRoom.itemManager;
+    this.map = playerRoom.map;
+
     this.entityManager.add(this.player.x, this.player.y, this.player);
-    this.renderer.setCenter(this.player.x,this.player.y);
+
+    this.renderer.setCenter(playerRoom.centerX,playerRoom.centerY);
     this.renderer.draw();
     
-    var playerRoom = this.player.room;
     this.initHud();
     this.updateHud();
     this.hudRenderer.draw();
@@ -133,6 +139,7 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
     toRoom.entityManager.add(this.player.x,this.player.y,this.player);
     this.player.room = toRoom;
     this.entityManager = toRoom.entityManager;
+    this.itemManager = toRoom.itemManager;
     this.map = toRoom.map;
     this.updateHud();
     this.renderer.draw();
@@ -142,9 +149,13 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
 
 //make tiles bigger for Hanzi readability
 RL.Renderer.prototype.tileSize = 32;
+//change font to something more Zelda-like
 RL.Renderer.prototype.font = "Arial Black";
 //make tiles explored by default
 RL.Tile.prototype.explored = true;
+
+RL.Item.prototype.charStrokeColor = false;
+RL.Item.prototype.charStrokeWidth = 0;
 
 //Customize renderer to ignore field of view
 RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {
@@ -179,9 +190,25 @@ RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {
     return false;
 };
 
+//New Renderer layer for item
+RL.RendererLayer.Types.item = {
+    merge: true,
+    cancelTileDrawWhenNotFound: true,
+    getTileData: function(x,y,prevTileData) {
+        if (!this.game) {
+            return false;
+        };
+        var item = this.game.itemManager.get(x,y);
+        if (item) {
+            return item.getTileDrawData();
+        };
+        return false;
+    }
+};
+
 //New type of renderer layer for hud
 RL.RendererLayer.Types.hud = {
-  merge: true,
+    merge: true,
     cancelTileDrawWhenNotFound: true,
     getTileData: function(x,y) {
         if (!this.game) {
@@ -206,8 +233,6 @@ var roomW = 15;
 var roomH = 9;
 game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
 game.dungeon.generate(0,0);
-game.map = game.dungeon.rooms.get(0,0).map;
-game.entityManager = game.dungeon.rooms.get(0,0).entityManager;
 
 //add hud
 game.hudMap = new RL.Map(game);
@@ -230,6 +255,7 @@ game.renderer.resize(rendererWidth, rendererHeight);
 
 game.renderer.layers = [
     new RL.RendererLayer(game, 'map', {draw: false, mergeWithPrevLayer: false}),
+    new RL.RendererLayer(game, 'item', {draw: false, mergeWithPrevLayer: true}),
     new RL.RendererLayer(game, 'entity', {draw: true, mergeWithPrevLayer: true})
 ];
 
@@ -247,8 +273,6 @@ var playerStartY = Math.floor(roomH/2);
 game.player.x = playerStartX;
 game.player.y = playerStartY;
 game.player.room = game.dungeon.rooms.get(0,0);
-//game.player.life = 2
-//game.player.maxLife = 3
 //var startingRoom = game.getRoom(game.player.x, game.player.y)
 //game.renderer.setCenter(startingRoom.centerX, startingRoom.centerY)
 

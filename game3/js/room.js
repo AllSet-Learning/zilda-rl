@@ -9,7 +9,7 @@ var Room = function Room(game,x,y,width,height) {
     this.tags = [];
     this.map = new RL.Map(game);
     this.entityManager = new RL.ObjectManager(game, RL.Entity, width, height);
-
+    this.itemManager = new RL.ObjectManager(game, RL.Item, width, height);
     this.hasTag = function(tag) {
         return ( this.tags.indexOf(tag.toUpperCase()) != -1 );
     };
@@ -80,5 +80,17 @@ var Room = function Room(game,x,y,width,height) {
     this.setSize = function(w,h) {
         this.map.setSize(w,h);
         this.entityManager.setSize(w,h);
+    };
+
+    this.randomItem = function() {
+        var x=0;//this.centerX;
+        var y=0;//this.centerY;
+        while ( this.map.get(x,y).type !== 'floor' ) {
+            x = Math.floor(Math.random()*this.width)
+            y = Math.floor(Math.random()*this.height)
+        }
+        var itemType = RL.Util.randomChoice(['heart','gold','threeGold','key','bomb']);
+        var item = new RL.Item(this.Game,itemType,x,y);
+        this.itemManager.add(x,y,item);
     };
 };

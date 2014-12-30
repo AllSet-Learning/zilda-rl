@@ -295,6 +295,10 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         };
         this.tagDeadEnds();
         this.digRooms();
+        var rooms = this.getAllRooms();
+        for ( var i=0; i<rooms.length; i++ ) {
+            rooms[i].randomItem();
+        };
         console.log(this.getRoomsWithTag('START')[0].tags);
     };
 };
