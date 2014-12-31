@@ -85,7 +85,12 @@ var Room = function Room(game,x,y,width,height) {
     this.randomItem = function() {
         var x=0;//this.centerX;
         var y=0;//this.centerY;
-        while ( this.map.get(x,y).type !== 'floor' ) {
+        while ( (x===this.centerX && y===1) ||
+                (x===this.centerX && y===this.height-2) ||
+                (y===this.centerY && x===1) ||
+                (y===this.centerY && x===this.width-2) ||
+                this.map.get(x,y).type !== 'floor' ) {
+            console.log('Choosing new position');
             x = Math.floor(Math.random()*this.width)
             y = Math.floor(Math.random()*this.height)
         }
