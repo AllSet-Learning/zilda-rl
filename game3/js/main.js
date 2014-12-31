@@ -9,10 +9,10 @@ RL.Game.prototype.onKeyAction = function(action) {
             //this.player.updateFov();
             //this.lighting.update();
             
-            //center in current room instead of on player
+            //don't follow player
             //this.renderer.setCenter(this.player.x, this.player.y);
-            //var room = this.getRoom(this.player.x, this.player.y);
-            //this.renderer.setCenter(room.centerX, room.centerY);
+
+            this.itemManager.update();
             this.renderer.draw();
             this.updateHud();
             this.hudRenderer.draw();
@@ -154,8 +154,18 @@ RL.Renderer.prototype.font = "Arial Black";
 //make tiles explored by default
 RL.Tile.prototype.explored = true;
 
+//Get rid of black border around items
 RL.Item.prototype.charStrokeColor = false;
 RL.Item.prototype.charStrokeWidth = 0;
+
+//Update item - if on same tile as player pick them up
+RL.Item.prototype.update = function() {
+    if ( this.x === this.game.player.x &&
+         this.y === this.game.player.y ) {
+        this.attachTo(this.game.player);
+        this.game.itemManager.remove(this);
+    };
+};
 
 //Customize renderer to ignore field of view
 RL.RendererLayer.Types.entity.getTileData = function(x, y, prevTileData) {

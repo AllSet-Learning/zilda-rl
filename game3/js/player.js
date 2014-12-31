@@ -1,9 +1,9 @@
 //initial stats
 RL.Player.prototype.maxLife = 6;
 RL.Player.prototype.life = 3;
-RL.Player.prototype.gold = 10;
-RL.Player.prototype.keys = 3;
-RL.Player.prototype.bombs = 1;
+RL.Player.prototype.gold = 0;
+RL.Player.prototype.keys = 0;
+RL.Player.prototype.bombs = 0;
 
 //increase and decrease max life
 RL.Player.prototype.addHeart = function() {
