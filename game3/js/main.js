@@ -2,7 +2,7 @@
 RL.Game.prototype.onKeyAction = function(action) {
     if(!this.gameOver){
         var result = this.player.update(action);
-        if(result){
+        if (result) {
             this.entityManager.update(this.player);
             
             //Don't update map the fov or lighting!
@@ -12,14 +12,23 @@ RL.Game.prototype.onKeyAction = function(action) {
             //don't follow player
             //this.renderer.setCenter(this.player.x, this.player.y);
 
+            //update items
             this.itemManager.update();
+
+            //update tiles
+            for ( var x=0; x<this.map.width; x++ ) {
+                for ( var y=0; y<this.map.height; y++ ) {
+                    this.map.get(x,y).update();
+                };
+            };
+
             this.renderer.draw();
             this.updateHud();
             this.hudRenderer.draw();
         } else if(this.queueDraw){
             this.renderer.draw();
-        }
-    }
+        };
+    };
     this.queueDraw = false;
 };
 
@@ -153,6 +162,14 @@ RL.Renderer.prototype.tileSize = 32;
 RL.Renderer.prototype.font = "Arial Black";
 //make tiles explored by default
 RL.Tile.prototype.explored = true;
+//give tiles update method placeholder;
+RL.Tile.prototype.update = function() {};
+//change type function
+RL.Tile.prototype.changeType = function(type) {
+    this.type = type;
+    var typeData = RL.Tile.Types[this.type];
+    RL.Util.merge(this, typeData);
+}
 
 //Get rid of black border around items
 RL.Item.prototype.charStrokeColor = false;

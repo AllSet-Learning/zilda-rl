@@ -82,7 +82,7 @@ RL.Tile.Types.wall = {
 RL.Tile.Types.door = {
     name: 'Door',
     char: '▇',
-    color: '#442200',
+    color: '#222',
     bgColor: '#2e2e2e',
     passable: true
 };
@@ -94,6 +94,40 @@ RL.Tile.Types.fire = {
     passable: true,
     onEntityEnter: function(entity) {
         entity.takeDamage(1);
+    }
+};
+RL.Tile.Types.bombThree = {
+    name: 'Bomb',
+    char: 'ර',
+    color: 'blue',
+    bgColor: '#222',
+    passable: true,
+    update: function() {
+        this.game.console.log('Three.');
+        this.changeType('bombTwo');
+    }        
+};
+RL.Tile.Types.bombTwo = {
+    name: 'Bomb',
+    char: 'ර',
+    color: 'blue',
+    bgColor: '#222',
+    passable: true,
+    update: function() {
+        this.game.console.log('Two!');
+        this.changeType('bombOne');
+    }        
+};
+RL.Tile.Types.bombOne = {
+    name: 'Bomb',
+    char: 'ර',
+    color: 'blue',
+    bgColor: '#222',
+    passable: true,
+    update: function() {
+        this.game.console.log('ONE!');
+        this.changeType('floor');
+        this.update = function() {};
     }
 };
 RL.Tile.Types.hud = {

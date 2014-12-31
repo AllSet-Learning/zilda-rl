@@ -90,7 +90,6 @@ var Room = function Room(game,x,y,width,height) {
                 (y===this.centerY && x===1) ||
                 (y===this.centerY && x===this.width-2) ||
                 this.map.get(x,y).type !== 'floor' ) {
-            console.log('Choosing new position');
             x = Math.floor(Math.random()*this.width)
             y = Math.floor(Math.random()*this.height)
         }
