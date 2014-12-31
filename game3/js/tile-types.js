@@ -82,7 +82,7 @@ RL.Tile.Types.wall = {
 RL.Tile.Types.door = {
     name: 'Door',
     char: '▇',
-    color: '#222',
+    color: '#442200',
     bgColor: '#2e2e2e',
     passable: true
 };
