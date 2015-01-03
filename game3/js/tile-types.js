@@ -77,14 +77,16 @@ RL.Tile.Types.wall = {
     char: '#',
     color: '#777',
     bgColor: '#2e2e2e',
-    passable: false
+    passable: false,
+    bombable: false
 };
 RL.Tile.Types.door = {
     name: 'Door',
     char: '▇',
     color: '#222',
     bgColor: '#2e2e2e',
-    passable: true
+    passable: true,
+    bombable: false
 };
 RL.Tile.Types.fire = {
     name: 'Fire',
@@ -129,15 +131,28 @@ RL.Tile.Types.bombOne = {
     passable: true,
     update: function() {
         this.game.console.log('ONE!');
+        this.changeType('bombExploding');
+    }        
+};
+RL.Tile.Types.bombExploding = {
+    name: 'Bomb',
+    char: 'ර',
+    color: 'blue',
+    bgColor: '#222',
+    passable: true,
+    update: function() {
         for ( var x=this.x-1; x<this.x+2; x++ ) {
             for ( var y=this.y-1; y<this.y+2; y++ ) {
-                this.game.map.get(x,y).changeType('explosion');
-                if (x>this.x || (x===this.x && y>this.y)) {
-                    this.game.map.get(x,y).skip = true;
-                };
-                entity = this.game.entityManager.get(x,y);
-                if (entity) {
-                    entity.takeDamage(1);
+                var t = this.game.map.get(x,y);
+                if (t.bombable) {
+                    this.game.map.get(x,y).changeType('explosion');
+                    if (x>this.x || (x===this.x && y>this.y)) {
+                        this.game.map.get(x,y).skip = true;
+                    };
+                    entity = this.game.entityManager.get(x,y);
+                    if (entity) {
+                        entity.takeDamage(1);
+                    };
                 };
             };
         };
@@ -151,8 +166,15 @@ RL.Tile.Types.explosion = {
     bgColor: '#522',
     passable: true,
     update: function() {
-        this.changeType('floor');
+        this.changeType('embers');
     }
+};
+RL.Tile.Types.embers = {
+    name: 'Embers',
+    char: '.',
+    color: '#522',
+    bgColor: '#222',
+    passable: true
 };
 RL.Tile.Types.hud = {
     name: 'HUD',

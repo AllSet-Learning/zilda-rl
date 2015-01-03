@@ -14,8 +14,7 @@
             "#": "wall",
             ".": "floor",
             "+": "door",
-            "^": "fire",
-            "b": "bombThree"
+            "^": "fire"
         },
         "requiredDoors": [],
         "optionalDoors": ["n", "s", "e", "w"],

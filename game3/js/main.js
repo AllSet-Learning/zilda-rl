@@ -170,6 +170,7 @@ RL.Tile.prototype.explored = true;
 //give tiles update method placeholder;
 RL.Tile.prototype.update = function() {};
 RL.Tile.prototype.skip = false;
+RL.Tile.prototype.bombable = true; //tiles are by default bombable
 //change type function
 RL.Tile.prototype.changeType = function(type) {
     this.type = type;
@@ -302,7 +303,8 @@ var keyBindings = {
     up: ['UP_ARROW'],
     down: ['DOWN_ARROW'],
     left: ['LEFT_ARROW'],
-    right: ['RIGHT_ARROW']
+    right: ['RIGHT_ARROW'],
+    placeBomb: ['B']
 };
 game.input.addBindings(keyBindings);
 

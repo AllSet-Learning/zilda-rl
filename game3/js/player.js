@@ -1,3 +1,26 @@
+//Extend players update to include new actions
+RL.Player.prototype.update = function(action) {
+    if (RL.Util.DIRECTIONS_4.indexOf(action) !== -1) {
+        var offsetCoord = RL.Util.getOffsetCoordsFromDirection(action),
+        moveToX = this.x+offsetCoord.x,
+        moveToY = this.y+offsetCoord.y;
+        return this.move(moveToX,moveToY);
+    }
+    if (action === 'wait' ) {
+        this.wait();
+        return true;
+    } else if (action === 'placeBomb') {
+        if (this.bombs) {
+            this.bombs -= 1;
+            this.game.map.get(this.x,this.y).changeType('bombThree');
+            return true;
+        } else {
+            return false;
+        };
+    };
+    return false;
+};
+
 //initial stats
 RL.Player.prototype.maxLife = 6;
 RL.Player.prototype.life = 3;
