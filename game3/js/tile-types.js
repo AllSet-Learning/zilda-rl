@@ -92,8 +92,11 @@ RL.Tile.Types.fire = {
     color: 'red',
     bgColor: '#522',
     passable: true,
-    onEntityEnter: function(entity) {
-        entity.takeDamage(1);
+    update: function() {
+        entity = this.game.entityManager.get(this.x,this.y);
+        if (entity) {
+            entity.takeDamage(1);
+        };
     }
 };
 RL.Tile.Types.bombThree = {
@@ -126,8 +129,29 @@ RL.Tile.Types.bombOne = {
     passable: true,
     update: function() {
         this.game.console.log('ONE!');
+        for ( var x=this.x-1; x<this.x+2; x++ ) {
+            for ( var y=this.y-1; y<this.y+2; y++ ) {
+                this.game.map.get(x,y).changeType('explosion');
+                if (x>this.x || (x===this.x && y>this.y)) {
+                    this.game.map.get(x,y).skip = true;
+                };
+                entity = this.game.entityManager.get(x,y);
+                if (entity) {
+                    entity.takeDamage(1);
+                };
+            };
+        };
+        this.changeType('explosion');
+    }
+};
+RL.Tile.Types.explosion = {
+    name: 'Explosion',
+    char: '火',
+    color: 'red',
+    bgColor: '#522',
+    passable: true,
+    update: function() {
         this.changeType('floor');
-        this.update = function() {};
     }
 };
 RL.Tile.Types.hud = {

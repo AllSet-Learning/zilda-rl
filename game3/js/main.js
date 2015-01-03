@@ -18,7 +18,12 @@ RL.Game.prototype.onKeyAction = function(action) {
             //update tiles
             for ( var x=0; x<this.map.width; x++ ) {
                 for ( var y=0; y<this.map.height; y++ ) {
-                    this.map.get(x,y).update();
+                    var tile = this.map.get(x,y);
+                    if (tile.skip) {
+                        tile.skip = false;
+                    } else {
+                        tile.update();
+                    };
                 };
             };
 
@@ -164,12 +169,19 @@ RL.Renderer.prototype.font = "Arial Black";
 RL.Tile.prototype.explored = true;
 //give tiles update method placeholder;
 RL.Tile.prototype.update = function() {};
+RL.Tile.prototype.skip = false;
 //change type function
 RL.Tile.prototype.changeType = function(type) {
     this.type = type;
     var typeData = RL.Tile.Types[this.type];
     RL.Util.merge(this, typeData);
-}
+    if (!typeData.update) {
+        this.update = function() {};
+    };
+    if (!typeData.onEntityEnter) {
+        this.onEntityEnter = function(entity) {};
+    };
+};
 
 //Get rid of black border around items
 RL.Item.prototype.charStrokeColor = false;
