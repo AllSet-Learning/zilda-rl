@@ -313,7 +313,8 @@ var startRoomY = 0
 var startRoom = game.dungeon.rooms.get(0,0);
 var playerStartX = 0
 var playerStartY = 0
-while ( startRoom.map.get(playerStartX,playerStartY).type !== 'floor' ) {
+while ( startRoom.map.get(playerStartX,playerStartY).type !== 'floor' ||
+        startRoom.itemManager.get(playerStartX,playerStartY) ) {
     playerStartX = Math.floor(Math.random()*startRoom.width);
     playerStartY = Math.floor(Math.random()*startRoom.height);
 };
