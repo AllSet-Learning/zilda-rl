@@ -19,7 +19,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         };
     };
 
-    this.loadLayouts(["basic","debris","cave","inferno","closed","labyrinth"])
+    this.loadLayouts(["basic","debris","cave","inferno","closed","labyrinth"]);
 
     this.validDirections = function(roomX, roomY) {
         var directions = ['n','s','e','w'];
@@ -236,10 +236,23 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
 
     this.digRooms = function() {
         var roomArray = this.getAllRooms();
+        var usedLayouts = [];
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
             var layouts = this.getCompatibleRoomLayouts(room);
-            var layout = RL.Util.weightedChoice( layouts, function(layout) { return layout.weight; } );
+            for ( var j=0; j<usedLayouts.length; j++ ) {
+                var usedLayout = usedLayouts[j];
+                if (layouts.indexOf(usedLayout)!==-1 && !usedLayout.reusable) {
+                    layouts.splice(layouts.indexOf(usedLayout),1);
+                };
+            };
+
+            if (layouts.length) {
+                var layout = RL.Util.weightedChoice( layouts, function(layout) { return layout.weight; } );
+                usedLayouts.push(layout);
+            } else {
+                var layout = this.roomLayouts.basic[0];
+            };
 
             //make a copy of mapData, so we're changing future layouts
             var mapData = layout.mapData.slice(0,layout.mapData.length)
