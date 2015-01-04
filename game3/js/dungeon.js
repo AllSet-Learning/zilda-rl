@@ -13,7 +13,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         for ( var i=0; i<roomTypes.length; i++ ) {
             var roomType = roomTypes[i];
             var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET","data/rooms"+roomType+".json",false);
+            xmlHttp.open("GET","data/rooms/"+roomType+".json",false);
             xmlHttp.send(null);
             this.roomLayouts[roomType] = JSON.parse(xmlHttp.responseText);
         };
