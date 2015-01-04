@@ -7,10 +7,19 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.tilesWidth  = dungeonWidth*roomWidth;
     this.tilesHeight = dungeonHeight*roomHeight;
     this.rooms = new RL.Array2d(dungeonWidth,dungeonHeight);
-    var xmlHttp = new XMLHttpRequest(); //TODO clean this up
-    xmlHttp.open("GET","data/rooms.json",false);
-    xmlHttp.send(null);
-    this.roomLayouts = JSON.parse(xmlHttp.responseText);
+    this.roomLayouts = {};
+
+    this.loadLayouts = function(roomTypes) {
+        for ( var i=0; i<roomTypes.length; i++ ) {
+            var roomType = roomTypes[i];
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET","data/rooms"+roomType+".json",false);
+            xmlHttp.send(null);
+            this.roomLayouts[roomType] = JSON.parse(xmlHttp.responseText);
+        };
+    };
+
+    this.loadLayouts(["basic","debris","cave","inferno","closed","labyrinth"])
 
     this.validDirections = function(roomX, roomY) {
         var directions = ['n','s','e','w'];
@@ -197,27 +206,29 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
 
     this.getCompatibleRoomLayouts = function(room) {
         var compatibleLayouts = [];
-        for ( var i=0; i<this.roomLayouts.length; i++ ) {
-            var layout = this.roomLayouts[i];
-            var compatible = true;
-            //room has connections where layout required doors
-            for ( var j=0; j<layout.requiredDoors.length; j++ ) {
-                if ( ! room.hasTag(layout.requiredDoors[j]) ) {
-                    compatible = false;
+        for ( var key in this.roomLayouts ) {
+            for ( var i=0; i<this.roomLayouts[key].length; i++ ) {
+                var layout = this.roomLayouts[key][i];
+                var compatible = true;
+                //room has connections where layout required doors
+                for ( var j=0; j<layout.requiredDoors.length; j++ ) {
+                    if ( ! room.hasTag(layout.requiredDoors[j]) ) {
+                        compatible = false;
+                    };
                 };
-            };
-            //layout accepts doors where room has connections
-            var connectionTags = room.connectionTags();
-            for ( var j=0; j<connectionTags.length; j++ ) {
-                if ( layout.requiredDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
-                     layout.requiredDoors.indexOf(connectionTags[j].toLowerCase()) === -1 &&
-                     layout.optionalDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
-                     layout.optionalDoors.indexOf(connectionTags[j].toLowerCase()) === -1 ) {
-                    compatible = false;
+                //layout accepts doors where room has connections
+                var connectionTags = room.connectionTags();
+                for ( var j=0; j<connectionTags.length; j++ ) {
+                    if ( layout.requiredDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
+                         layout.requiredDoors.indexOf(connectionTags[j].toLowerCase()) === -1 &&
+                         layout.optionalDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
+                         layout.optionalDoors.indexOf(connectionTags[j].toLowerCase()) === -1 ) {
+                        compatible = false;
+                    };
                 };
-            };
-            if (compatible) {
-                compatibleLayouts.push(layout);
+                if (compatible) {
+                    compatibleLayouts.push(layout);
+                };
             };
         };
         return compatibleLayouts;
