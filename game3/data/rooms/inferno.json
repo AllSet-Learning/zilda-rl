@@ -10,15 +10,8 @@
             "^^....^^...^^",
             "^^^.....^.^^^"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door",
-            "^": "fire"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "s", "e", "w"],
-        "weight":1
+        "optionalDoors": ["n", "s", "e", "w"]
     },
     {
         "name": "Inferno 2",
@@ -31,15 +24,8 @@
             "^^...^.^...^^",
             "^^^.......^^^"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door",
-            "^": "fire"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "s", "e", "w"],
-        "weight":1
+        "optionalDoors": ["n", "s", "e", "w"]
     },
     {
         "name": "Inferno 3",
@@ -52,14 +38,7 @@
             "^^....^....^^",
             "^^^.......^^^"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door",
-            "^": "fire"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "s", "e", "w"],
-        "weight":1
+        "optionalDoors": ["n", "s", "e", "w"]
     }
 ]

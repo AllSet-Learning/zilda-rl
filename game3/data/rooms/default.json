@@ -1,0 +1,22 @@
+{
+    "name": "default",
+    "mapData": [
+        ".............",
+        ".............",
+        ".............",
+        ".............",
+        ".............",
+        ".............",
+        "............."
+    ],
+    "charToTileType": {
+        "#": "wall",
+        ".": "floor",
+        "+": "door",
+        "^": "fire"
+    },
+    "requiredDoors": [],
+    "optionalDoors": [],
+    "weight":1,
+    "reusable":false
+}

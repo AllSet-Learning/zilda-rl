@@ -8,14 +8,34 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.tilesHeight = dungeonHeight*roomHeight;
     this.rooms = new RL.Array2d(dungeonWidth,dungeonHeight);
     this.roomLayouts = {};
+    this.defaultLayout = null;
 
     this.loadLayouts = function(roomTypes) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET","data/rooms/default.json",false);
+        xmlHttp.send(null);
+        this.defaultLayout = JSON.parse(xmlHttp.responseText);
         for ( var i=0; i<roomTypes.length; i++ ) {
             var roomType = roomTypes[i];
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET","data/rooms/"+roomType+".json",false);
             xmlHttp.send(null);
             this.roomLayouts[roomType] = JSON.parse(xmlHttp.responseText);
+
+            //add default values to layouts if not overridden
+            for ( var j=0; j<this.roomLayouts[roomType].length; j++ ) {
+                var layout = this.roomLayouts[roomType][j];
+                for ( var key in this.defaultLayout ) {
+                    if (layout[key]===undefined) {
+                        layout[key] = this.defaultLayout[key];
+                    };
+                };
+                for ( var char in this.defaultLayout.charToTileType ) {
+                    if (layout.charToTileType[char]===undefined) {
+                        layout.charToTileType[char]=this.defaultLayout.charToTileType[char];
+                    };
+                };
+            };
         };
     };
 
@@ -251,7 +271,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 var layout = RL.Util.weightedChoice( layouts, function(layout) { return layout.weight; } );
                 usedLayouts.push(layout);
             } else {
-                var layout = this.roomLayouts.basic[0];
+                var layout = this.defaultLayout;
             };
 
             //make a copy of mapData, so we're changing future layouts

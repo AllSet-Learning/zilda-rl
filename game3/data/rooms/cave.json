@@ -10,14 +10,8 @@
             "#.........###",
             "##......#####"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "s", "e", "w"],
-        "weight":1
+        "optionalDoors": ["n", "s", "e", "w"]
     },
     {
         "name": "Cave-like 2",
@@ -30,14 +24,8 @@
             "#######...###",
             "#############"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "e", "w"],
-        "weight":1
+        "optionalDoors": ["n", "e", "w"]
     },
     {
         "name": "Cave-like 3",
@@ -46,18 +34,12 @@
             "##.........##",
             "#.........###",
             "...........##",
-            "..........####",
+            "..........###",
             "#.......#####",
             "##.....######"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "s", "w"],
-        "weight":1
+        "optionalDoors": ["n", "s", "w"]
     },
     {
         "name": "Cave-like 4",
@@ -70,13 +52,7 @@
             "#...##....###",
             "##......#####"
         ],
-        "charToTileType": {
-            "#": "wall",
-            ".": "floor",
-            "+": "door"
-        },
         "requiredDoors": [],
-        "optionalDoors": ["n", "s", "e", "w"],
-        "weight":1
+        "optionalDoors": ["n", "s", "e", "w"]
     }
 ]
