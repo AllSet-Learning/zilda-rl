@@ -88,6 +88,35 @@ RL.Tile.Types.door = {
     passable: true,
     bombable: false
 };
+RL.Tile.Types.lockedDoor = {
+    name: 'Locked Door',
+    char: '▇',
+    color: '#8B4513',
+    bgColor: '#2e2e2e',
+    passable: false,
+    bombable: false,
+    bump: function(entity) {
+        if (entity.keys) {
+            this.game.console.log('You unlock the door');
+            entity.keys -= 1;
+
+            if (this.y===0) {
+                this.game.map.set(this.x,this.y,'doorPassageN');
+            } else if (this.y===this.game.map.height-1) {
+                this.game.map.set(this.x,this.y,'doorPassageS');
+            } else if (this.x===this.game.map.width-1) {
+                this.game.map.set(this.x,this.y,'doorPassageE');
+            } else if (this.x===0) {
+                this.game.map.set(this.x,this.y,'doorPassageW');
+            } else {
+                this.game.map.set(this.x,this.y,'door');
+            };
+        };
+        this.game.renderer.draw();
+    }
+};
+                
+
 RL.Tile.Types.fire = {
     name: 'Fire',
     char: '火',

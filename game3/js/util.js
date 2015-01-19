@@ -31,7 +31,7 @@ RL.Util.shuffle = function(array) {
 };
 
 RL.Util.oppositeDirection = function(direction) {
-    var directions = ['n','s','e','w'];
-    var oppositeDirections = ['s','n','w','e'];
+    var directions = ['n','s','e','w','N','S','E','W'];
+    var oppositeDirections = ['s','n','w','e','S','N','W','E'];
     return oppositeDirections[directions.indexOf(direction)];
 };

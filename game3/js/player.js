@@ -24,9 +24,9 @@ RL.Player.prototype.update = function(action) {
 //initial stats
 RL.Player.prototype.maxLife = 6;
 RL.Player.prototype.life = 3;
-RL.Player.prototype.gold = 0;
-RL.Player.prototype.keys = 0;
-RL.Player.prototype.bombs = 0;
+RL.Player.prototype.gold = 3;
+RL.Player.prototype.keys = 3;
+RL.Player.prototype.bombs = 3;
 
 //increase and decrease max life
 RL.Player.prototype.addHeart = function() {

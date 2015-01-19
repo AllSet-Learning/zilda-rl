@@ -61,6 +61,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.getRoomToDirection = function(fromRoom,direction) {
         newRoomX = fromRoom.x;
         newRoomY = fromRoom.y;
+        direction = direction.toLowerCase();
         switch (direction) {
         case 'n':
             newRoomY -= 1;
@@ -343,6 +344,30 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         for ( var i=0; i<rooms.length; i++ ) {
             rooms[i].randomItem();
         };
-        console.log(this.getRoomsWithTag('START')[0].tags);
+        deadEnds = this.getRoomsWithTag('DEADEND');
+        for ( var i=0; i<deadEnds.length; i++ ) {
+            var room = this.getRoomToDirection(deadEnds[i],deadEnds[i].connectionTags()[0]);
+            var d = RL.Util.oppositeDirection(deadEnds[i].connectionTags()[0]);
+            var x=0;
+            var y=0;
+            switch (d) {
+            case 'N':
+                x=room.centerX;
+                break;
+            case 'S':
+                y=room.height-1;
+                x=room.centerX;
+                break;
+            case 'E':
+                x=room.width-1;
+                y=room.centerY;
+                break;
+            case 'W':
+                y=room.centerY;
+                break;
+            };
+            room.map.get(x,y).changeType('lockedDoor');
+            console.log('Locked '+d+' door in room at ('+room.x+','+room.y+')');
+        };
     };
 };
