@@ -16,12 +16,12 @@ var Room = function Room(game,x,y,width,height) {
     this.tag = function(tag) {
         if ( ! this.hasTag(tag) ) {
             this.tags.push(tag.toUpperCase())
-        };
+        }
     };
     this.untag = function(tag) {
         if ( this.hasTag(tag) ) {
             this.tags.splice(this.tags.indexOf(tag.toUpperCase()),1);
-        };
+        }
     };
     this.connectionTags = function() {
         var connectionTags = [];
@@ -29,8 +29,8 @@ var Room = function Room(game,x,y,width,height) {
         for ( var i=0; i<4; i++ ) {
             if ( this.hasTag(directions[i]) ) {
                 connectionTags.push(directions[i]);
-            };
-        };
+            }
+        }
         return connectionTags;
     };
 
@@ -45,32 +45,32 @@ var Room = function Room(game,x,y,width,height) {
             if (northTile.passable) {
                 if ( ! (northTile.type+'PassageN' in RL.Tile.Types) ) {
                     RL.Tile.Types[northTile.type+'PassageN'] = makePassage(RL.Tile.Types[northTile.type],'n');
-                }; 
+                } 
                 this.map.set(x,0,northTile.type+'PassageN');
-            };
+            }
             if (southTile.passable) {
                 if ( ! (southTile.type+'PassageS' in RL.Tile.Types) ) {
                     RL.Tile.Types[southTile.type+'PassageS'] = makePassage(RL.Tile.Types[southTile.type],'s');
-                };
+                }
                 this.map.set(x,this.height-1,southTile.type+'PassageS');
-            };
-        };
+            }
+        }
         for ( var y=0; y<this.height; y++ ) {
             eastTile = this.map.get(this.width-1,y);
             westTile = this.map.get(0,y);
             if (eastTile.passable) {
                 if ( ! (eastTile.type+'PassageE' in RL.Tile.Types) ) {
                     RL.Tile.Types[eastTile.type+'PassageE'] = makePassage(RL.Tile.Types[eastTile.type],'e');
-                };
+                }
                 this.map.set(this.width-1,y,eastTile.type+'PassageE');
-            };
+            }
             if (westTile.passable) {
                 if ( ! (westTile.type+'PassageW' in RL.Tile.Types) ) {
                     RL.Tile.Types[westTile.type+'PassageW'] = makePassage(RL.Tile.Types[westTile.type],'w');
-                };
+                }
                 this.map.set(0,y,westTile.type+'PassageW');
-            };
-        };
+            }
+        }
     };
     
     this.loadEntitiesFromArrayString = function(mapData, charToType, defaultType, replaceCurrentObjects) {

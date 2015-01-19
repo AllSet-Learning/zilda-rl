@@ -9,7 +9,7 @@ RL.Item.Types = {
                 return true;
             } else {
                 return false;
-            };
+            }
         },
         attachTo: function(entity) {
             entity.heal(1);
@@ -25,7 +25,7 @@ RL.Item.Types = {
                 return true;
             } else {
                 return false;
-            };
+            }
         },
         attachTo: function(entity) {
             entity.addGold(1);
@@ -41,7 +41,7 @@ RL.Item.Types = {
                 return true;
             } else {
                 return false;
-            };
+            }
         },
         attachTo: function(entity) {
             entity.addGold(3);
@@ -57,7 +57,7 @@ RL.Item.Types = {
                 return true;
             } else {
                 return false;
-            };
+            }
         },
         attachTo: function(entity) {
             entity.addKeys(1);
@@ -73,10 +73,10 @@ RL.Item.Types = {
                 return true;
             } else {
                 return false;
-            };
+            }
         },
         attachTo: function(entity) {
             entity.addBombs(1);
         }
     }
-}
+};

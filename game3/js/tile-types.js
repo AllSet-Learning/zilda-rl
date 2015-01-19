@@ -25,10 +25,10 @@ var passageBump = function(entity,direction) {
                 newRoom = game.dungeon.rooms.get(currentRoom.x-1,currentRoom.y)
                 entity.x = newRoom.width-2;
                 break;
-            };
+            }
             game.movePlayerRoom(currentRoom,newRoom);
-        };
-    };
+        }
+    }
 };
 
 var northBump = function(entity) {
@@ -48,7 +48,7 @@ var makePassage = function(baseType,direction) {
   var newType = {};
     for (var key in baseType) {
         newType[key] = baseType[key];
-    };
+    }
     newType.passable = false;
     if (direction==='n') {
         bump = northBump;
@@ -60,7 +60,7 @@ var makePassage = function(baseType,direction) {
     bump = westBump;
     } else {
         console.log('Direction must be "n", "s", "e", or "w"');
-    };
+    }
     newType.bump = bump;
     return newType;
 };
@@ -110,8 +110,8 @@ RL.Tile.Types.lockedDoor = {
                 this.game.map.set(this.x,this.y,'doorPassageW');
             } else {
                 this.game.map.set(this.x,this.y,'door');
-            };
-        };
+            }
+        }
         this.game.renderer.draw();
     }
 };
@@ -127,7 +127,7 @@ RL.Tile.Types.fire = {
         entity = this.game.entityManager.get(this.x,this.y);
         if (entity) {
             entity.takeDamage(1);
-        };
+        }
     }
 };
 RL.Tile.Types.bombThree = {
@@ -177,14 +177,14 @@ RL.Tile.Types.bombExploding = {
                     this.game.map.get(x,y).changeType('explosion');
                     if (x>this.x || (x===this.x && y>this.y)) {
                         this.game.map.get(x,y).skip = true;
-                    };
+                    }
                     entity = this.game.entityManager.get(x,y);
                     if (entity) {
                         entity.takeDamage(1);
-                    };
-                };
-            };
-        };
+                    }
+                }
+            }
+        }
         this.changeType('explosion');
     }
 };
@@ -210,4 +210,4 @@ RL.Tile.Types.hud = {
     char: '■',
     color: '#000',
     bgColor: '#000',
-}
+};

@@ -23,17 +23,17 @@ RL.Game.prototype.onKeyAction = function(action) {
                         tile.skip = false;
                     } else {
                         tile.update();
-                    };
-                };
-            };
+                    }
+                }
+            }
 
             this.renderer.draw();
             this.updateHud();
             this.hudRenderer.draw();
         } else if(this.queueDraw){
             this.renderer.draw();
-        };
-    };
+        }
+    }
     this.queueDraw = false;
 };
 
@@ -96,15 +96,15 @@ RL.Game.prototype.initHud = function() {
     for ( var x=0; x<this.hudMap.width; x++ ) {
         for ( var y=0; y<this.hudMap.height; y++ ) {
             this.hudMap.get(x,y).explored = true;
-        };
-    };
+        }
+    }
     for ( var x=0; x<this.dungeon.width; x++ ) {
         for ( var y=0; y<this.dungeon.height; y++ ) {
             tile = this.hudMap.get(x,y+1);
             tile.explored = false;
             tile.color = "blue";
-        };
-    };
+        }
+    }
 };
 
 //New function to update the hud
@@ -117,22 +117,22 @@ RL.Game.prototype.updateHud = function() {
                 tile.color = "yellow";
             } else {
                 tile.color = "blue";
-            };
-        };
-    };
+            }
+        }
+    }
 
     var goldString = this.player.gold.toString();
-    if (goldString.length===1) { goldString="0"+goldString; };
+    if (goldString.length===1) { goldString="0"+goldString; }
     this.hudMap.get(this.dungeon.width+3,1).char = goldString[0];
     this.hudMap.get(this.dungeon.width+4,1).char = goldString[1];
 
     var keysString = this.player.keys.toString();
-    if (keysString.length===1) { keysString="0"+keysString; };
+    if (keysString.length===1) { keysString="0"+keysString; }
     this.hudMap.get(this.dungeon.width+3,2).char = keysString[0];
     this.hudMap.get(this.dungeon.width+4,2).char = keysString[1];
 
     var bombsString = this.player.bombs.toString();
-    if (bombsString.length===1) { bombsString="0"+bombsString; };
+    if (bombsString.length===1) { bombsString="0"+bombsString; }
     this.hudMap.get(this.dungeon.width+3,3).char = bombsString[0];
     this.hudMap.get(this.dungeon.width+4,3).char = bombsString[1];
 
@@ -144,8 +144,8 @@ RL.Game.prototype.updateHud = function() {
             tile.color = "gray";
         } else {
             tile.color = "red";
-        };
-    };
+        }
+    }
 };
 
 //New function that handles player moving from one room to another
@@ -178,10 +178,10 @@ RL.Tile.prototype.changeType = function(type) {
     RL.Util.merge(this, typeData);
     if (!typeData.update) {
         this.update = function() {};
-    };
+    }
     if (!typeData.onEntityEnter) {
         this.onEntityEnter = function(entity) {};
-    };
+    }
 };
 
 //Get rid of black border around items
@@ -194,7 +194,7 @@ RL.Item.prototype.update = function() {
          this.y === this.game.player.y ) {
         this.attachTo(this.game.player);
         this.game.itemManager.remove(this);
-    };
+    }
 };
 
 //Customize renderer to ignore field of view
@@ -237,11 +237,11 @@ RL.RendererLayer.Types.item = {
     getTileData: function(x,y,prevTileData) {
         if (!this.game) {
             return false;
-        };
+        }
         var item = this.game.itemManager.get(x,y);
         if (item) {
             return item.getTileDrawData();
-        };
+        }
         return false;
     }
 };
@@ -253,11 +253,11 @@ RL.RendererLayer.Types.hud = {
     getTileData: function(x,y) {
         if (!this.game) {
             return false;
-        };
+        }
         var tile = this.game.hudMap.get(x,y);
         if (!tile.explored) {
             return false;
-        };
+        }
         var tileData = tile.getTileDrawData();
         return tileData;
     }
@@ -280,8 +280,8 @@ game.hudMap.setSize(roomW,dungeonH+1);
 for ( var x=0; x<game.hudMap.width; x++ ) {
     for ( var y=0; y<game.hudMap.height; y++ ) {
         game.hudMap.set(x,y,'hud');
-    };
-};
+    }
+}
 
 game.hudRenderer = new RL.Renderer(game,game.hudMap.width,game.hudMap.height,'hud');
 
@@ -317,7 +317,7 @@ while ( startRoom.map.get(playerStartX,playerStartY).type !== 'floor' ||
         startRoom.itemManager.get(playerStartX,playerStartY) ) {
     playerStartX = Math.floor(Math.random()*startRoom.width);
     playerStartY = Math.floor(Math.random()*startRoom.height);
-};
+}
 game.player.x = playerStartX;
 game.player.y = playerStartY;
 game.player.room = startRoom;
