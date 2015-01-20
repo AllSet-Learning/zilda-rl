@@ -300,10 +300,11 @@ game.renderer.layers = [
 ];
 
 var keyBindings = {
-    up: ['UP_ARROW'],
-    down: ['DOWN_ARROW'],
-    left: ['LEFT_ARROW'],
-    right: ['RIGHT_ARROW'],
+    up: ['UP_ARROW','K','NUMPAD_8'],
+    down: ['DOWN_ARROW','J','NUMPAD_2'],
+    left: ['LEFT_ARROW','H','NUMPAD_4'],
+    right: ['RIGHT_ARROW','L','NUMPAD_6'],
+    wait: ['SPACE','.','NUMPAD_5'],
     placeBomb: ['B']
 };
 game.input.addBindings(keyBindings);
