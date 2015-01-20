@@ -213,6 +213,52 @@ RL.Tile.Types.embers = {
     bgColor: '#222',
     passable: true
 };
+RL.Tile.Types.brazier = {
+    name: 'Brazier',
+    char: '♨',
+    color: 'red',
+    bgColor: '#222',
+    passable: false,
+    bombable: true
+};
+RL.Tile.Types.puddle = {
+    name: 'Puddle',
+    char: '~',
+    color: 'blue',
+    bgColor: '#222',
+    passable: true,
+    bombable: true
+};
+RL.Tile.Types.acidPuddle = {
+    name: 'Puddle',
+    char: '~',
+    color: 'blue',
+    bgColor: '#222',
+    passable: true,
+    bombable: true,
+    update = function() {
+        entity = this.game.entityManager.get(this.x,this.y);
+        if (entity) {
+            entity.takeDamage(1);
+        }
+    }
+};
+RL.Tile.Types.tombstone = {
+    name: 'Tombstone',
+    char: '☗',
+    color: '#777',
+    bgColor: '#222',
+    passable: true,
+    bombable: true
+};
+RL.Tile.Types.pillar = {
+    name: 'Pillar',
+    char: '●',
+    color: '#2e2e2e',
+    bgColor: '#222',
+    passable: false,
+    bombable: false
+};
 RL.Tile.Types.hud = {
     name: 'HUD',
     char: '■',

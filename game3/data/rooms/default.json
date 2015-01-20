@@ -14,7 +14,12 @@
         ".": "floor",
         "+": "door",
         "^": "fire",
-        "W": "weakWall"
+        "W": "weakWall",
+        "O": "pillar",
+        "~": "puddle",
+        "A": "acidPuddle",
+        "B": "brazier",
+        "T": "tombstone"
     },
     "requiredDoors": [],
     "optionalDoors": [],
