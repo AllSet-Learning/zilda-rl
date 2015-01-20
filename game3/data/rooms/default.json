@@ -13,7 +13,8 @@
         "#": "wall",
         ".": "floor",
         "+": "door",
-        "^": "fire"
+        "^": "fire",
+        "W": "weakWall"
     },
     "requiredDoors": [],
     "optionalDoors": [],

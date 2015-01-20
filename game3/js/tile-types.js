@@ -80,6 +80,14 @@ RL.Tile.Types.wall = {
     passable: false,
     bombable: false
 };
+RL.Tile.Types.weakWall = {
+    name: 'Weak Wall',
+    char: '≠',
+    color: '#777',
+    bgColor: '#2e2e2e',
+    passable: false,
+    bombable: true
+};
 RL.Tile.Types.door = {
     name: 'Door',
     char: '▇',
