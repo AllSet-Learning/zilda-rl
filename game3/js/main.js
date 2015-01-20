@@ -304,6 +304,10 @@ var keyBindings = {
     down: ['DOWN_ARROW','J','NUMPAD_2'],
     left: ['LEFT_ARROW','H','NUMPAD_4'],
     right: ['RIGHT_ARROW','L','NUMPAD_6'],
+    //up_left: ['Y','NUMPAD_7'],
+    //up_right: ['U','NUMPAD_9'],
+    //down_left: ['B','NUMPAD_1'],
+    //down_right: ['N','NUMPAD_3'],
     wait: ['SPACE','PERIOD','NUMPAD_5'],
     placeBomb: ['B']
 };
