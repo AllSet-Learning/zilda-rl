@@ -304,7 +304,7 @@ var keyBindings = {
     down: ['DOWN_ARROW','J','NUMPAD_2'],
     left: ['LEFT_ARROW','H','NUMPAD_4'],
     right: ['RIGHT_ARROW','L','NUMPAD_6'],
-    wait: ['SPACE','.','NUMPAD_5'],
+    wait: ['SPACE','PERIOD','NUMPAD_5'],
     placeBomb: ['B']
 };
 game.input.addBindings(keyBindings);
