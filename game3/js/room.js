@@ -94,7 +94,7 @@ var Room = function Room(game,x,y,width,height) {
             y = Math.floor(Math.random()*this.height)
         }
         var itemType = RL.Util.randomChoice(itemTypes);
-        var item = new RL.Item(this.Game,itemType,x,y);
+        var item = new RL.Item(this.game,itemType,x,y);
         this.itemManager.add(x,y,item);
     };
     this.spawnMonster = function(monsterTypes) {

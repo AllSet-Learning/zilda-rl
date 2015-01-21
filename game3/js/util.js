@@ -5,6 +5,25 @@ RL.Util.randomChoice = function(array) {
     return array[i];
 };
 
+RL.Util.mappedWeightedChoice = function(map) {
+    var totalWeight = 0;
+    var choices = [];
+    for (var choice in map) {
+        if (choice !== undefined) {
+            choices.push(choice);
+            totalWeight += map[choice];
+        }
+    }
+    var chosenWeight = Math.floor(Math.random()*totalWeight);
+    var currentWeight = 0;
+    for ( var i=0; i<choices.length; i++ ) {
+        currentWeight += map[choices[i]];
+        if (chosenWeight < currentWeight) {
+            return choices[i];
+        }
+    }
+};
+
 RL.Util.weightedChoice = function(array, weightFunc) {
     var totalWeight = 0;
     for ( var i=0; i<array.length; i++ ) {
