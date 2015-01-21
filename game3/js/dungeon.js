@@ -291,7 +291,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
 
             //add doors in walls
             if ( room.hasTag('N') ) {
-                mapData[0] = mapData[0].slice(0,room.centerX) + "+" + mapData[0].slice(room.xenterX+1,room.width);
+                mapData[0] = mapData[0].slice(0,room.centerX) + "+" + mapData[0].slice(room.centerX+1,room.width);
             }
             if ( room.hasTag('S') ) {
                 mapData[room.height-1] = mapData[room.height-1].slice(0,room.centerX) + "+" + mapData[room.height-1].slice(room.centerX+1,room.width);

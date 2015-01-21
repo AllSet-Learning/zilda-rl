@@ -107,7 +107,6 @@ RL.Tile.Types.lockedDoor = {
         if (entity.keys) {
             this.game.console.log('You unlock the door');
             entity.keys -= 1;
-
             if (this.y===0) {
                 this.game.map.set(this.x,this.y,'doorPassageN');
             } else if (this.y===this.game.map.height-1) {
