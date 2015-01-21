@@ -82,7 +82,7 @@ var Room = function Room(game,x,y,width,height) {
         this.entityManager.setSize(w,h);
     };
 
-    this.randomItem = function() {
+    this.spawnItem = function(itemTypes) {
         var x=0;//this.centerX;
         var y=0;//this.centerY;
         while ( (x===this.centerX && y===1) ||
@@ -93,7 +93,7 @@ var Room = function Room(game,x,y,width,height) {
             x = Math.floor(Math.random()*this.width)
             y = Math.floor(Math.random()*this.height)
         }
-        var itemType = RL.Util.randomChoice(['heart','gold','threeGold','key','bomb']);
+        var itemType = RL.Util.randomChoice(itemTypes);
         var item = new RL.Item(this.Game,itemType,x,y);
         this.itemManager.add(x,y,item);
     };
