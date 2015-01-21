@@ -343,6 +343,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         var rooms = this.getAllRooms();
         for ( var i=0; i<rooms.length; i++ ) {
             rooms[i].randomItem();
+            rooms[i].spawnMonster(["rat"]);
         }
         deadEnds = this.getRoomsWithTag('DEADEND');
         for ( var i=0; i<deadEnds.length; i++ ) {

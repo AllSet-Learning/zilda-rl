@@ -97,4 +97,19 @@ var Room = function Room(game,x,y,width,height) {
         var item = new RL.Item(this.Game,itemType,x,y);
         this.itemManager.add(x,y,item);
     };
+    this.spawnMonster = function(monsterTypes) {
+        var x=0;
+        var y=0;
+        while ( (x===this.centerX && y===1) ||
+                (x===this.centerX && y===this.height-2) ||
+                (y===this.centerY && x===1) ||
+                (y===this.centerY && x===this.width-2) ||
+                this.map.get(x,y).type !== 'floor' ) {
+            x = Math.floor(Math.random()*this.width)
+            y = Math.floor(Math.random()*this.height)
+        }
+        var monsterType = RL.Util.randomChoice(monsterTypes);
+        monster = new RL.Entity(this.game,monsterType);
+        this.entityManager.add(x,y,monster);
+    };
 };

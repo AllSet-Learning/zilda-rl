@@ -21,6 +21,25 @@ RL.Player.prototype.update = function(action) {
     return false;
 };
 
+//customized move function -- attacks creatures you bump into
+RL.Player.prototype.move = function(x,y) {
+    if (this.canMoveTo(x,y)) {
+        this.moveTo(x,y);
+        return true;
+    } else {
+        var target = this.game.entityManager.get(x,y);
+        if (target) {
+            this.game.console.log('You attack the <strong>'+target.name+'</strong>!');
+            target.takeDamage(1);
+            return true;
+        } else {
+            var tile = this.game.map.get(x,y);
+            return tile.bump(this);
+        }
+    }
+    return false;
+};
+
 //initial stats
 RL.Player.prototype.maxLife = 6;
 RL.Player.prototype.life = 3;
