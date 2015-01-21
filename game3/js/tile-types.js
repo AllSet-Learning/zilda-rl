@@ -236,7 +236,7 @@ RL.Tile.Types.acidPuddle = {
     bgColor: '#222',
     passable: true,
     bombable: true,
-    update = function() {
+    update: function() {
         entity = this.game.entityManager.get(this.x,this.y);
         if (entity) {
             entity.takeDamage(1);
