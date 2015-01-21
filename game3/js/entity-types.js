@@ -1,21 +1,15 @@
 RL.Entity.Types = {
-    rat: {
-        name: 'Rat',
-        char: 'r',
-        color: '#AAA',
-        bgColor: false,
-        charStrokeColor: false,
-        charStrokeWidth: 0,
+    a: {
+        name: 'A',
+        char: 'A',
+        color: '#006600',
 
-        playerLastSeen: false,
-
-        life: 1,
         maxLife: 1,
         damage: 1,
         fovRadius: 3,
+        stumbleChance: 0.25,
         fireImmune: false,
         acidImmune: false,
-        stumbleChance: 0.25,
         
         /**
         * 'random': moves randomly
@@ -29,15 +23,49 @@ RL.Entity.Types = {
         * 'never': never attacks
         * 'provoked': only attacks when attacked
         */
-        aggression: 'always',
+        aggression: 'never',
 
-        onDeath: null,//'explodes'
         drops: { //weighted drops
             'nothing':50,
             'gold':30,
             'threeGold':10,
-            'bomb':10,
-            'key':0
+            'bomb':10
         }
+    },
+
+    b: {
+        name: 'B',
+        char: 'B',
+        color: '#006600',
+
+        maxLife: 3,
+        damage: 10,
+        fovRadius: 10,
+        stumbleChance: 0.1,
+        
+        movement: 'stationary',
+        aggression: 'provoked',
+
+        drops: {
+            'threeGold':100
+        }
+    },
+
+    c: {
+        name: 'C',
+        char: 'C',
+        color: '#006600',
+
+        fovRadius: 100,
+        stumbleChance: 0.5,
+
+        movement: 'towards',
+        aggression: 'always'
+    },
+
+    d: {
+        name: 'D',
+        char: 'D',
+        color: '#006600'
     }
 };
