@@ -117,7 +117,7 @@ RL.Entity.prototype.update = function() {
                 destination = this.getNextPathTile(this.game.player.x,
                                                    this.game.player.y,
                                                    true);
-                if (this.canMoveTo(destination.x,destination.y)) {
+                if (destination && this.canMoveTo(destination.x,destination.y)) {
                     this.moveTo(destination.x,destination.y);
                 }
                 return true;
