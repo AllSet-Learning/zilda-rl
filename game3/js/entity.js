@@ -89,9 +89,6 @@ RL.Entity.prototype.update = function() {
         return true;
     } else {
         //attack if can and matches aggression
-        if (this.aggression==="provoked") {
-            console.log(this.life,this.maxLife);
-        }
         if ((this.aggression==="always" &&
              this.adjacentTo(this.game.player.x,this.game.player.y)) ||
             (this.aggression==="provoked" &&
@@ -105,7 +102,6 @@ RL.Entity.prototype.update = function() {
         //Check for random and stationary movement patterns
         if (this.movement==="random") {
             destination = this.getWanderDest();
-            console.log(destination);
             if (destination) {
                 this.moveTo(destination.x,destination.y);
             }

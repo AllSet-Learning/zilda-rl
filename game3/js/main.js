@@ -161,6 +161,33 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
     console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
 };
 
+//load monsters from json
+RL.Game.prototype.loadMonsters = function(monsterTypes) {
+    RL.Entity.Types = {};
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET","data/monsters/default.json",false);
+    xmlHttp.send(null);
+    var defaultMonsterData = JSON.parse(xmlHttp.responseText)['default'];
+    for (var i=0; i<monsterTypes.length; i++) {
+        var monsterType = monsterTypes[i];
+        xmlHttp.open("GET","data/monsters/"+monsterType+".json",false);
+        xmlHttp.send(null);
+        var typeData = JSON.parse(xmlHttp.responseText);
+        for (var monsterID in typeData) {
+            if (monsterID!==undefined) {
+                monsterData = typeData[monsterID];
+                monsterData.type = monsterType;
+                for ( var key in defaultMonsterData ) {
+                    if (monsterData[key]===undefined && key!=="comment") {
+                        monsterData[key] = defaultMonsterData[key];
+                    }
+                }
+                RL.Entity.Types[monsterID] = monsterData;
+            }
+        }
+    }
+};
+
 //make tiles bigger for Hanzi readability
 RL.Renderer.prototype.tileSize = 32;
 //change font to something more Zelda-like
@@ -265,6 +292,9 @@ RL.RendererLayer.Types.hud = {
 
 var game = new RL.Game();
 
+//load monsters
+game.loadMonsters(['test']);
+
 //adding dungeon to game
 console.log('Adding dungeon to game');
 var dungeonW = 5;
@@ -306,7 +336,7 @@ var keyBindings = {
     right: ['RIGHT_ARROW','L','NUMPAD_6'],
     //up_left: ['Y','NUMPAD_7'],
     //up_right: ['U','NUMPAD_9'],
-    //down_left: ['B','NUMPAD_1'],
+    //down_left: ['B','NUMPAD_1'], //note: conflicts with "placeBomb"
     //down_right: ['N','NUMPAD_3'],
     wait: ['SPACE','PERIOD','NUMPAD_5'],
     placeBomb: ['B']

@@ -1,0 +1,28 @@
+{
+    "default": {
+        "name": "X",
+        "char": "X",
+        "color": "#FFFFFF",
+
+        "maxLife": 1,
+        "damage": 1,
+        "fovRadius": 3,
+        "stumbleChance": 0.25,
+
+        "fireImmune": false,
+        "acidImmune": false,
+
+        "movement": "towards",
+        "comment": "Valid values are 'towards', 'away', 'random', and 'stationary'. 'towards' and 'away' move towards or away from the player, respectively, if the monster can see the player, otherwise moves randomly. 'random' always moves randomly. 'stationary' never moves.",
+
+        "aggression": "always",
+        "comment": "Valid values are 'always', 'never', and 'provoked'. 'always' will always attack if able. 'never' never attacks. 'provoked' attacks if health is less than maximum.",
+
+        "drops": {
+            "nothing":50,
+            "gold":30,
+            "threeGold":10,
+            "bomb":10
+        }
+    }
+}
