@@ -61,10 +61,20 @@ RL.Player.prototype.removeHeart = function() {
 
 //Damage and healing
 RL.Player.prototype.takeDamage = function(amount) {
-    this.game.console.log('You take <strong>'+amount+'</strong> damage.');
+    this.game.console.log("You take <strong>"+amount+"</strong> damage.");
     this.life -= amount;
     if (this.life<0) { this.life=0; }
-    if (this.life===0) { this.dead=true; }
+    if (this.life===0) {
+        if (!this.dead) {
+            this.game.console.log("<strong>You are dead!</strong>");
+            this.dead=true;
+            this.color="red";
+            this.char="%";
+        }
+        if (!this.immortal) {
+            this.game.gameOver = true;
+        }
+    }
 };
 RL.Player.prototype.heal = function(amount) {
     this.life += amount;

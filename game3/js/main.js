@@ -1,3 +1,5 @@
+RL.Player.prototype.immortal = true;
+
 //customize basic game "turn"
 RL.Game.prototype.onKeyAction = function(action) {
     if(!this.gameOver){
