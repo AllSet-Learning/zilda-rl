@@ -9,6 +9,32 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.rooms = new RL.Array2d(dungeonWidth,dungeonHeight);
     this.roomLayouts = {};
     this.defaultLayout = null;
+    this.levels = {};
+    this.defaultLevel = null;
+
+    this.loadLevels = function(fnames) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET","data/levels/default.json",false);
+        xmlHttp.send(null);
+        this.defaultLevel = JSON.parse(xmlHttp.responseText);
+        for ( var i=0; i<fnames.length; i++ ) {
+            xmlHttp.open("GET","data/levels/"+fnames[i]+".json",false);
+            xmlHttp.send(null);
+            var data = JSON.parse(xmlHttp.responseText);
+            for ( var j=0; j<data.length; j++ ) {
+                var level = data[j];
+                for ( var key in this.defaultLevel ) {
+                    if (level[key]===undefined) {
+                        level[key] = this.defaultLevel[key];
+                    }
+                }
+                if (this.levels[level.depth]===undefined) {
+                    this.levels[level.depth] = [];
+                }
+                this.levels[level.depth].push(level);
+            }
+        }
+    };
 
     this.loadLayouts = function(roomTypes) {
         var xmlHttp = new XMLHttpRequest();
@@ -38,8 +64,6 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             }
         }
     };
-
-    this.loadLayouts(["basic","debris","cave","inferno","closed","labyrinth"]);
 
     this.validDirections = function(roomX, roomY) {
         var directions = ['n','s','e','w'];
@@ -225,42 +249,44 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         }
     };
 
-    this.getCompatibleRoomLayouts = function(room) {
+    this.getCompatibleRoomLayouts = function(room,roomTypes) {
         var compatibleLayouts = [];
         for ( var key in this.roomLayouts ) {
-            for ( var i=0; i<this.roomLayouts[key].length; i++ ) {
-                var layout = this.roomLayouts[key][i];
-                var compatible = true;
-                //room has connections where layout required doors
-                for ( var j=0; j<layout.requiredDoors.length; j++ ) {
-                    if ( ! room.hasTag(layout.requiredDoors[j]) ) {
-                        compatible = false;
+            if ( roomTypes.indexOf(key)!==-1 ) {
+                for ( var i=0; i<this.roomLayouts[key].length; i++ ) {
+                    var layout = this.roomLayouts[key][i];
+                    var compatible = true;
+                    //room has connections where layout required doors
+                    for ( var j=0; j<layout.requiredDoors.length; j++ ) {
+                        if ( ! room.hasTag(layout.requiredDoors[j]) ) {
+                            compatible = false;
+                        }
                     }
-                }
-                //layout accepts doors where room has connections
-                var connectionTags = room.connectionTags();
-                for ( var j=0; j<connectionTags.length; j++ ) {
-                    if ( layout.requiredDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
-                         layout.requiredDoors.indexOf(connectionTags[j].toLowerCase()) === -1 &&
-                         layout.optionalDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
-                         layout.optionalDoors.indexOf(connectionTags[j].toLowerCase()) === -1 ) {
-                        compatible = false;
+                    //layout accepts doors where room has connections
+                    var connectionTags = room.connectionTags();
+                    for ( var j=0; j<connectionTags.length; j++ ) {
+                        if ( layout.requiredDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
+                             layout.requiredDoors.indexOf(connectionTags[j].toLowerCase()) === -1 &&
+                             layout.optionalDoors.indexOf(connectionTags[j].toUpperCase()) === -1 &&
+                             layout.optionalDoors.indexOf(connectionTags[j].toLowerCase()) === -1 ) {
+                            compatible = false;
+                        }
                     }
-                }
-                if (compatible) {
-                    compatibleLayouts.push(layout);
+                    if (compatible) {
+                        compatibleLayouts.push(layout);
+                    }
                 }
             }
         }
         return compatibleLayouts;
     };
 
-    this.digRooms = function() {
+    this.digRooms = function(roomTypes) {
         var roomArray = this.getAllRooms();
         var usedLayouts = [];
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
-            var layouts = this.getCompatibleRoomLayouts(room);
+            var layouts = this.getCompatibleRoomLayouts(room,roomTypes);
             for ( var j=0; j<usedLayouts.length; j++ ) {
                 var usedLayout = usedLayouts[j];
                 if (layouts.indexOf(usedLayout)!==-1 && !usedLayout.reusable) {
@@ -308,7 +334,37 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         }
     };
 
-    this.generate = function(startX,startY) {
+    this.generate = function(depth,startX,startY) {
+        var level; //LOAD LEVEL!!!
+        if (this.levels[depth]===undefined || this.levels[depth]===[]) {
+            console.log('No levels for depth '+depth+'; using default');
+            level = this.defaultLevel;
+        } else {
+            level = RL.Util.randomChoice(this.levels[depth]);
+        }
+
+        RL.Tile.Types.floor.color           = level.floorForeground;
+        RL.Tile.Types.floor.bgColor         = level.floorBackground;
+        RL.Tile.Types.wall.color            =  level.wallForeground;
+        RL.Tile.Types.wall.bgColor          =  level.wallBackground;
+        RL.Tile.Types.weakWall.color        =  level.wallForeground;
+        RL.Tile.Types.weakWall.bgColor      =  level.wallBackground;
+        RL.Tile.Types.door.color            = level.floorBackground;
+        RL.Tile.Types.door.bgColor          =  level.wallBackground;
+        RL.Tile.Types.lockedDoor.bgColor    =  level.wallBackground;
+        RL.Tile.Types.bombThree.bgColor     = level.floorBackground;
+        RL.Tile.Types.bombTwo.bgColor       = level.floorBackground;
+        RL.Tile.Types.bombOne.bgColor       = level.floorBackground;
+        RL.Tile.Types.bombExploding.bgColor = level.floorBackground;
+        RL.Tile.Types.embers.bgColor        = level.floorBackground;
+        RL.Tile.Types.brazier.bgColor       = level.floorBackground;
+        RL.Tile.Types.puddle.bgColor        = level.floorBackground;
+        RL.Tile.Types.acidPuddle.bgColor    = level.floorBackground;
+        RL.Tile.Types.tombstone.color       =  level.wallForeground;
+        RL.Tile.Types.tombstone.bgColor     = level.floorBackground;
+        RL.Tile.Types.pillar.color          =  level.wallBackground;
+        RL.Tile.Types.pillar.bgColor        = level.floorBackground;
+
         this.rooms.reset(this.width, this.height);
         for ( var x=0; x<this.width; x++ ) {
             for ( var y=0; y<this.height; y++ ) {
@@ -339,12 +395,29 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             this.attemptNewConnection(room);
         }
         this.tagDeadEnds();
-        this.digRooms();
+        this.digRooms(level.roomTypes);
+
+        //determine which monsters are suitable for level
+        var monsters = [];
+        for (var monsterID in RL.Entity.Types) {
+            if (monsterID!==undefined) {
+                if ( level.monsterTypes.indexOf(RL.Entity.Types[monsterID].type) !== -1 ) {
+                    monsters.push(monsterID);
+                }
+            }
+        }
+
+        //spawn items and monsters
         var rooms = this.getAllRooms();
         for ( var i=0; i<rooms.length; i++ ) {
             rooms[i].spawnItem(['heart','gold','threeGold','key','bomb']);
-            rooms[i].spawnMonster(['a','b','c','d']);
+            var numMonsters = Math.floor(Math.random()*(level.maxMonstersPerRoom-level.minMonstersPerRoom))+level.minMonstersPerRoom+1;
+            for ( var j=0; j<numMonsters; j++ ) {
+                rooms[i].spawnMonster(monsters);
+            }
         }
+
+        //lock dead ends
         deadEnds = this.getRoomsWithTag('DEADEND');
         for ( var i=0; i<deadEnds.length; i++ ) {
             var room = this.getRoomToDirection(deadEnds[i],deadEnds[i].connectionTags()[0]);

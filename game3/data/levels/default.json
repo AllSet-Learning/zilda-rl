@@ -1,0 +1,23 @@
+{
+    "depth":0,
+
+    "wallForeground":"#777",
+    "wallBackground":"#2e2e2e",
+    "floorForeground":"#444",
+    "floorBackground":"#222",
+
+    "minMonstersPerRoom":1,
+    "maxMonstersPerRoom":4,
+
+    "monsterTypes": [
+        "test"
+    ],
+    "roomTypes": [
+        "basic",
+        "debris",
+        "cave",
+        "inferno",
+        "closed",
+        "labyrinth"
+    ]
+}

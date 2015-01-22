@@ -1,4 +1,7 @@
 RL.Player.prototype.immortal = true;
+var roomFiles = ["basic","debris","cave","inferno","closed","labyrinth"];
+var levelFiles = ["test"];
+var monsterFiles = ["test"];
 
 //customize basic game "turn"
 RL.Game.prototype.onKeyAction = function(action) {
@@ -295,7 +298,7 @@ RL.RendererLayer.Types.hud = {
 var game = new RL.Game();
 
 //load monsters
-game.loadMonsters(['test']);
+game.loadMonsters(monsterFiles);
 
 //adding dungeon to game
 console.log('Adding dungeon to game');
@@ -304,7 +307,9 @@ var dungeonH = 4;
 var roomW = 15;
 var roomH = 9;
 game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
-game.dungeon.generate(0,0);
+game.dungeon.loadLayouts(roomFiles);
+game.dungeon.loadLevels(levelFiles);
+game.dungeon.generate(1,0,0);
 
 //add hud
 game.hudMap = new RL.Map(game);

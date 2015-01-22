@@ -1,0 +1,15 @@
+[
+    {
+        "depth":1,
+
+        "wallForeground":"#770000",
+        "wallBackground":"#2e0000",
+        "floorForeground":"#554444",
+        "floorBackground":"#332222",
+
+        "roomTypes": [
+            "inferno",
+            "basic"
+        ]
+    }
+]
