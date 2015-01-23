@@ -1,5 +1,5 @@
 RL.Player.prototype.immortal = true;
-var roomFiles = ["basic","debris","cave","inferno","closed","labyrinth"];
+var roomFiles = ["start","end","basic","debris","cave","inferno","closed","labyrinth"];
 var levelFiles = ["test"];
 var monsterFiles = ["test"];
 
@@ -8,33 +8,8 @@ RL.Game.prototype.onKeyAction = function(action) {
     if(!this.gameOver){
         var result = this.player.update(action);
         if (result) {
-            this.entityManager.update(this.player);
-            
-            //Don't update map the fov or lighting!
-            //this.player.updateFov();
-            //this.lighting.update();
-            
-            //don't follow player
-            //this.renderer.setCenter(this.player.x, this.player.y);
+            this.updateAll()
 
-            //update items
-            this.itemManager.update();
-
-            //update tiles
-            for ( var x=0; x<this.map.width; x++ ) {
-                for ( var y=0; y<this.map.height; y++ ) {
-                    var tile = this.map.get(x,y);
-                    if (tile.skip) {
-                        tile.skip = false;
-                    } else {
-                        tile.update();
-                    }
-                }
-            }
-
-            this.renderer.draw();
-            this.updateHud();
-            this.hudRenderer.draw();
         } else if(this.queueDraw){
             this.renderer.draw();
         }
@@ -42,9 +17,41 @@ RL.Game.prototype.onKeyAction = function(action) {
     this.queueDraw = false;
 };
 
+//new update function to force updates without keypress
+RL.Game.prototype.updateAll = function() {
+    //mark player's room as explored
+    this.player.room.explored=true;
+    this.entityManager.update(this.player);
+    //Don't update map the fov or lighting!
+    //this.player.updateFov();
+    //this.lighting.update();
+    
+    //don't follow player
+    //this.renderer.setCenter(this.player.x, this.player.y);
+    
+    //update items
+    this.itemManager.update();
+    
+    //update tiles
+    for ( var x=0; x<this.map.width; x++ ) {
+        for ( var y=0; y<this.map.height; y++ ) {
+            var tile = this.map.get(x,y);
+            if (tile.skip) {
+                tile.skip = false;
+            } else {
+                tile.update();
+            }
+        }
+    }
+    this.renderer.draw();
+    this.updateHud();
+    this.hudRenderer.draw();
+};
+
 //custom start function
 RL.Game.prototype.start = function() {
     var playerRoom = this.player.room;
+    playerRoom.explored = true;
 
     this.entityManager = playerRoom.entityManager;
     this.itemManager = playerRoom.itemManager;
@@ -74,8 +81,10 @@ RL.Game.prototype.initHud = function() {
     this.hudMap.get(4,0).color = "white";
     this.hudMap.get(5,0).char = " ";
     this.hudMap.get(5,0).color = "white";
-    this.hudMap.get(6,0).char = "1";
+    this.hudMap.get(6,0).char = "0";
     this.hudMap.get(6,0).color = "white";
+    this.hudMap.get(7,0).char = "1";
+    this.hudMap.get(7,0).color = "white";
 
     this.hudMap.get(this.dungeon.width+1,1).char  = "⁂";
     this.hudMap.get(this.dungeon.width+1,1).color = "yellow";
@@ -117,14 +126,19 @@ RL.Game.prototype.updateHud = function() {
     for ( var x=0; x<this.dungeon.width; x++ ) {
         for ( var y=0; y<this.dungeon.height; y++ ) {
             tile = this.hudMap.get(x,y+1);
+            tile.explored = this.dungeon.rooms.get(x,y).explored;
             if (this.player.room.x == x && this.player.room.y == y) {
-                tile.explored = true;
                 tile.color = "yellow";
             } else {
                 tile.color = "blue";
             }
         }
     }
+
+    var depthString = this.depth.toString();
+    if (depthString.length===1) { depthString="0"+depthString; }
+    this.hudMap.get(6,0).char = depthString[0];
+    this.hudMap.get(7,0).char = depthString[1];
 
     var goldString = this.player.gold.toString();
     if (goldString.length===1) { goldString="0"+goldString; }
@@ -164,6 +178,7 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
     this.renderer.draw();
     this.hudRenderer.draw();
     console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
+    this.updateAll();
 };
 
 //load monsters from json
@@ -309,6 +324,7 @@ var roomH = 9;
 game.dungeon = new Dungeon(game,dungeonW,dungeonH,roomW,roomH);
 game.dungeon.loadLayouts(roomFiles);
 game.dungeon.loadLevels(levelFiles);
+game.depth = 1;
 game.dungeon.generate(1,0,0);
 
 //add hud

@@ -7,9 +7,10 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.tilesWidth  = dungeonWidth*roomWidth;
     this.tilesHeight = dungeonHeight*roomHeight;
     this.rooms = new RL.Array2d(dungeonWidth,dungeonHeight);
+    this.levels = [null];
     this.roomLayouts = {};
     this.defaultLayout = null;
-    this.levels = {};
+    this.levelData = {};
     this.defaultLevel = null;
 
     this.loadLevels = function(fnames) {
@@ -28,10 +29,10 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                         level[key] = this.defaultLevel[key];
                     }
                 }
-                if (this.levels[level.depth]===undefined) {
-                    this.levels[level.depth] = [];
+                if (this.levelData[level.depth]===undefined) {
+                    this.levelData[level.depth] = [];
                 }
-                this.levels[level.depth].push(level);
+                this.levelData[level.depth].push(level);
             }
         }
     };
@@ -130,7 +131,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
             var connections = room.countConnections();
-            if ( !room.hasTag('START') ) {
+            if ( !(room.hasTag('START') || room.hasTag('END')) ) {
                 if (connections===1) {
                     room.untag('ISOLATED');
                     room.tag('DEADEND');
@@ -286,22 +287,29 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         var usedLayouts = [];
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
-            var layouts = this.getCompatibleRoomLayouts(room,roomTypes);
-            for ( var j=0; j<usedLayouts.length; j++ ) {
-                var usedLayout = usedLayouts[j];
-                if (layouts.indexOf(usedLayout)!==-1 && !usedLayout.reusable) {
-                    layouts.splice(layouts.indexOf(usedLayout),1);
+            var layout;
+            if (room.hasTag("START")) {
+                layout = RL.Util.randomChoice(this.roomLayouts["start"]);
+            } else if (room.hasTag("END")) {
+                layout = RL.Util.randomChoice(this.roomLayouts["end"]);
+            } else {
+                var layouts = this.getCompatibleRoomLayouts(room,roomTypes);
+                for ( var j=0; j<usedLayouts.length; j++ ) {
+                    var usedLayout = usedLayouts[j];
+                    if (layouts.indexOf(usedLayout)!==-1 && !usedLayout.reusable) {
+                        layouts.splice(layouts.indexOf(usedLayout),1);
+                    }
+                }
+                
+                if (layouts.length) {
+                    layout = RL.Util.weightedChoice( layouts, function(layout) { return layout.weight; } );
+                    usedLayouts.push(layout);
+                } else {
+                    layout = this.defaultLayout;
                 }
             }
 
-            if (layouts.length) {
-                var layout = RL.Util.weightedChoice( layouts, function(layout) { return layout.weight; } );
-                usedLayouts.push(layout);
-            } else {
-                var layout = this.defaultLayout;
-            }
-
-            //make a copy of mapData, so we're changing future layouts
+            //make a copy of mapData so we're not changing future layouts
             var mapData = layout.mapData.slice(0,layout.mapData.length)
 
             //add walls around room
@@ -333,37 +341,47 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             room.loadTilesFromArrayString(mapData,layout.charToTileType,'floor');
         }
     };
+    
+    this.loadColors = function(data) {
+        for (var key in RL.Tile.Types) {
+            if (key!==undefined && key!=="floor" && key!=="wall") {
+                if (RL.Tile.Types[key].color===RL.Tile.Types.floor.color) {
+                    RL.Tile.Types[key].color = data.floorForeground;
+                } else if (RL.Tile.Types[key].color===RL.Tile.Types.floor.bgColor) {
+                    RL.Tile.Types[key].color = data.floorBackground;
+                } else if (RL.Tile.Types[key].color===RL.Tile.Types.wall.color) {
+                    RL.Tile.Types[key].color = data.wallForeground;
+                } else if (RL.Tile.Types[key].color===RL.Tile.Types.wall.bgColor) {
+                    RL.Tile.Types[key].color = data.wallBackground;
+                }
+                if (RL.Tile.Types[key].bgColor===RL.Tile.Types.floor.color) {
+                    RL.Tile.Types[key].bgColor = data.floorForeground;
+                } else if (RL.Tile.Types[key].bgColor===RL.Tile.Types.floor.bgColor) {
+                    RL.Tile.Types[key].bgColor = data.floorBackground;
+                } else if (RL.Tile.Types[key].bgColor===RL.Tile.Types.wall.color) {
+                    RL.Tile.Types[key].bgColor = data.wallForeground;
+                } else if (RL.Tile.Types[key].bgColor===RL.Tile.Types.wall.bgColor) {
+                    RL.Tile.Types[key].bgColor = data.wallBackground;
+                }
+            }
+        }
+        RL.Tile.Types.floor.color           = data.floorForeground;
+        RL.Tile.Types.floor.bgColor         = data.floorBackground;
+        RL.Tile.Types.wall.color            =  data.wallForeground;
+        RL.Tile.Types.wall.bgColor          =  data.wallBackground;
+    };
 
     this.generate = function(depth,startX,startY) {
-        var level; //LOAD LEVEL!!!
-        if (this.levels[depth]===undefined || this.levels[depth]===[]) {
+        var newLevelData;
+        this.levels[depth] = new RL.Array2d(this.width,this.height);
+        this.rooms = this.levels[depth];
+        if (this.levelData[depth]===undefined || this.levelData[depth]===[]) {
             console.log('No levels for depth '+depth+'; using default');
-            level = this.defaultLevel;
+            newLevelData = this.defaultLevel;
         } else {
-            level = RL.Util.randomChoice(this.levels[depth]);
+            newLevelData = RL.Util.randomChoice(this.levelData[depth]);
         }
-
-        RL.Tile.Types.floor.color           = level.floorForeground;
-        RL.Tile.Types.floor.bgColor         = level.floorBackground;
-        RL.Tile.Types.wall.color            =  level.wallForeground;
-        RL.Tile.Types.wall.bgColor          =  level.wallBackground;
-        RL.Tile.Types.weakWall.color        =  level.wallForeground;
-        RL.Tile.Types.weakWall.bgColor      =  level.wallBackground;
-        RL.Tile.Types.door.color            = level.floorBackground;
-        RL.Tile.Types.door.bgColor          =  level.wallBackground;
-        RL.Tile.Types.lockedDoor.bgColor    =  level.wallBackground;
-        RL.Tile.Types.bombThree.bgColor     = level.floorBackground;
-        RL.Tile.Types.bombTwo.bgColor       = level.floorBackground;
-        RL.Tile.Types.bombOne.bgColor       = level.floorBackground;
-        RL.Tile.Types.bombExploding.bgColor = level.floorBackground;
-        RL.Tile.Types.embers.bgColor        = level.floorBackground;
-        RL.Tile.Types.brazier.bgColor       = level.floorBackground;
-        RL.Tile.Types.puddle.bgColor        = level.floorBackground;
-        RL.Tile.Types.acidPuddle.bgColor    = level.floorBackground;
-        RL.Tile.Types.tombstone.color       =  level.wallForeground;
-        RL.Tile.Types.tombstone.bgColor     = level.floorBackground;
-        RL.Tile.Types.pillar.color          =  level.wallBackground;
-        RL.Tile.Types.pillar.bgColor        = level.floorBackground;
+        this.loadColors(newLevelData)
 
         this.rooms.reset(this.width, this.height);
         for ( var x=0; x<this.width; x++ ) {
@@ -389,19 +407,24 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         this.tagDeadEnds();
         deadEnds = this.getRoomsWithTag('DEADEND');
         RL.Util.shuffle(deadEnds);
+        //make one dead end the end
+        deadEnds[0].tag("END");
+        deadEnds[0].untag("DEADEND");
+        deadEnds = this.getRoomsWithTag("DEADEND");
+        RL.Util.shuffle(deadEnds);
         //connect remaining dead ends
         for ( var i=0; i<deadEnds.length/2; i++ ) {
             var room = deadEnds[i];
             this.attemptNewConnection(room);
         }
         this.tagDeadEnds();
-        this.digRooms(level.roomTypes);
+        this.digRooms(newLevelData.roomTypes);
 
         //determine which monsters are suitable for level
         var monsters = [];
         for (var monsterID in RL.Entity.Types) {
             if (monsterID!==undefined) {
-                if ( level.monsterTypes.indexOf(RL.Entity.Types[monsterID].type) !== -1 ) {
+                if ( newLevelData.monsterTypes.indexOf(RL.Entity.Types[monsterID].type) !== -1 ) {
                     monsters.push(monsterID);
                 }
             }
@@ -411,7 +434,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         var rooms = this.getAllRooms();
         for ( var i=0; i<rooms.length; i++ ) {
             rooms[i].spawnItem(['heart','gold','threeGold','key','bomb']);
-            var numMonsters = Math.floor(Math.random()*(level.maxMonstersPerRoom-level.minMonstersPerRoom))+level.minMonstersPerRoom+1;
+            var numMonsters = Math.floor(Math.random()*(newLevelData.maxMonstersPerRoom-newLevelData.minMonstersPerRoom))+newLevelData.minMonstersPerRoom+1;
             for ( var j=0; j<numMonsters; j++ ) {
                 rooms[i].spawnMonster(monsters);
             }

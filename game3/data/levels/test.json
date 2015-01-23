@@ -2,14 +2,54 @@
     {
         "depth":1,
 
-        "wallForeground":"#770000",
-        "wallBackground":"#2e0000",
-        "floorForeground":"#554444",
-        "floorBackground":"#332222",
+        "wallForeground": "#770000",
+        "wallBackground": "#2e0000",
+        "floorForeground":"#664444",
+        "floorBackground":"#442222",
 
         "roomTypes": [
             "inferno",
             "basic"
         ]
+    },
+    {
+        "depth":2,
+
+        "wallForeground": "#007700",
+        "wallBackground": "#002e00",
+        "floorForeground":"#446644",
+        "floorBackground":"#224422"
+    },
+    {
+        "depth":3,
+
+        "wallForeground": "#000077",
+        "wallBackground": "#00002e",
+        "floorForeground":"#444466",
+        "floorBackground":"#222244"
+    },
+    {
+        "depth":4,
+
+        "wallForeground": "#777700",
+        "wallBackground": "#2e2e00",
+        "floorForeground":"#666644",
+        "floorBackground":"#444422"
+    },
+    {
+        "depth":5,
+
+        "wallForeground": "#770077",
+        "wallBackground": "#2e002e",
+        "floorForeground":"#664466",
+        "floorBackground":"#442244"
+    },        
+    {
+        "depth":6,
+
+        "wallForeground": "#007777",
+        "wallBackground": "#002e2e",
+        "floorForeground":"#446666",
+        "floorBackground":"#224444"
     }
 ]

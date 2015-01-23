@@ -6,6 +6,7 @@ var Room = function Room(game,x,y,width,height) {
     this.height = height;
     this.centerX = Math.floor(width/2);
     this.centerY = Math.floor(height/2);
+    this.explored = false;
     this.tags = [];
     this.map = new RL.Map(game);
     this.entityManager = new RL.ObjectManager(game, RL.Entity, width, height);

@@ -258,6 +258,52 @@ RL.Tile.Types.pillar = {
     passable: false,
     bombable: false
 };
+RL.Tile.Types.downStairs = {
+    name: 'Stairs',
+    char: '>',
+    color: '#777',
+    bgColor: '#222',
+    passable: true,
+    bombdable: false,
+    onEntityEnter: function(entity) {
+        if (entity===this.game.player) {
+            this.game.depth += 1;
+            console.log(this.game.dungeon.levels.length);
+            if (this.game.dungeon.levels.length===this.game.depth) {
+                console.log('generating new level');
+                this.game.dungeon.generate(this.game.depth,
+                                           this.game.player.room.x,
+                                           this.game.player.room.y)
+            } else {
+                console.log('level already generated');
+                this.game.dungeon.rooms = this.game.dungeon.levels[this.game.depth];
+            }
+            console.log(this.game.dungeon.levels.length);
+            this.game.movePlayerRoom(this.game.player.room, this.game.dungeon.getRoomsWithTag('START')[0]);
+        }
+    }
+};
+
+RL.Tile.Types.upStairs = {
+    name: 'Stairs',
+    char: '<',
+    color: '#777',
+    bgColor: '#222',
+    passable: true,
+    bombdable: false,
+    /*onEntityEnter: function(entity) {
+        if (entity===this.game.player) {
+            console.log(this.game.dungeon.depth);
+            this.game.dungeon.depth += 1;
+            console.log(this.game.dungeon.depth);
+            this.game.dungeon.generate(this.game.dungeon.depth,
+                                       this.game.player.room.x,
+                                       this.game.player.room.y)
+            this.game.movePlayerRoom(this.game.player.room, this.game.dungeon.getRoomsWithTag('START')[0]);
+        }
+    }*/
+};
+
 RL.Tile.Types.hud = {
     name: 'HUD',
     char: '■',

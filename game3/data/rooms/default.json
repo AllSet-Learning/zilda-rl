@@ -19,7 +19,9 @@
         "~": "puddle",
         "A": "acidPuddle",
         "B": "brazier",
-        "T": "tombstone"
+        "T": "tombstone",
+        ">": "downStairs",
+        "<": "upStairs"
     },
     "requiredDoors": [],
     "optionalDoors": [],
