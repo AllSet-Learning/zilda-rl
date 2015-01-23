@@ -162,7 +162,7 @@ RL.Tile.Types.bombTwo = {
 RL.Tile.Types.bombOne = {
     name: 'Bomb',
     char: 'ර',
-    color: 'blue',
+    color: 'red',
     bgColor: '#222',
     passable: true,
     update: function() {
@@ -173,7 +173,7 @@ RL.Tile.Types.bombOne = {
 RL.Tile.Types.bombExploding = {
     name: 'Bomb',
     char: 'ර',
-    color: 'blue',
+    color: 'red',
     bgColor: '#222',
     passable: true,
     update: function() {
@@ -260,8 +260,8 @@ RL.Tile.Types.pillar = {
 };
 RL.Tile.Types.downStairs = {
     name: 'Stairs',
-    char: '>',
-    color: '#777',
+    char: 'Ω',
+    color: '#CC2EFA',
     bgColor: '#222',
     passable: true,
     bombdable: false,
