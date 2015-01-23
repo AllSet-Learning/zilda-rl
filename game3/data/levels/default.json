@@ -12,6 +12,7 @@
     "monsterTypes": [
         "test"
     ],
+
     "roomTypes": [
         "basic",
         "debris",
@@ -19,5 +20,12 @@
         "inferno",
         "closed",
         "labyrinth"
+    ],
+
+    "startRooms": [
+        "basicStart"
+    ],
+    "endRooms": [
+        "basicEnd"
     ]
 }

@@ -282,16 +282,20 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         return compatibleLayouts;
     };
 
-    this.digRooms = function(roomTypes) {
+    this.digRooms = function(roomTypes,startRooms,endRooms) {
         var roomArray = this.getAllRooms();
         var usedLayouts = [];
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
-            var layout;
+            var layout = {name:'foobar'};
             if (room.hasTag("START")) {
-                layout = RL.Util.randomChoice(this.roomLayouts["start"]);
+                while (startRooms.indexOf(layout.name)===-1) {
+                    layout = RL.Util.randomChoice(this.roomLayouts["start"]);
+                }
             } else if (room.hasTag("END")) {
-                layout = RL.Util.randomChoice(this.roomLayouts["end"]);
+                while (endRooms.indexOf(layout.name)===-1) {
+                    layout = RL.Util.randomChoice(this.roomLayouts["end"]);
+                }
             } else {
                 var layouts = this.getCompatibleRoomLayouts(room,roomTypes);
                 for ( var j=0; j<usedLayouts.length; j++ ) {
@@ -418,7 +422,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             this.attemptNewConnection(room);
         }
         this.tagDeadEnds();
-        this.digRooms(newLevelData.roomTypes);
+        this.digRooms(newLevelData.roomTypes,
+                      newLevelData.startRooms,
+                      newLevelData.endRooms);
 
         //determine which monsters are suitable for level
         var monsters = [];
