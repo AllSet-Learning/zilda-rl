@@ -435,13 +435,19 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         for ( var i=0; i<rooms.length; i++ ) {
             rooms[i].spawnItem(['heart','gold','threeGold','key','bomb']);
             var numMonsters = Math.floor(Math.random()*(newLevelData.maxMonstersPerRoom-newLevelData.minMonstersPerRoom))+newLevelData.minMonstersPerRoom+1;
+            if (rooms[i].hasTag('START')) {
+                numMonsters = 0;
+            } else if (rooms[i].hasTag('END')) {
+                numMonsters *= 2;
+            }
             for ( var j=0; j<numMonsters; j++ ) {
                 rooms[i].spawnMonster(monsters);
             }
         }
-
         //lock dead ends
         deadEnds = this.getRoomsWithTag('DEADEND');
+        //including the end
+        deadEnds = deadEnds.concat(this.getRoomsWithTag('END'));
         for ( var i=0; i<deadEnds.length; i++ ) {
             var room = this.getRoomToDirection(deadEnds[i],deadEnds[i].connectionTags()[0]);
             var d = RL.Util.oppositeDirection(deadEnds[i].connectionTags()[0]);
