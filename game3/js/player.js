@@ -69,7 +69,7 @@ RL.Player.prototype.takeDamage = function(amount) {
             this.game.console.log("<strong>You are dead!</strong>");
             this.dead=true;
             this.color="red";
-            this.char="%";
+            this.char="@";
         }
         if (!this.immortal) {
             this.game.gameOver = true;
