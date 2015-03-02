@@ -440,7 +440,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         var rooms = this.getAllRooms();
         for ( var i=0; i<rooms.length; i++ ) {
             rooms[i].spawnItem(['heart','gold','threeGold','key','bomb']);
-            var numMonsters = Math.floor(Math.random()*(newLevelData.maxMonstersPerRoom-newLevelData.minMonstersPerRoom))+newLevelData.minMonstersPerRoom+1;
+            var numMonsters = ROT.RNG.getUniformInt(newLevelData.minMonstersPerRoom,newLevelData.maxMonstersPerRoom);
             if (rooms[i].hasTag('START')) {
                 numMonsters = 0;
             } else if (rooms[i].hasTag('END')) {

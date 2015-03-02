@@ -1,7 +1,7 @@
 //add-ons to util
 
 RL.Util.randomChoice = function(array) {
-    var i=Math.floor(Math.random()*array.length);
+    var i=ROT.RNG.getUniformInt(0,array.length-1);
     return array[i];
 };
 
@@ -14,7 +14,7 @@ RL.Util.mappedWeightedChoice = function(map) {
             totalWeight += map[choice];
         }
     }
-    var chosenWeight = Math.floor(Math.random()*totalWeight);
+    var chosenWeight = ROT.RNG.getUniformInt(0,totalWeight-1);
     var currentWeight = 0;
     for ( var i=0; i<choices.length; i++ ) {
         currentWeight += map[choices[i]];
@@ -29,7 +29,7 @@ RL.Util.weightedChoice = function(array, weightFunc) {
     for ( var i=0; i<array.length; i++ ) {
         totalWeight += weightFunc(array[i]);
     }
-    var choice = Math.floor(Math.random()*totalWeight);
+    var choice = ROT.RNG.getUniformInt(0,totalWeight-1);
     var currentWeight = 0;
     for ( var i=0; i<array.length; i++ ) {
         currentWeight += weightFunc(array[i]);

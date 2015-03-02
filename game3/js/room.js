@@ -91,8 +91,8 @@ var Room = function Room(game,x,y,width,height) {
                 (y===this.centerY && x===1) ||
                 (y===this.centerY && x===this.width-2) ||
                 this.map.get(x,y).type !== 'floor' ) {
-            x = Math.floor(Math.random()*this.width)
-            y = Math.floor(Math.random()*this.height)
+            x = ROT.RNG.getUniformInt(0,this.width-1);
+            y = ROT.RNG.getUniformInt(0,this.height-1);
         }
         var itemType = RL.Util.randomChoice(itemTypes);
         var item = new RL.Item(this.game,itemType,x,y);
@@ -106,8 +106,8 @@ var Room = function Room(game,x,y,width,height) {
                 (y===this.centerY && x===1) ||
                 (y===this.centerY && x===this.width-2) ||
                 this.map.get(x,y).type !== 'floor' ) {
-            x = Math.floor(Math.random()*this.width)
-            y = Math.floor(Math.random()*this.height)
+            x = ROT.RNG.getUniformInt(0,this.width-1);
+            y = ROT.RNG.getUniformInt(0,this.height-1);
         }
         var monsterType = RL.Util.randomChoice(monsterTypes);
         monster = new RL.Entity(this.game,monsterType);

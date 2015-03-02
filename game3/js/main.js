@@ -3,6 +3,19 @@ var roomFiles = ["start","end","basic","debris","cave","inferno","closed","labyr
 var levelFiles = ["test"];
 var monsterFiles = ["test"];
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,   
+                                             function(m,key,value) {
+                                                 vars[key] = value;
+                                             });
+    return vars;
+}
+
+//set RNG seed
+var seed = parseInt(getUrlVars()["s"]);
+if (seed) { ROT.RNG.setSeed(seed); }
+
 //customize basic game "turn"
 RL.Game.prototype.onKeyAction = function(action) {
     if(!this.gameOver){
@@ -373,8 +386,8 @@ var playerStartX = 0
 var playerStartY = 0
 while ( startRoom.map.get(playerStartX,playerStartY).type !== 'floor' ||
         startRoom.itemManager.get(playerStartX,playerStartY) ) {
-    playerStartX = Math.floor(Math.random()*startRoom.width);
-    playerStartY = Math.floor(Math.random()*startRoom.height);
+    playerStartX = ROT.RNG.getUniformInt(0,startRoom.width-1);
+    playerStartY = ROT.RNG.getUniformInt(0,startRoom.height-1);
 }
 game.player.x = playerStartX;
 game.player.y = playerStartY;
