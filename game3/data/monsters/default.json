@@ -19,9 +19,9 @@
         "comment": "Valid values are 'always', 'never', and 'provoked'. 'always' will always attack if able. 'never' never attacks. 'provoked' attacks if health is less than maximum.",
 
         "drops": {
-            "nothing":50,
-            "gold":30,
-            "threeGold":10,
+            "nothing":65,
+            "gold":20,
+            "threeGold":5,
             "bomb":10
         }
     }
