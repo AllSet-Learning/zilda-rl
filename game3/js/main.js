@@ -25,6 +25,7 @@ RL.Game.prototype.onKeyAction = function(action) {
 
         } else if(this.queueDraw){
             this.renderer.draw();
+            this.hudRenderer.draw();
         }
     }
     this.queueDraw = false;
@@ -349,8 +350,8 @@ for ( var x=0; x<game.hudMap.width; x++ ) {
     }
 }
 
-game.hudRenderer = new RL.Renderer(game,game.hudMap.width,game.hudMap.height,'hud');
-
+game.hudRenderer = new RL.Renderer(game);
+game.hudRenderer.resize(game.hudMap.width, game.hudMap.height);
 game.hudRenderer.layers = [ new RL.RendererLayer(game, 'hud', {draw: true}) ];
 
 //set up the renderer
@@ -401,5 +402,7 @@ var hudContainerEl = document.getElementById('hud-container');
 mapContainerEl.appendChild(game.renderer.canvas);
 hudContainerEl.appendChild(game.hudRenderer.canvas);
 consoleContainerEl.appendChild(game.console.el);
+
+console.log(hudContainerEl, game.hudRenderer.canvas, game.hudMap);
 
 game.start();
