@@ -6,25 +6,44 @@ var Room = function Room(game,x,y,width,height) {
     this.height = height;
     this.centerX = Math.floor(width/2);
     this.centerY = Math.floor(height/2);
-    this.explored = false;
-    this.tags = [];
     this.map = new RL.Map(game);
     this.entityManager = new RL.ObjectManager(game, RL.Entity, width, height);
     this.itemManager = new RL.ObjectManager(game, RL.Item, width, height);
-    this.hasTag = function(tag) {
+    this.tags = [];
+};
+
+Room.prototype = {
+    constructor: Room,
+    game: null,
+    x: null,
+    y: null,
+    width: null,
+    height: null,
+    centerX: null,
+    centerY: null,
+    explored: false,
+    tags: null,
+    map: null,
+    entityManager: null,
+    itemManager: null,
+    
+    hasTag: function(tag) {
         return ( this.tags.indexOf(tag.toUpperCase()) != -1 );
-    };
-    this.tag = function(tag) {
+    },
+    
+    tag: function(tag) {
         if ( ! this.hasTag(tag) ) {
             this.tags.push(tag.toUpperCase())
         }
-    };
-    this.untag = function(tag) {
+    },
+    
+    untag: function(tag) {
         if ( this.hasTag(tag) ) {
             this.tags.splice(this.tags.indexOf(tag.toUpperCase()),1);
         }
-    };
-    this.connectionTags = function() {
+    },
+    
+    connectionTags: function() {
         var connectionTags = [];
         var directions = ['N','S','E','W'];
         for ( var i=0; i<4; i++ ) {
@@ -33,12 +52,13 @@ var Room = function Room(game,x,y,width,height) {
             }
         }
         return connectionTags;
-    };
+    },
 
-    this.countConnections = function() {
+    countConnections: function() {
         return this.connectionTags().length;
-    };
-    this.loadTilesFromArrayString = function(mapData, charToType, defaultTileType) {
+    },
+    
+    loadTilesFromArrayString: function(mapData, charToType, defaultTileType) {
         this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
         for ( var x=0; x<this.width; x++ ) {
             northTile = this.map.get(x,0);
@@ -72,18 +92,19 @@ var Room = function Room(game,x,y,width,height) {
                 this.map.set(0,y,westTile.type+'PassageW');
             }
         }
-    };
+    },
     
-    this.loadEntitiesFromArrayString = function(mapData, charToType, defaultType, replaceCurrentObjects) {
+    loadEntitiesFromArrayString: function(mapData, charToType, defaultType, replaceCurrentObjects) {
         this.entityManager.loadFromArrayString(mapData, charToType, defaultType, replaceCurrentObjects);
-    };
+    },
 
-    this.setSize = function(w,h) {
+    setSize: function(w,h) {
         this.map.setSize(w,h);
         this.entityManager.setSize(w,h);
-    };
+        this.itemManager.setSizE(w,h)
+    },
 
-    this.spawnItem = function(itemTypes) {
+    spawnItem: function(itemTypes) {
         var x=0;//this.centerX;
         var y=0;//this.centerY;
         while ( (x===this.centerX && y===1) ||
@@ -97,8 +118,9 @@ var Room = function Room(game,x,y,width,height) {
         var itemType = RL.Util.randomChoice(itemTypes);
         var item = new RL.Item(this.game,itemType,x,y);
         this.itemManager.add(x,y,item);
-    };
-    this.spawnMonster = function(monsterTypes) {
+    },
+    
+    spawnMonster: function(monsterTypes) {
         var x=0;
         var y=0;
         while ( (x===this.centerX && y===1) ||
@@ -112,5 +134,6 @@ var Room = function Room(game,x,y,width,height) {
         var monsterType = RL.Util.randomChoice(monsterTypes);
         monster = new RL.Entity(this.game,monsterType);
         this.entityManager.add(x,y,monster);
-    };
+    }
 };
+

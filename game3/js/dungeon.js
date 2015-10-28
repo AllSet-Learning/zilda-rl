@@ -9,11 +9,26 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.rooms = new RL.Array2d(dungeonWidth,dungeonHeight);
     this.levels = [null];
     this.roomLayouts = {};
-    this.defaultLayout = null;
     this.levelData = {};
-    this.defaultLevel = null;
+};
 
-    this.loadLevels = function(fnames) {
+Dungeon.prototype = {
+    constructor: Dungeon,
+    game: null,
+    width: null,
+    height: null,
+    roomWidth: null,
+    roomHeight: null,
+    tilesWidth: null,
+    tilesHeight: null,
+    rooms: null,
+    levels: null,
+    roomLayouts: null,
+    defaultLayout: null,
+    levelData: null,
+    defaultLevel: null,
+    
+    loadLevels: function(fnames) {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET","data/levels/default.json",false);
         xmlHttp.send(null);
@@ -35,9 +50,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 this.levelData[level.depth].push(level);
             }
         }
-    };
+    },
 
-    this.loadLayouts = function(roomTypes) {
+    loadLayouts: function(roomTypes) {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET","data/rooms/default.json",false);
         xmlHttp.send(null);
@@ -64,9 +79,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 }
             }
         }
-    };
+    },
 
-    this.validDirections = function(roomX, roomY) {
+    validDirections: function(roomX, roomY) {
         var directions = ['n','s','e','w'];
         if (roomX===0) {
             directions.splice(directions.indexOf('w'),1);
@@ -81,9 +96,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             directions.splice(directions.indexOf('s'),1);
         }
         return directions;
-    };
+    },
 
-    this.getRoomToDirection = function(fromRoom,direction) {
+    getRoomToDirection: function(fromRoom,direction) {
         newRoomX = fromRoom.x;
         newRoomY = fromRoom.y;
         direction = direction.toLowerCase();
@@ -102,9 +117,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             break;
         }
         return this.rooms.get(newRoomX,newRoomY);
-    };
+    },
 
-    this.getAllRooms = function() {
+    getAllRooms: function() {
         var roomArray = [];
         for ( var x=0; x<this.width; x++ ) {
             for ( var y=0; y<this.height; y++ ) {
@@ -112,9 +127,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             }
         }
         return roomArray;
-    };
+    },
 
-    this.getRoomsWithTag = function(tag) {
+    getRoomsWithTag: function(tag) {
         var roomsWithTag = [];
         var roomArray = this.getAllRooms();
         for ( var i=0; i<roomArray.length; i++ ) {
@@ -124,9 +139,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             }
         }
         return roomsWithTag;
-    };
+    },
 
-    this.tagDeadEnds = function() {
+    tagDeadEnds: function() {
         var roomArray = this.getAllRooms();
         for ( var i=0; i<roomArray.length; i++ ) {
             var room = roomArray[i];
@@ -144,13 +159,13 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 }
             }
         }
-    };
+    },
 
-    this.roomsAreAdjacent = function(room1,room2) {
+    roomsAreAdjacent: function(room1,room2) {
         return (Math.abs(room1.x-room2.x)+Math.abs(room1.y-room2.y)===1);
-    };
+    },
 
-    this.roomsAreConnected = function(room1,room2) {
+    roomsAreConnected: function(room1,room2) {
         if (this.roomsAreAdjacent(room1,room2)) {
             if ( (room1.x > room2.x && room1.hasTag('W') && room2.hasTag('E')) ||
                  (room1.x < room2.x && room1.hasTag('E') && room2.hasTag('W')) ||
@@ -159,9 +174,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 return true;
             } else { return false; }
         } else { return false; }
-    };
+    },
 
-    this.connectRooms = function(room1,room2) {
+    connectRooms: function(room1,room2) {
         if (this.roomsAreAdjacent(room1,room2)) {
             if (room1.x > room2.x) {
                 room1.tag('W');
@@ -177,9 +192,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 room2.tag('N');
             }
         }
-    };
+    },
 
-    this.disconnectRooms = function(room1,room2) {
+    disconnectRooms: function(room1,room2) {
         if (this.roomsAreConnected(room1,room2)) {
             if (room1.x > room2.x) {
                 room1.untag('W');
@@ -195,9 +210,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 room2.untag('N');
             }
         }
-    };
+    },
 
-    this.makeMaze = function(startX,startY) {
+    makeMaze: function(startX,startY) {
         this.rooms.get(startX,startY).tag('START');
         var inMaze = [ this.rooms.get(startX,startY) ];
         var walls = [];
@@ -220,9 +235,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             }
             walls.splice(walls.indexOf(wall),1);
         }
-    };
+    },
 
-    this.isolateRoom = function(room) {
+    isolateRoom: function(room) {
         var directions = this.validDirections(room.x,room.y);
         for ( var i=0; i<directions.length; i++ ) {
             var d = directions[i];
@@ -233,9 +248,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         }
         room.tags=[];
         room.tag('ISOLATED');
-    };
+    },
 
-    this.attemptNewConnection = function(room) {
+    attemptNewConnection: function(room) {
         var validDirections = this.validDirections(room.x,room.y);
         var madeNewConnection = false;
         while ( (!madeNewConnection) && (validDirections.length) ) {
@@ -248,9 +263,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
                 }
             }
         }
-    };
+    },
 
-    this.getCompatibleRoomLayouts = function(room,roomTypes) {
+    getCompatibleRoomLayouts: function(room,roomTypes) {
         var compatibleLayouts = [];
         for ( var key in this.roomLayouts ) {
             if ( roomTypes.indexOf(key)!==-1 ) {
@@ -280,9 +295,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             }
         }
         return compatibleLayouts;
-    };
+    },
 
-    this.digRooms = function(roomTypes,startRooms,endRooms) {
+    digRooms: function(roomTypes,startRooms,endRooms) {
         var roomArray = this.getAllRooms();
         var usedLayouts = [];
         for ( var i=0; i<roomArray.length; i++ ) {
@@ -344,9 +359,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             //load the room data
             room.loadTilesFromArrayString(mapData,layout.charToTileType,'floor');
         }
-    };
+    },
     
-    this.loadColors = function(data) {
+    loadColors: function(data) {
         for (var key in RL.Tile.Types) {
             if (key!==undefined && key!=="floor" && key!=="wall") {
                 if (RL.Tile.Types[key].color===RL.Tile.Types.floor.color) {
@@ -373,9 +388,9 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
         RL.Tile.Types.floor.bgColor         = data.floorBackground;
         RL.Tile.Types.wall.color            =  data.wallForeground;
         RL.Tile.Types.wall.bgColor          =  data.wallBackground;
-    };
+    },
 
-    this.generate = function(depth,startX,startY) {
+    generate: function(depth,startX,startY) {
         var newLevelData;
         this.levels[depth] = new RL.Array2d(this.width,this.height);
         this.rooms = this.levels[depth];
@@ -478,5 +493,5 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
             room.map.get(x,y).changeType('lockedDoor');
             console.log('Locked '+d+' door in room at ('+room.x+','+room.y+')');
         }
-    };
+    }
 };
