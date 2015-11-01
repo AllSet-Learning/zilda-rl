@@ -10,6 +10,7 @@ var Dungeon = function(game, dungeonWidth, dungeonHeight, roomWidth, roomHeight)
     this.levels = [null];
     this.roomLayouts = {};
     this.levelData = {};
+    this.connections = [];
 };
 
 Dungeon.prototype = {
@@ -27,6 +28,12 @@ Dungeon.prototype = {
     defaultLayout: null,
     levelData: null,
     defaultLevel: null,
+
+    update: function() {
+        var player = this.game.player;
+        player.room.explored = true;
+        player.room.update(player);
+    },
     
     loadLevels: function(fnames) {
         var xmlHttp = new XMLHttpRequest();

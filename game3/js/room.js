@@ -10,6 +10,12 @@ var Room = function Room(game,x,y,width,height) {
     this.entityManager = new RL.ObjectManager(game, RL.Entity, width, height);
     this.itemManager = new RL.ObjectManager(game, RL.Item, width, height);
     this.tags = [];
+    this.connections = {
+        north: null,
+        south: null,
+        east: null,
+        west: null
+    }
 };
 
 Room.prototype = {
@@ -26,6 +32,21 @@ Room.prototype = {
     map: null,
     entityManager: null,
     itemManager: null,
+
+    update: function(exclude) {
+        this.entityManager.update(exclude);
+        this.itemManager.update(exclude);
+        for (var x = 0; x < this.width; x++) {
+            for (var y = 0; y < this.height; y++) {
+                var tile = this.map.get(x, y);
+                if (tile.skip) {
+                    tile.skip = false;
+                } else if (tile.update) {
+                    tile.update();
+                }
+            }
+        }
+    },        
     
     hasTag: function(tag) {
         return ( this.tags.indexOf(tag.toUpperCase()) != -1 );
@@ -43,7 +64,7 @@ Room.prototype = {
         }
     },
     
-    connectionTags: function() {
+    connectionTags: function() { // TODO rewrite or remove
         var connectionTags = [];
         var directions = ['N','S','E','W'];
         for ( var i=0; i<4; i++ ) {
@@ -54,11 +75,12 @@ Room.prototype = {
         return connectionTags;
     },
 
-    countConnections: function() {
+    countConnections: function() { // TODO rewrite or remove
         return this.connectionTags().length;
     },
-    
+
     loadTilesFromArrayString: function(mapData, charToType, defaultTileType) {
+        // TODO rewrite or remove (esp. passage code)
         this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
         for ( var x=0; x<this.width; x++ ) {
             northTile = this.map.get(x,0);

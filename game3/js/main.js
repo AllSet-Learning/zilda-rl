@@ -33,30 +33,7 @@ RL.Game.prototype.onKeyAction = function(action) {
 
 //new update function to force updates without keypress
 RL.Game.prototype.updateAll = function() {
-    //mark player's room as explored
-    this.player.room.explored=true;
-    this.entityManager.update(this.player);
-    //Don't update map the fov or lighting!
-    //this.player.updateFov();
-    //this.lighting.update();
-    
-    //don't follow player
-    //this.renderer.setCenter(this.player.x, this.player.y);
-    
-    //update items
-    this.itemManager.update();
-    
-    //update tiles
-    for ( var x=0; x<this.map.width; x++ ) {
-        for ( var y=0; y<this.map.height; y++ ) {
-            var tile = this.map.get(x,y);
-            if (tile.skip) {
-                tile.skip = false;
-            } else {
-                tile.update();
-            }
-        }
-    }
+    this.dungeon.update();
     this.renderer.draw();
     this.updateHud();
     this.hudRenderer.draw();
