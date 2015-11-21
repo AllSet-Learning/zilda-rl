@@ -160,7 +160,6 @@ RL.Game.prototype.updateHud = function() {
 
 //New function that handles player moving from one room to another
 RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
-    toRoom.entityManager.add(this.player.x,this.player.y,this.player);
     this.player.room = toRoom;
     this.entityManager = toRoom.entityManager;
     this.itemManager = toRoom.itemManager;
@@ -357,11 +356,11 @@ var keyBindings = {
 };
 game.input.addBindings(keyBindings);
 
-var startRoomX = 0
-var startRoomY = 0
+var startRoomX = 0;
+var startRoomY = 0;
 var startRoom = game.dungeon.rooms.get(0,0);
-var playerStartX = 0
-var playerStartY = 0
+var playerStartX = 0;
+var playerStartY = 0;
 while ( startRoom.map.get(playerStartX,playerStartY).type !== 'floor' ||
         startRoom.itemManager.get(playerStartX,playerStartY) ) {
     playerStartX = ROT.RNG.getUniformInt(0,startRoom.width-1);

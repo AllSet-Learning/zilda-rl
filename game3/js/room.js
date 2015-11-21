@@ -15,7 +15,7 @@ var Room = function Room(game,x,y,width,height) {
         south: null,
         east: null,
         west: null
-    }
+    };
 };
 
 Room.prototype = {
@@ -46,7 +46,71 @@ Room.prototype = {
                 }
             }
         }
-    },        
+        if (this === this.game.player.room) {
+            console.log('Checking if player at connection');
+            var player = this.game.player;
+            var connectionDirection = this.getConnectionForEntity(player);
+            console.log(connectionDirection, this.connections);
+            
+            if (connectionDirection !== null) {
+                this.entityManager.remove(player);
+                var connection = this.connections[connectionDirection];
+                switch (connectionDirection) {
+                case 'north':
+                    player.y = connection.height - 2;
+                    break;
+                case 'south':
+                    player.y = 1;
+                    break;
+                case 'east':
+                    player.x = connection.width - 2;
+                    break;
+                case 'west':
+                    player.x = 1;
+                    break;
+                }
+                connection.entityManager.add(player.x, player.y, player);
+                this.game.movePlayerRoom(this, connection);
+            }
+        }
+    },
+
+    /**
+     * Checks if an entity is at a connection location, and returns the direction
+     * @method getConnectionForEntity
+     * @param {Player|Entity} entity - The entity to check
+     * @return {String|null} string of direction of connection (eg 'north') or null if not at connection
+     */
+    getConnectionForEntity: function(entity) {
+        var x = entity.x;
+        var y = entity.y;
+
+        if (x === this.centerX &&
+            y === 0 &&
+            this.connections.north !== null) {
+            return 'north';
+        }
+
+        if (x === this.centerX &&
+            y === this.height - 1 &&
+            this.connections.south !== null) {
+            return 'south';
+        }
+
+        if (x === 0 &&
+            y === this.centerY &&
+            this.connections.east !== null) {
+            return 'east';
+        }
+
+        if (x === this.width - 1 &&
+            y === this.centerY &&
+            this.connections.west) {
+            return 'west';
+        }
+
+        return null;
+    },
     
     hasTag: function(tag) {
         return ( this.tags.indexOf(tag.toUpperCase()) != -1 );
@@ -54,7 +118,7 @@ Room.prototype = {
     
     tag: function(tag) {
         if ( ! this.hasTag(tag) ) {
-            this.tags.push(tag.toUpperCase())
+            this.tags.push(tag.toUpperCase());
         }
     },
     
@@ -82,38 +146,6 @@ Room.prototype = {
     loadTilesFromArrayString: function(mapData, charToType, defaultTileType) {
         // TODO rewrite or remove (esp. passage code)
         this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
-        for ( var x=0; x<this.width; x++ ) {
-            northTile = this.map.get(x,0);
-            southTile = this.map.get(x,this.height-1);
-            if (northTile.passable) {
-                if ( ! (northTile.type+'PassageN' in RL.Tile.Types) ) {
-                    RL.Tile.Types[northTile.type+'PassageN'] = makePassage(RL.Tile.Types[northTile.type],'n');
-                } 
-                this.map.set(x,0,northTile.type+'PassageN');
-            }
-            if (southTile.passable) {
-                if ( ! (southTile.type+'PassageS' in RL.Tile.Types) ) {
-                    RL.Tile.Types[southTile.type+'PassageS'] = makePassage(RL.Tile.Types[southTile.type],'s');
-                }
-                this.map.set(x,this.height-1,southTile.type+'PassageS');
-            }
-        }
-        for ( var y=0; y<this.height; y++ ) {
-            eastTile = this.map.get(this.width-1,y);
-            westTile = this.map.get(0,y);
-            if (eastTile.passable) {
-                if ( ! (eastTile.type+'PassageE' in RL.Tile.Types) ) {
-                    RL.Tile.Types[eastTile.type+'PassageE'] = makePassage(RL.Tile.Types[eastTile.type],'e');
-                }
-                this.map.set(this.width-1,y,eastTile.type+'PassageE');
-            }
-            if (westTile.passable) {
-                if ( ! (westTile.type+'PassageW' in RL.Tile.Types) ) {
-                    RL.Tile.Types[westTile.type+'PassageW'] = makePassage(RL.Tile.Types[westTile.type],'w');
-                }
-                this.map.set(0,y,westTile.type+'PassageW');
-            }
-        }
     },
     
     loadEntitiesFromArrayString: function(mapData, charToType, defaultType, replaceCurrentObjects) {
@@ -123,7 +155,7 @@ Room.prototype = {
     setSize: function(w,h) {
         this.map.setSize(w,h);
         this.entityManager.setSize(w,h);
-        this.itemManager.setSizE(w,h)
+        this.itemManager.setSizE(w,h);
     },
 
     spawnItem: function(itemTypes) {

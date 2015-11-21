@@ -186,15 +186,23 @@ Dungeon.prototype = {
     connectRooms: function(room1,room2) {
         if (this.roomsAreAdjacent(room1,room2)) {
             if (room1.x > room2.x) {
+                room1.connections.east = room2;
+                room2.connections.west = room1;
                 room1.tag('W');
                 room2.tag('E');
             } else if (room1.x < room2.x) {
+                room1.connections.west = room2;
+                room2.connections.east = room1;
                 room1.tag('E');
                 room2.tag('W');
             } else if (room1.y > room2.y) {
+                room1.connections.north = room2;
+                room2.connections.south = room1;
                 room1.tag('N');
                 room2.tag('S');
             } else if (room1.y < room2.y) {
+                room1.connections.south = room2;
+                room2.connections.north = room1;
                 room1.tag('S');
                 room2.tag('N');
             }

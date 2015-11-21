@@ -40,14 +40,22 @@ RL.Entity.prototype.distanceTo = function(x,y) {
     return Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2)); //realistic (1.41 diagonals)
 };
 
+RL.Entity.prototype.validMovement = function(pos) {
+    return (pos[0] !== 0 &&
+            pos[0] !== this.game.dungeon.roomWidth - 1 &&
+            pos[1] !== 0 &&
+            pos[1] !== this.game.dungeon.roomHeight - 1 &&
+            this.game.map.get(pos[0], pos[1]).passable &&
+            !this.game.entityManager.get(pos[0], pos[1]));
+};
+
 RL.Entity.prototype.getWanderDest = function() {
     var adjacentPositions = [[this.x,this.y+1],[this.x,this.y-1],
                              [this.x+1,this.y],[this.x-1,this.y]];
     var possiblePositions = [];
     for ( var i=0; i<4; i++ ) {
         var pos = adjacentPositions[i];
-        if (this.game.map.get(pos[0],pos[1]).passable &&
-            !this.game.entityManager.get(pos[0],pos[1])) {
+        if (this.validMovement(pos)) {
             possiblePositions.push(pos);
         }
     }
@@ -65,7 +73,7 @@ RL.Entity.prototype.getAwayFromDest = function(x,y) {
     var possiblePositions = [];
     for ( var i=0; i<4; i++ ) {
         var pos = adjacentPositions[i];
-        if (this.game.map.get(pos[0],pos[1]).passable &&
+        if (this.validMovement(pos) &&
             (Math.abs(pos[0]-x)>Math.abs(this.x-x) ||
              Math.abs(pos[1]-y)>Math.abs(this.y-y)) &&
             !this.game.entityManager.get(pos[0],pos[1])) {

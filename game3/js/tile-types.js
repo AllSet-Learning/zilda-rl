@@ -1,70 +1,3 @@
-var passageBump = function(entity,direction) {
-    game = entity.game;
-    if ( entity === game.player ) {
-        var currentRoom = entity.room;
-        if (direction==='n' && currentRoom.y > 0 ||
-            direction==='s' && currentRoom.y < game.dungeon.height-1 ||
-            direction==='e' && currentRoom.x < game.dungeon.width-1 ||
-            direction==='w' && currentRoom.x > 0) {
-            var newRoom = null
-            currentRoom.entityManager.remove(entity);
-            switch (direction) {
-            case 'n':
-                newRoom = game.dungeon.rooms.get(currentRoom.x,currentRoom.y-1)
-                entity.y = newRoom.height-2;
-                break;
-            case 's':
-                newRoom = game.dungeon.rooms.get(currentRoom.x,currentRoom.y+1)
-                entity.y = 1;
-                break;
-            case 'e':
-                newRoom = game.dungeon.rooms.get(currentRoom.x+1,currentRoom.y)
-                entity.x = 1;
-                break;
-            case 'w':
-                newRoom = game.dungeon.rooms.get(currentRoom.x-1,currentRoom.y)
-                entity.x = newRoom.width-2;
-                break;
-            }
-            game.movePlayerRoom(currentRoom,newRoom);
-        }
-    }
-};
-
-var northBump = function(entity) {
-    passageBump(entity,'n');
-};
-var southBump = function(entity) {
-    passageBump(entity,'s');
-};
-var eastBump = function(entity) {
-    passageBump(entity,'e');
-};
-var westBump = function(entity) {
-    passageBump(entity,'w');
-};
-
-var makePassage = function(baseType,direction) {
-  var newType = {};
-    for (var key in baseType) {
-        newType[key] = baseType[key];
-    }
-    newType.passable = false;
-    if (direction==='n') {
-        bump = northBump;
-    } else if (direction==='s') {
-        bump = southBump;
-    } else if (direction==='e') {
-        bump = eastBump;
-    } else if (direction==='w') {
-    bump = westBump;
-    } else {
-        console.log('Direction must be "n", "s", "e", or "w"');
-    }
-    newType.bump = bump;
-    return newType;
-};
-
 RL.Tile.Types.floor = {
     name: 'Floor',
     char: '.',
@@ -107,22 +40,12 @@ RL.Tile.Types.lockedDoor = {
         if (entity.keys) {
             this.game.console.log('You unlock the door');
             entity.keys -= 1;
-            if (this.y===0) {
-                this.game.map.set(this.x,this.y,'doorPassageN');
-            } else if (this.y===this.game.map.height-1) {
-                this.game.map.set(this.x,this.y,'doorPassageS');
-            } else if (this.x===this.game.map.width-1) {
-                this.game.map.set(this.x,this.y,'doorPassageE');
-            } else if (this.x===0) {
-                this.game.map.set(this.x,this.y,'doorPassageW');
-            } else {
-                this.game.map.set(this.x,this.y,'door');
-            }
+            this.game.map.set(this.x,this.y,'door');
         }
         this.game.renderer.draw();
     }
 };
-                
+
 
 RL.Tile.Types.fire = {
     name: 'Fire',
@@ -273,12 +196,14 @@ RL.Tile.Types.downStairs = {
                 console.log('generating new level');
                 this.game.dungeon.generate(this.game.depth,
                                            this.game.player.room.x,
-                                           this.game.player.room.y)
+                                           this.game.player.room.y);
             } else {
                 console.log('level already generated');
                 this.game.dungeon.rooms = this.game.dungeon.levels[this.game.depth];
             }
             console.log(this.game.dungeon.levels.length);
+            this.game.player.room.entityManager.remove(this.game.player);
+            this.game.dungeon.getRoomsWithTag('START')[0].entityManager.add(this.game.player.x, this.game.player.y, this.game.player);
             this.game.movePlayerRoom(this.game.player.room, this.game.dungeon.getRoomsWithTag('START')[0]);
         }
     }
@@ -290,23 +215,23 @@ RL.Tile.Types.upStairs = {
     color: '#777',
     bgColor: '#222',
     passable: true,
-    bombdable: false,
+    bombdable: false
     /*onEntityEnter: function(entity) {
-        if (entity===this.game.player) {
-            console.log(this.game.dungeon.depth);
-            this.game.dungeon.depth += 1;
-            console.log(this.game.dungeon.depth);
-            this.game.dungeon.generate(this.game.dungeon.depth,
-                                       this.game.player.room.x,
-                                       this.game.player.room.y)
-            this.game.movePlayerRoom(this.game.player.room, this.game.dungeon.getRoomsWithTag('START')[0]);
-        }
-    }*/
+     if (entity===this.game.player) {
+     console.log(this.game.dungeon.depth);
+     this.game.dungeon.depth += 1;
+     console.log(this.game.dungeon.depth);
+     this.game.dungeon.generate(this.game.dungeon.depth,
+     this.game.player.room.x,
+     this.game.player.room.y)
+     this.game.movePlayerRoom(this.game.player.room, this.game.dungeon.getRoomsWithTag('START')[0]);
+     }
+     }*/
 };
 
 RL.Tile.Types.hud = {
     name: 'HUD',
     char: '■',
     color: '#000',
-    bgColor: '#000',
+    bgColor: '#000'
 };
