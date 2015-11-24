@@ -14,14 +14,16 @@ function getUrlVars() {
 
 //set RNG seed
 var seed = parseInt(getUrlVars()["s"]);
-if (seed) { ROT.RNG.setSeed(seed); }
+if (!isNaN(seed)) {
+    ROT.RNG.setSeed(seed);
+}
 
 //customize basic game "turn"
 RL.Game.prototype.onKeyAction = function(action) {
     if(!this.gameOver){
         var result = this.player.update(action);
         if (result) {
-            this.updateAll()
+            this.updateAll();
 
         } else if(this.queueDraw){
             this.renderer.draw();
