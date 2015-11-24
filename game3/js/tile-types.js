@@ -54,7 +54,7 @@ RL.Tile.Types.fire = {
     bgColor: '#522',
     passable: true,
     update: function() {
-        entity = this.game.entityManager.get(this.x,this.y);
+        var entity = this.game.entityManager.get(this.x,this.y);
         if (entity) {
             entity.takeDamage(1);
         }
@@ -108,7 +108,7 @@ RL.Tile.Types.bombExploding = {
                     if (x>this.x || (x===this.x && y>this.y)) {
                         this.game.map.get(x,y).skip = true;
                     }
-                    entity = this.game.entityManager.get(x,y);
+                    var entity = this.game.entityManager.get(x,y);
                     if (entity) {
                         entity.takeDamage(1);
                     }

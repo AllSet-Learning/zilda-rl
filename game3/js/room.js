@@ -36,6 +36,7 @@ Room.prototype = {
     update: function(exclude) {
         this.entityManager.update(exclude);
         this.itemManager.update(exclude);
+        
         for (var x = 0; x < this.width; x++) {
             for (var y = 0; y < this.height; y++) {
                 var tile = this.map.get(x, y);
@@ -86,9 +87,34 @@ Room.prototype = {
                 console.log('Changed west connection from ' + oldType + ' to ' + newType);
             }
         }
-                
-        // move player to next room if needed
+
+        // special case to handle bombs
+        this.getConnectedRooms().forEach(function(room) {
+            for (x = 0; x < room.width; x++) {
+                for (y = 0; y < room.height; y++) {
+                    var tile = room.map.get(x, y);
+                    if (tile.type === 'bombThree') {
+                        tile.changeType('bombTwo');
+                    } else if (tile.type === 'bombTwo') {
+                        tile.changeType('bombOne');
+                    } else if (tile.type === 'bombOne') {
+                        tile.changeType('bombExploding');
+                    } else if (tile.type === 'bombExploding') {
+                        room.game.console.log('You hear a distant explosion');
+                        for (var x2 = x - 1; x2 < x + 2; x2++) {
+                            for (var y2 = y - 1; y2 < y + 2; y2++) {
+                                if (room.map.get(x2, y2).bombable) {
+                                    room.map.set(x2, y2, 'embers');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         if (this === this.game.player.room) {
+            // move player to next room if needed
             var player = this.game.player;
             var connectionDirection = this.getConnectionForEntity(player);
             
