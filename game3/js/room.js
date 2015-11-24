@@ -46,11 +46,51 @@ Room.prototype = {
                 }
             }
         }
+
+        // change connection terrains to match
+        var oldType, newType; // for debugging
+        if (this.hasConnection('north')) {
+            var north = this.connections.north;
+            oldType = north.map.get(north.centerX, north.height - 1).type;
+            newType = this.map.get(this.centerX, 0).type;
+            if (oldType !== newType) {
+                north.map.set(north.centerX, north.height - 1, newType);
+                console.log('Changed north connection from ' + oldType + ' to ' + newType);
+            }
+        }
+        if (this.hasConnection('south')) {
+            var south = this.connections.south;
+            oldType = south.map.get(south.centerX, 0).type;
+            newType = this.map.get(this.centerX, this.height - 1).type;
+            if (oldType !== newType) {
+                south.map.set(south.centerX, 0, newType);
+                console.log('Changed south connection from ' + oldType + ' to ' + newType);
+            }
+        }
+        if (this.hasConnection('east')) {
+            var east = this.connections.east;
+            oldType = east.map.get(0, east.centerY).type;
+            newType = this.map.get(this.width - 1, this.centerY).type;
+            if (oldType !== newType) {
+                east.map.set(0, east.centerY, newType);
+                console.log('Changed east connection from ' + oldType + ' to ' + newType);
+            }
+
+        }
+        if (this.hasConnection('west')) {
+            var west = this.connections.west;
+            oldType = west.map.get(west.width - 1, west.centerY).type;
+            newType = this.map.get(0, this.centerY).type;
+            if (oldType !== newType) {
+                west.map.set(west.width - 1, west.centerY, newType);
+                console.log('Changed west connection from ' + oldType + ' to ' + newType);
+            }
+        }
+                
+        // move player to next room if needed
         if (this === this.game.player.room) {
-            console.log('Checking if player at connection');
             var player = this.game.player;
             var connectionDirection = this.getConnectionForEntity(player);
-            console.log(connectionDirection, this.connections);
             
             if (connectionDirection !== null) {
                 this.entityManager.remove(player);
@@ -63,10 +103,10 @@ Room.prototype = {
                     player.y = 1;
                     break;
                 case 'east':
-                    player.x = connection.width - 2;
+                    player.x = 1;
                     break;
                 case 'west':
-                    player.x = 1;
+                    player.x = connection.width - 2;
                     break;
                 }
                 connection.entityManager.add(player.x, player.y, player);
@@ -97,67 +137,162 @@ Room.prototype = {
             return 'south';
         }
 
-        if (x === 0 &&
+        if (x === this.width - 1 &&
             y === this.centerY &&
-            this.connections.east !== null) {
+            this.connections.east) {
             return 'east';
         }
 
-        if (x === this.width - 1 &&
+        if (x === 0 &&
             y === this.centerY &&
-            this.connections.west) {
+            this.connections.west !== null) {
             return 'west';
         }
 
         return null;
     },
+
+    /**
+     * Gets all the rooms the 
+     * @method getConnectedRooms
+     * @returns {Array} - Array of room objects
+     */
+    getConnectedRooms: function() {
+        var results = [];
+        
+        if (this.connections.north !== null) {
+            results.push(this.connections.north);
+        }
+        
+        if (this.connections.south !== null) {
+            results.push(this.connections.south);
+        }
+        
+        if (this.connections.east !== null) {
+            results.push(this.connections.east);
+        }
+        
+        if (this.connections.west !== null) {
+            results.push(this.connections.west);
+        }
+        
+        return results;
+    },
+
+    /**
+     * Checks if the room has a connections in a certain direction
+     * @method hasConnection
+     * @param {String} direction - one of the four cardinal directions, can be written in the following forms: 'n', 'N', 'north', 'North', 'NORTH'
+     * @returns {Bool}
+     */
+    hasConnection: function(direction) {
+        switch(direction) {
+        case 'n': // fall through
+        case 'N': // fall through
+        case 'north': // fall through
+        case 'North': // fall through
+        case 'NORTH':
+            return this.connections.north !== null;
+            break;
+        case 's': // fall through
+        case 'S': // fall through
+        case 'south': // fall through
+        case 'South': // fall through
+        case 'SOUTH': // fall through
+            return this.connections.south !== null;
+            break;
+        case 'e': // fall through
+        case 'E': // fall through
+        case 'east': // fall through
+        case 'East': // fall through
+        case 'EAST': // fall through
+            return this.connections.east !== null;
+            break;
+        case 'w': // fall through
+        case 'W': // fall through
+        case 'west': // fall through
+        case 'West': // fall through
+        case 'WEST': // fall through
+            return this.connections.west !== null;
+            break;
+        default:
+            return false;
+        }
+    },
     
+    countConnections: function() {
+        var count = 0;
+        if (this.connections.north !== null) {
+            count++;
+        }
+        if (this.connections.south !== null) {
+            count++;
+        }
+        if (this.connections.east !== null) {
+            count++;
+        }
+        if (this.connections.west !== null) {
+            count++;
+        }
+        return count;
+    },
+
+    isAdjacentTo: function(room) {
+        return Math.abs(this.x - room.x) + Math.abs(this.y - room.y) === 1;
+    },
+
+    connect: function(room, direction) {
+        if (direction === undefined) {
+            if (this.x > room.x) {
+                direction = 'west';
+            } else if (this.x < room.x) {
+                direction = 'east';
+            } else if (this.y > room.y) {
+                direction = 'north';
+            } else if (this.y < room.y) {
+                direction = 'south';
+            }
+        }
+        this.connections[direction] = room;
+        room.connections[RL.Util.oppositeDirection(direction)] = this;
+    },
+
+    disconnect: function(direction) {
+        var opposite = RL.Util.oppositeDirection(direction);
+        this.connections[direction].connections[opposite] = null;
+        this.connections[direction] = null;
+    },
+
+    isolate: function() {
+        var room = this;
+        ['north', 'south', 'east', 'west'].forEach(function(direction) {
+            if (room.hasConnection(direction)) {
+                room.disconnect(direction);
+            }
+        });
+    },
+
+    isConnected: function(room) {
+        return (this.getConnectedRooms().indexOf(room) !== -1 &&
+                room.getConnectedRooms().indexOf(this) !== -1);
+    },
+
     hasTag: function(tag) {
         return ( this.tags.indexOf(tag.toUpperCase()) != -1 );
     },
     
-    tag: function(tag) {
+    addTag: function(tag) {
         if ( ! this.hasTag(tag) ) {
             this.tags.push(tag.toUpperCase());
         }
     },
     
-    untag: function(tag) {
+    removeTag: function(tag) {
         if ( this.hasTag(tag) ) {
             this.tags.splice(this.tags.indexOf(tag.toUpperCase()),1);
         }
     },
     
-    connectionTags: function() { // TODO rewrite or remove
-        var connectionTags = [];
-        var directions = ['N','S','E','W'];
-        for ( var i=0; i<4; i++ ) {
-            if ( this.hasTag(directions[i]) ) {
-                connectionTags.push(directions[i]);
-            }
-        }
-        return connectionTags;
-    },
-
-    countConnections: function() { // TODO rewrite or remove
-        return this.connectionTags().length;
-    },
-
-    loadTilesFromArrayString: function(mapData, charToType, defaultTileType) {
-        // TODO rewrite or remove (esp. passage code)
-        this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
-    },
-    
-    loadEntitiesFromArrayString: function(mapData, charToType, defaultType, replaceCurrentObjects) {
-        this.entityManager.loadFromArrayString(mapData, charToType, defaultType, replaceCurrentObjects);
-    },
-
-    setSize: function(w,h) {
-        this.map.setSize(w,h);
-        this.entityManager.setSize(w,h);
-        this.itemManager.setSizE(w,h);
-    },
-
     spawnItem: function(itemTypes) {
         var x=0;//this.centerX;
         var y=0;//this.centerY;
@@ -188,6 +323,22 @@ Room.prototype = {
         var monsterType = RL.Util.randomChoice(monsterTypes);
         monster = new RL.Entity(this.game,monsterType);
         this.entityManager.add(x,y,monster);
+    },
+    
+    loadTilesFromArrayString: function(mapData, charToType, defaultTileType) {
+        // TODO rewrite or remove (esp. passage code)
+        this.map.loadTilesFromArrayString(mapData,charToType,defaultTileType);
+    },
+    
+    loadEntitiesFromArrayString: function(mapData, charToType, defaultType, replaceCurrentObjects) {
+        this.entityManager.loadFromArrayString(mapData, charToType, defaultType, replaceCurrentObjects);
+    },
+
+    setSize: function(w,h) {
+        this.map.setSize(w,h);
+        this.entityManager.setSize(w,h);
+        this.itemManager.setSizE(w,h);
     }
+
 };
 

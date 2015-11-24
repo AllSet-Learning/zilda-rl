@@ -167,7 +167,7 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
     this.updateHud();
     this.renderer.draw();
     this.hudRenderer.draw();
-    console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
+    //console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
     this.updateAll();
 };
 
@@ -306,7 +306,6 @@ var game = new RL.Game();
 game.loadMonsters(monsterFiles);
 
 //adding dungeon to game
-console.log('Adding dungeon to game');
 var dungeonW = 5;
 var dungeonH = 4;
 var roomW = 15;
@@ -378,7 +377,5 @@ var hudContainerEl = document.getElementById('hud-container');
 mapContainerEl.appendChild(game.renderer.canvas);
 hudContainerEl.appendChild(game.hudRenderer.canvas);
 consoleContainerEl.appendChild(game.console.el);
-
-console.log(hudContainerEl, game.hudRenderer.canvas, game.hudMap);
 
 game.start();

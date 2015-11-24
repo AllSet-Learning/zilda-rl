@@ -50,7 +50,11 @@ RL.Util.shuffle = function(array) {
 };
 
 RL.Util.oppositeDirection = function(direction) {
-    var directions = ['n','s','e','w','N','S','E','W'];
-    var oppositeDirections = ['s','n','w','e','S','N','W','E'];
-    return oppositeDirections[directions.indexOf(direction)];
+    var directions = ['n', 's', 'e', 'w',
+                      'N', 'S', 'E', 'W',
+                      'north', 'south', 'east', 'west'];
+    var opposites  = ['s', 'n', 'w', 'e',
+                      'S', 'N', 'W', 'E',
+                      'south', 'north', 'west', 'east'];
+    return opposites[directions.indexOf(direction)];
 };

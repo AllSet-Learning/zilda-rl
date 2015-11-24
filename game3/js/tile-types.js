@@ -191,7 +191,6 @@ RL.Tile.Types.downStairs = {
     onEntityEnter: function(entity) {
         if (entity===this.game.player) {
             this.game.depth += 1;
-            console.log(this.game.dungeon.levels.length);
             if (this.game.dungeon.levels.length===this.game.depth) {
                 console.log('generating new level');
                 this.game.dungeon.generate(this.game.depth,
@@ -201,7 +200,6 @@ RL.Tile.Types.downStairs = {
                 console.log('level already generated');
                 this.game.dungeon.rooms = this.game.dungeon.levels[this.game.depth];
             }
-            console.log(this.game.dungeon.levels.length);
             this.game.player.room.entityManager.remove(this.game.player);
             this.game.dungeon.getRoomsWithTag('START')[0].entityManager.add(this.game.player.x, this.game.player.y, this.game.player);
             this.game.movePlayerRoom(this.game.player.room, this.game.dungeon.getRoomsWithTag('START')[0]);
