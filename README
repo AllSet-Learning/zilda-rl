@@ -1,5 +1,12 @@
-The Chinese RL Lab is a series of roguelike roleplaying games designed to help teach Chinese. It currently contains three in-development games. To run these games, open a terminal, go to this directory, then enter:
+# What is Zilda (字尔达) RL?
+Originally known as the "Chinese RL Lab" (when it consisted of a series of short gam experiments), Zilda RL is a roguelike game inspired by the original *The Legend of Zelda*, and designed to be the backbone of a game that can help teach Chinese.
 
-python -m SimpleHTTPServer
+# Setup (Local)
+To run these games:
 
-You can than open your browser of choice and enter "localhost:8000/<game>" as the url, replacing <game> with "game1", "game2", or "game3".
+1. Open a terminal and go to the game's local directory
+2. Enter: ```python -m SimpleHTTPServer```
+3. Open your (modern) browser of choice and enter ```localhost:8000/<game directory>``` as the url, replacing <game directory> with the appropriate local directory on your computer.
+
+# Setup (Remote Server)
+(need a how-to here)
