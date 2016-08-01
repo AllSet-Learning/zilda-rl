@@ -4,9 +4,9 @@ Originally known as the "Chinese RL Lab" (when it consisted of a series of short
 # Setup (Local)
 To run these games:
 
-1. Open a terminal and go to the game's local directory
+1. Open a terminal and go to this directory
 2. Enter: ```python -m SimpleHTTPServer```
-3. Open your (modern) browser of choice and enter ```localhost:8000/<game directory>``` as the url, replacing <game directory> with the appropriate local directory on your computer.
+3. Open your (modern) browser of choice and enter ```localhost:8000/``` as the url
 
 # Setup (Remote Server)
 (need a how-to here)
