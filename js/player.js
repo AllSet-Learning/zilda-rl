@@ -75,6 +75,12 @@ RL.Player.prototype.takeDamage = function(amount) {
             this.game.gameOver = true;
         }
     }
+
+    let overlay = document.querySelector('.overlay');
+    overlay.classList.add('damaged');
+    setTimeout(function() {
+        overlay.classList.remove('damaged');
+    }, 100);
 };
 RL.Player.prototype.heal = function(amount) {
     this.life += amount;
