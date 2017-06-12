@@ -261,6 +261,8 @@ Dungeon.prototype = {
                 while (endRooms.indexOf(layout.name)===-1) {
                     layout = RL.Util.randomChoice(this.roomLayouts["end"]);
                 }
+            } else if (room.hasTag("SHOP")) {
+                layout = RL.Util.randomChoice(this.roomLayouts["shop"]); 
             } else {
                 var layouts = this.getCompatibleRoomLayouts(room,roomTypes);
                 for ( var j=0; j<usedLayouts.length; j++ ) {
@@ -393,6 +395,13 @@ Dungeon.prototype = {
         });
     },
 
+    tagShop: function(levelData) {
+        let treasureRooms = this.getRoomsWithTag('TREASURE');
+        let shop = RL.Util.randomChoice(treasureRooms);
+        shop.removeTag('TREASURE');
+        shop.addTag('SHOP');
+    },
+
     lockRooms: function(levelData) {
         this.getAllRooms().forEach(function(room) {
             if (room.hasTag('END') || room.hasTag('TREASURE')) {
@@ -503,7 +512,7 @@ Dungeon.prototype = {
 
         this.getAllRooms().forEach(function(room) {
             var numMonsters = ROT.RNG.getUniformInt(levelData.minMonstersPerRoom, levelData.maxMonstersPerRoom);
-            if (room.hasTag('START')) {
+            if (room.hasTag('START') || room.hasTag("SHOP")) {
                 numMonsters = 0;
             } else if (room.hasTag('END') || room.hasTag('TREASURE')) {
                 numMonsters *= 2;
@@ -557,6 +566,7 @@ Dungeon.prototype = {
         this.isolateRooms(newLevelData);
         this.addShortcuts(newLevelData);
         this.tagTreasureRooms(newLevelData);
+        if (depth % 4 === 0) this.tagShop(newLevelData);
         this.digRooms(newLevelData);
         this.lockRooms(newLevelData);
         this.blockShortcuts(newLevelData);
@@ -578,6 +588,8 @@ Dungeon.prototype = {
                     roomString = '[S]';
                 } else if (room.hasTag('END')) {
                     roomString = '[E]';
+                } else if (room.hasTag('SHOP')) {
+                    roomString = '[$]';
                 } else if (room.hasTag('TREASURE')) {
                     roomString = '[T]';
                 } else if (room.hasTag('ISOLATED')) {

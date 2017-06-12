@@ -1,5 +1,5 @@
 RL.Player.prototype.immortal = false;
-var roomFiles = ["start","end","basic","debris","cave","inferno","closed","labyrinth"];
+var roomFiles = ["start","end","shop","basic","debris","cave","inferno","closed","labyrinth"];
 var levelFiles = ["test"];
 var monsterFiles = ["test"];
 

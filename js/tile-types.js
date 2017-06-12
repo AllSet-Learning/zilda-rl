@@ -187,7 +187,7 @@ RL.Tile.Types.downStairs = {
     color: '#CC2EFA',
     bgColor: '#222',
     passable: true,
-    bombdable: false,
+    bombable: false,
     onEntityEnter: function(entity) {
         if (entity===this.game.player) {
             this.game.depth += 1;
@@ -226,6 +226,100 @@ RL.Tile.Types.upStairs = {
      }
      }*/
 };
+
+// Shop-specific tiles
+RL.Tile.Types.bombBlock = {
+    name: 'Bomb Display',
+    char: 'ර',
+    color: 'blue',
+    bgColor: '#004',
+    passable: false,
+    bombable: false,
+    bump: function() {
+        this.game.console.log("Move into the space below to buy a bomb for 3 gold")
+    }
+};
+RL.Tile.Types.bombBuy = {
+    name: 'Buy a Bomb',
+    char: '⁂',
+    color: '#880',
+    bgColor: '#222',
+    passable: true,
+    bombable: false,
+    onEntityEnter: function(entity) {
+        console.log('bombBuy entered');
+        if (entity === this.game.player) {
+            if (entity.gold >= 3) {
+                entity.removeGold(3);
+                entity.addBombs(1);
+                this.game.console.log("You buy a bomb for 3 gold");
+            } else {
+                this.game.console.log("It costs 3 gold to buy a bomb");
+            }
+        }
+    }
+};
+RL.Tile.Types.keyBlock = {
+    name: 'Key Display',
+    char: '۴',
+    color: 'orange',
+    bgColor: '#420',
+    passable: false,
+    bombable: false,
+    bump: function() {
+        this.game.console.log("Move into the space below to buy a key for 3 gold")
+    }
+};
+RL.Tile.Types.keyBuy = {
+    name: 'Buy a Key',
+    char: '⁂',
+    color: '#880',
+    bgColor: '#222',
+    passable: true,
+    bombable: false,
+    onEntityEnter: function(entity) {
+        if (entity === this.game.player) {
+            if (entity.gold >= 3) {
+                entity.removeGold(3);
+                entity.addKeys(1);
+                this.game.console.log("You buy a key for 3 gold");
+            } else {
+                this.game.console.log("It costs 3 gold to buy a key");
+            }
+        }
+    }
+};
+RL.Tile.Types.heartBlock = {
+    name: 'Heart Display',
+    char: '♥',
+    color: 'red',
+    bgColor: '#400',
+    passable: false,
+    bombable: false,
+    bump: function() {
+        this.game.console.log("Move into the space below to heal a heart for 3 gold")
+    }
+};
+RL.Tile.Types.heartBuy = {
+    name: 'Buy a Heart',
+    char: '⁂',
+    color: '#880',
+    bgColor: '#222',
+    passable: true,
+    bombable: false,
+    onEntityEnter: function(entity) {
+        if (entity === this.game.player) {
+            if (entity.gold >= 3) {
+                entity.removeGold(3);
+                entity.heal(1);
+                this.game.console.log("You heal for 3 gold");
+            } else {
+                this.game.console.log("It costs 3 gold to heal");
+            }
+        }
+    }
+};
+
 
 RL.Tile.Types.hud = {
     name: 'HUD',
