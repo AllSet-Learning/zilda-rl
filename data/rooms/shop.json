@@ -1,0 +1,23 @@
+[
+    {
+        "name": "shop",
+        "mapData": [
+            ".............",
+            ".............",
+            "....B.H.K....",
+            "....b.h.k....",
+            ".............",
+            ".............",
+            "............."
+        ],
+        "optionalDoors":["N","S","E","W"],
+        "charToTileType": {
+            "B": "bombBlock",
+            "b": "bombBuy",
+            "H": "heartBlock",
+            "h": "heartBuy",
+            "K": "keyBlock",
+            "k": "keyBuy"
+        }
+    }
+]
