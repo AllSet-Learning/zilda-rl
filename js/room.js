@@ -338,11 +338,24 @@ Room.prototype = {
     spawnMonster: function(monsterTypes, respawn) {
         var x=0;
         var y=0;
-        while ( (x===this.centerX && y===1) ||
-                (x===this.centerX && y===this.height-2) ||
-                (y===this.centerY && x===1) ||
-                (y===this.centerY && x===this.width-2) ||
-                this.map.get(x,y).type !== 'floor' ) {
+        // spawn only on floors and away from doors
+        while ( this.map.get(x, y).type !== 'floor' ||
+                (x === this.centerX && y === 1) ||
+                (x === this.centerX && y === 2) ||
+                (x === this.centerX + 1 && y === 1) ||
+                (x === this.centerX - 1 && y === 1) ||
+                (x === this.centerX && y === this.height - 2) ||
+                (x === this.centerX && y === this.height - 3) ||
+                (x === this.centerX + 1 && y === this.height - 2) ||
+                (x === this.centerX - 1 && y === this.height - 2) ||
+                (y === this.centerY && x === 1) ||
+                (y === this.centerY && x === 2) ||
+                (y === this.centerY + 1 && x === 1) ||
+                (y === this.centerY - 1 && x === 1) ||
+                (y === this.centerY && x === this.width - 2) ||
+                (y === this.centerY && x === this.width - 3) ||
+                (y === this.centerY + 1 && x === this.width - 2) ||
+                (y === this.centerY - 1 && x === this.width - 2) ) {
             x = ROT.RNG.getUniformInt(0,this.width-1);
             y = ROT.RNG.getUniformInt(0,this.height-1);
         }
