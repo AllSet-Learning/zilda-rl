@@ -67,6 +67,8 @@ RL.Player.prototype.takeDamage = function(amount) {
     if (this.life===0) {
         if (!this.dead) {
             this.game.console.log("<strong>You are dead!</strong>");
+            this.game.console.log(`Your final score is ${ this.gold } gold pieces.`);
+            this.game.console.log("Reload the page to try again.");
             this.dead=true;
             this.color="red";
             this.char="@";
