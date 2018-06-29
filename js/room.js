@@ -335,7 +335,7 @@ Room.prototype = {
         this.itemManager.add(x,y,item);
     },
     
-    spawnMonster: function(monsterTypes) {
+    spawnMonster: function(monsterTypes, respawn) {
         var x=0;
         var y=0;
         while ( (x===this.centerX && y===1) ||
@@ -348,6 +348,9 @@ Room.prototype = {
         }
         var monsterType = RL.Util.randomChoice(monsterTypes);
         monster = new RL.Entity(this.game,monsterType);
+        if (respawn) {
+            monster.drops = { nothing: 100 };
+        }
         this.entityManager.add(x,y,monster);
     },
     

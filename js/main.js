@@ -161,7 +161,7 @@ RL.Game.prototype.updateHud = function() {
 };
 
 //New function that handles player moving from one room to another
-RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
+RL.Game.prototype.movePlayerRoom = function(fromRoom, toRoom) {
     this.player.room = toRoom;
     this.entityManager = toRoom.entityManager;
     this.itemManager = toRoom.itemManager;
@@ -169,6 +169,17 @@ RL.Game.prototype.movePlayerRoom = function(fromRoom,toRoom) {
     this.updateHud();
     this.renderer.draw();
     this.hudRenderer.draw();
+
+    // if player reenters a room with no monsters, spawn more monsters
+    if (toRoom.explored && toRoom.entityManager.objects.length === 1) {
+        const levelData = this.dungeon.levelGenerationData;
+        const numMonsters = Math.floor(Math.random() * (levelData.maxMonstersPerRoom - levelData.minMonstersPerRoom)) + levelData.minMonstersPerRoom;
+        const monsterTypes = this.dungeon.getMonsterTypes(levelData);
+        for (let i = 0; i < numMonsters; i++) {
+            toRoom.spawnMonster(monsterTypes, true);
+        }
+    }
+
     //console.log('Player moved from ('+fromRoom.x+','+fromRoom.y + ') to (' + toRoom.x+','+toRoom.y+')');
     this.updateAll();
 };

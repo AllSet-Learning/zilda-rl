@@ -499,9 +499,8 @@ Dungeon.prototype = {
         });
     },
 
-    spawnMonsters: function(levelData) {
-        //determine which monsters are suitable for level
-        var monsters = [];
+    getMonsterTypes: function(levelData) {
+        const monsters = [];
         for (var monsterID in RL.Entity.Types) {
             if (monsterID!==undefined) {
                 if ( levelData.monsterTypes.indexOf(RL.Entity.Types[monsterID].type) !== -1 ) {
@@ -509,6 +508,12 @@ Dungeon.prototype = {
                 }
             }
         }
+        return monsters;
+    },
+
+    spawnMonsters: function(levelData) {
+        //determine which monsters are suitable for level
+        const monsters = this.getMonsterTypes(levelData);
 
         this.getAllRooms().forEach(function(room) {
             var numMonsters = ROT.RNG.getUniformInt(levelData.minMonstersPerRoom, levelData.maxMonstersPerRoom);
@@ -561,6 +566,7 @@ Dungeon.prototype = {
     
     generate: function(depth,startX,startY) {
         var newLevelData = this.loadLevelData(depth);
+        this.levelGenerationData = newLevelData;
         this.initLevel(newLevelData);
         this.makeMaze(startX, startY);
         this.isolateRooms(newLevelData);
