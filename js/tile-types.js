@@ -56,6 +56,9 @@ RL.Tile.Types.fire = {
     update: function() {
         var entity = this.game.entityManager.get(this.x,this.y);
         if (entity) {
+            if (entity === this.game.player) {
+                this.game.console.log('You got burned by 火 (huǒ)! OUCH!');
+            }
             entity.takeDamage(1);
         }
     }
