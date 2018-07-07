@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -114,6 +116,6 @@
 
     Map.prototype = RL.Util.merge({}, RL.Array2d.prototype, Map.prototype);
 
-    root.RL.Map = Map;
+    RL.Map = Map;
 
-}(this));
+}(RL));

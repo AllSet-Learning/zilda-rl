@@ -1,4 +1,6 @@
-(function(root) {
+import RL from '../rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -253,7 +255,7 @@
         },
     };
 
-    root.RL.Mixins.PerformableActionInterface = PerformableActionInterface;
-    root.RL.Mixins.ResolvableActionInterface = ResolvableActionInterface;
+    RL.Mixins.PerformableActionInterface = PerformableActionInterface;
+    RL.Mixins.ResolvableActionInterface = ResolvableActionInterface;
 
-}(this));
+}(RL));

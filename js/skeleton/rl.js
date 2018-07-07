@@ -1,2 +1,3 @@
 // define RL lib global variable
-window.RL = {};
+const RL = {};
+export default RL;

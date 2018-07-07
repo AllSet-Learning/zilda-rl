@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
 	var entId = 0;
@@ -216,6 +218,6 @@
         },
     };
 
-    root.RL.Entity = Entity;
+    RL.Entity = Entity;
 
-}(this));
+}(RL));

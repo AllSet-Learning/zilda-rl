@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -211,6 +213,6 @@
         }
     };
 
-    root.RL.ValidTargets = ValidTargets;
+    RL.ValidTargets = ValidTargets;
 
-}(this));
+}(RL));

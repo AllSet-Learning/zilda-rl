@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -61,6 +63,6 @@
         },
     };
 
-    root.RL.Console = Console;
+    RL.Console = Console;
 
-}(this));
+}(RL));

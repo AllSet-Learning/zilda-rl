@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -432,7 +434,7 @@
         },
     };
 
-    root.RL.Renderer = Renderer;
+    RL.Renderer = Renderer;
 
     /*
         The following describes an object litteral used by Renderer for the benefit of api doc generation.
@@ -535,4 +537,4 @@
      * @type {Number|false}
      */
 
-}(this));
+}(RL));

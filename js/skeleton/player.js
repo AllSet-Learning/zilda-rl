@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -237,6 +239,6 @@
     RL.Util.merge(Player.prototype, RL.Mixins.ResolvableActionInterface);
 
 
-    root.RL.Player = Player;
+    RL.Player = Player;
 
-}(this));
+}(RL));

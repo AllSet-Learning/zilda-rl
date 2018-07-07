@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -225,6 +227,6 @@
         },
     };
 
-    root.RL.ObjectManager = ObjectManager;
+    RL.ObjectManager = ObjectManager;
 
-}(this));
+}(RL));

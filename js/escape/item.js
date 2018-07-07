@@ -1,4 +1,6 @@
-(function(root) {
+import RL from '../skeleton/rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -383,6 +385,6 @@
     };
 
 
-    root.RL.Item = Item;
+    RL.Item = Item;
 
-}(this));
+}(RL));

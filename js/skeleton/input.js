@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -240,6 +242,6 @@
         'RIGHT_BRACKET': 221
     };
 
-    root.RL.Input = Input;
+    RL.Input = Input;
 
-}(this));
+}(RL));

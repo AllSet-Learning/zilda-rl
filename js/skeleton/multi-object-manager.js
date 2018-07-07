@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -314,6 +316,6 @@
         },
     };
 
-    root.RL.MultiObjectManager = MultiObjectManager;
+    RL.MultiObjectManager = MultiObjectManager;
 
-}(this));
+}(RL));

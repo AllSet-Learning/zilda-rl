@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     var DIRECTIONS_TO_OFFSETS = {
@@ -214,6 +216,6 @@
         },
     };
 
-    root.RL.Util = Util;
+    RL.Util = Util;
 
-}(this));
+}(RL));

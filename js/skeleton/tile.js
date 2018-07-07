@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     var tileId = 0;
@@ -222,6 +224,6 @@
         }
     };
 
-    root.RL.Tile = Tile;
+    RL.Tile = Tile;
 
-}(this));
+}(RL));

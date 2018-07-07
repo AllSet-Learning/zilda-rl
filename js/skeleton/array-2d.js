@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -473,6 +475,6 @@
         }
     };
 
-    root.RL.Array2d = Array2d;
+    RL.Array2d = Array2d;
 
-}(this));
+}(RL));

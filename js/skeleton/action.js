@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function() {
     'use strict';
 
     /**
@@ -123,7 +125,7 @@
         resolveAction: true,
     };
 
-    root.RL.PerformableAction = PerformableAction;
-    root.RL.ResolvableAction = ResolvableAction;
+    RL.PerformableAction = PerformableAction;
+    RL.ResolvableAction = ResolvableAction;
 
-}(this));
+}(RL));

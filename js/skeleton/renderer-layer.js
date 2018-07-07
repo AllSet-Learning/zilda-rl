@@ -1,4 +1,6 @@
-(function(root) {
+import RL from './rl.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -240,6 +242,6 @@
         }
     };
 
-    root.RL.RendererLayer = RendererLayer;
+    RL.RendererLayer = RendererLayer;
 
-}(this));
+}(RL));

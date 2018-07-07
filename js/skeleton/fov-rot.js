@@ -1,4 +1,7 @@
-(function(root) {
+import RL from './rl.js';
+import ROT from '../rotjs/rot.js';
+
+(function(RL) {
     'use strict';
 
     /**
@@ -206,6 +209,6 @@
 
     };
 
-    root.RL.FovROT = FovROT;
+    RL.FovROT = FovROT;
 
-}(this));
+}(RL));

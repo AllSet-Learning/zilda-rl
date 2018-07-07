@@ -1,0 +1,30 @@
+{
+  "name": "zilda-rl",
+  "version": "1.0.0",
+  "description": "Originally known as the \"Chinese RL Lab\" (when it consisted of a series of short gam experiments), Zilda RL is a roguelike game inspired by the original *The Legend of Zelda*, and designed to be the backbone of a game that can help teach Chinese.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllSet-Learning/zilda-rl.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AllSet-Learning/zilda-rl/issues"
+  },
+  "homepage": "https://github.com/AllSet-Learning/zilda-rl#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "rules": {
+        "import/extensions": [".js"]
+    }
+  }
+}
